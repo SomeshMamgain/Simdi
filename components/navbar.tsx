@@ -42,7 +42,7 @@ export const Navbar = () => {
           {[
             { label: 'Home', href: '/' },
             { label: 'Products', href: '/shop' },
-            { label: 'Blog', href: '/blogs' },
+            { label: 'Blogs', href: '/blogs' },
             { label: 'Our Roots', href: '/our-roots' },
           ].map(({ label, href }) => (
             <Link key={label} href={href} style={{
