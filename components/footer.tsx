@@ -1,19 +1,19 @@
 'use client'
 
 import Link from 'next/link'
-import { Facebook, Instagram, Twitter, Mail, MapPin, ShieldCheck, Truck } from 'lucide-react'
+import { Facebook, Instagram, Mail, MapPin, ShieldCheck, Truck } from 'lucide-react'
 
 export const Footer = () => {
   // Styles define kar lete hain takki code saaf rahe
   const sectionStyle = { display: 'flex', flexDirection: 'column' as const, gap: '15px' };
   const headingStyle = { color: '#B58E58', textTransform: 'uppercase' as const, fontSize: '0.85rem', fontWeight: 700, letterSpacing: '1px' };
-  const linkStyle = { color: '#F9F7F2', textDecoration: 'none', fontSize: '0.9rem', display: 'block', marginBottom: '8px' };
+  const linkStyle = { color: '#F9F7F2', textDecoration: 'none', fontSize: '0.9rem', display: 'block', marginBottom: '8px', transition: '0.3s' };
 
   return (
     <footer style={{ backgroundColor: '#1E2D24', color: '#F9F7F2', padding: '60px 20px 30px' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         
-        {/* Main Grid - Using standard CSS flex for columns */}
+        {/* Main Grid */}
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '40px', marginBottom: '50px' }}>
           
           {/* Column 1: Brand */}
@@ -23,9 +23,15 @@ export const Footer = () => {
               Bringing the untouched purity of Himalayan villages to your doorstep. Supporting 35+ women artisans across Uttarakhand.
             </p>
             <div style={{ display: 'flex', gap: '20px' }}>
-              <Link href="#" style={{ color: '#F9F7F2' }}><Facebook size={20} /></Link>
-              <Link href="#" style={{ color: '#F9F7F2' }}><Instagram size={20} /></Link>
-              <Link href="#" style={{ color: '#F9F7F2' }}><Twitter size={20} /></Link>
+              {/* Facebook Link Updated */}
+              <a href="https://www.facebook.com/SimdiUK12" target="_blank" rel="noopener noreferrer" style={{ color: '#F9F7F2' }}>
+                <Facebook size={22} />
+              </a>
+              {/* Instagram Link Updated */}
+              <a href="https://www.instagram.com/simdi.in" target="_blank" rel="noopener noreferrer" style={{ color: '#F9F7F2' }}>
+                <Instagram size={22} />
+              </a>
+              {/* Twitter Removed */}
             </div>
           </div>
 
@@ -47,6 +53,7 @@ export const Footer = () => {
               <Link href="/our-roots" style={linkStyle}>Our Story</Link>
               <Link href="/blogs" style={linkStyle}>Blogs</Link>
               <Link href="/contact" style={linkStyle}>Contact Us</Link>
+              {/* URL updated to match our page */}
               <Link href="/privacy" style={linkStyle}>Privacy Policy</Link>
             </div>
           </div>
@@ -56,21 +63,21 @@ export const Footer = () => {
             <h4 style={headingStyle}>Our Roots</h4>
             <div style={{ marginTop: '5px', fontSize: '0.9rem', lineHeight: 1.5 }}>
               <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
-                <MapPin size={18} style={{ color: '#B58E58' }} />
+                <MapPin size={18} style={{ color: '#B58E58', flexShrink: 0 }} />
                 <span>SIMDI, Chakisain, Pauri Garhwal,<br />Uttarakhand - 246130</span>
               </div>
               <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-                <Mail size={18} style={{ color: '#B58E58' }} />
-                <span>team@simdi.in</span>
+                <Mail size={18} style={{ color: '#B58E58', flexShrink: 0 }} />
+                <span>Team@simdi.in</span>
               </div>
               <div style={{ display: 'flex', gap: '25px' }}>
                 <div style={{ textAlign: 'center' }}>
                   <ShieldCheck size={24} style={{ color: '#B58E58', margin: '0 auto' }} />
-                  <p style={{ fontSize: '0.65rem', marginTop: '5px' }}>100% PURE</p>
+                  <p style={{ fontSize: '0.65rem', marginTop: '5px', fontWeight: 700 }}>100% PURE</p>
                 </div>
                 <div style={{ textAlign: 'center' }}>
                   <Truck size={24} style={{ color: '#B58E58', margin: '0 auto' }} />
-                  <p style={{ fontSize: '0.65rem', marginTop: '5px' }}>PAN INDIA</p>
+                  <p style={{ fontSize: '0.65rem', marginTop: '5px', fontWeight: 700 }}>PAN INDIA</p>
                 </div>
               </div>
             </div>
