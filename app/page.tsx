@@ -9,7 +9,7 @@ const bestSellers = [
   { id: 1, name: 'Organic Pahadi Ghee', price: '₹799', img: '/ghee.jpg' },
   { id: 2, name: 'Raw Wild Honey', price: '₹649', img: '/wild_honey.jpg' },
   { id: 3, name: 'Pahadi Red Rice', price: '₹349', img: '/pahad-rice.png' },
-  { id: 4, name: 'Traditional Pisyu Loon', price: '₹199', img: '/pisyu_loon.jpg' },
+  { id: 4, name: 'Traditional Pisyu Loon', price: '₹199', img: '/pisyuloon.jpg' },
 ]
 
 const features = [
