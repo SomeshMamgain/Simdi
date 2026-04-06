@@ -1,6 +1,11 @@
-'use client'
-
 import { Mail, MessageCircle, Instagram, MapPin, Send } from 'lucide-react'
+import { Navbar } from '@/components/navbar'
+import { Footer } from '@/components/footer'
+
+export const metadata = {
+  title: 'Contact SIMDI - Pure Himalayan & Pahadi Products Support',
+  description: 'Reach out to SIMDI for authentic Himalayan food, handpicked Pahadi products, and support. We are based in Uttarakhand and Ghaziabad.'
+}
 
 export default function ContactPage() {
   
@@ -9,13 +14,11 @@ export default function ContactPage() {
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Hi%20Simdi%20Team,%20I%20have%20a%20query%20about%20your%20Pahadi%20products.`
 
   return (
-    <div style={{ backgroundColor: '#F9F7F2', minHeight: '100vh', padding: '60px 20px' }}>
-      
-      {/* SEO Friendly Meta Tags (Next.js 13+ ke liye layout.tsx mein bhi daal sakte ho) */}
-      <title>Contact SIMDI - Pure Himalayan & Pahadi Products Support</title>
-      <meta name="description" content="Reach out to SIMDI for authentic Himalayan food, handpicked Pahadi products, and support. We are based in Uttarakhand and Ghaziabad." />
+    <>
+      <Navbar />
 
-      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+      <div style={{ backgroundColor: '#F9F7F2', minHeight: '100vh', padding: '60px 20px' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
         
         {/* Header Section */}
         <div style={{ textAlign: 'center', marginBottom: '50px' }}>
@@ -92,6 +95,9 @@ export default function ContactPage() {
         </div>
       </div>
     </div>
+
+      <Footer />
+    </>
   )
 }
 
