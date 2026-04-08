@@ -3,6 +3,7 @@
 import { ShieldCheck, UserCheck, Eye, Lock, Zap } from 'lucide-react'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { Suspense } from 'react'
 
 export default function PrivacyPolicy() {
   
@@ -10,7 +11,9 @@ export default function PrivacyPolicy() {
 
   return (
     <>
-      <Navbar />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Navbar />
+      </Suspense>
 
       <div style={{ backgroundColor: '#FDFDFB', minHeight: '100vh', padding: '60px 20px' }}>
         

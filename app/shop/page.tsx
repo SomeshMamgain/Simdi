@@ -4,13 +4,16 @@ import { ProductCard } from '@/components/ProductCard'
 import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
 import { useProductsQuery } from '@/hooks/use-products-query'
+import { Suspense } from 'react'
 
 export default function ProductsPage() {
   const { data: products = [], isLoading, error } = useProductsQuery()
 
   return (
     <div className="min-h-screen" style={{ background: '#F9F7F2' }}>
-      <Navbar />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Navbar />
+      </Suspense>
 
       <section style={{ padding: '72px 20px 36px' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>

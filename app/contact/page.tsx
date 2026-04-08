@@ -1,6 +1,7 @@
 import { Mail, MessageCircle, Instagram, MapPin, Send } from 'lucide-react'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { Suspense } from 'react'
 
 export const metadata = {
   title: 'Contact SIMDI - Pure Himalayan & Pahadi Products Support',
@@ -15,7 +16,9 @@ export default function ContactPage() {
 
   return (
     <>
-      <Navbar />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Navbar />
+      </Suspense>
 
       <div style={{ backgroundColor: '#F9F7F2', minHeight: '100vh', padding: '60px 20px' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>

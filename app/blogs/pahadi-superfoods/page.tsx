@@ -5,6 +5,7 @@ import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import Link from 'next/link'
 import { Star, Leaf, Heart, ShoppingCart, CheckCircle2, MapPin } from 'lucide-react'
+import { Suspense } from 'react'
 
 export default function CowGheeBlog() {
   const [lang, setLang] = useState<'en' | 'hi'>('en')
@@ -60,7 +61,9 @@ export default function CowGheeBlog() {
 
   return (
     <div style={{ background: '#F9F7F2', minHeight: '100vh', overflowX: 'hidden' }}>
-      <Navbar />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Navbar />
+      </Suspense>
 
       <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '120px 20px 80px' }}>
         

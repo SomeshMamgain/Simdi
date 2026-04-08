@@ -3,6 +3,7 @@
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { ShieldCheck, Leaf, Target, Eye, Users, Map, Wheat, MapPin } from 'lucide-react'
+import { Suspense } from 'react'
 
 export default function OurRoots() {
   const containerStyle = { maxWidth: '1200px', margin: '0 auto', padding: '0 20px' };
@@ -12,7 +13,9 @@ export default function OurRoots() {
 
   return (
     <div style={{ background: '#F9F7F2', minHeight: '100vh', overflowX: 'hidden' }}>
-      <Navbar />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Navbar />
+      </Suspense>
       
       {/* 1. HERO SECTION */}
       <section style={{ padding: '100px 0', textAlign: 'center' }}>

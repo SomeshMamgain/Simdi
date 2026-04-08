@@ -4,6 +4,7 @@ import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import Link from 'next/link'
 import { ArrowRight, Leaf, Heart, Mountain, Shield } from 'lucide-react'
+import { Suspense } from 'react'
 
 const bestSellers = [
   { id: 1, name: 'Organic Pahadi Ghee', price: '₹799', img: '/ghee.jpg' },
@@ -22,7 +23,9 @@ const features = [
 export default function Home() {
   return (
     <div className="min-h-screen" style={{ background: '#F9F7F2', overflowX: 'hidden' }}>
-      <Navbar />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Navbar />
+      </Suspense>
 
       {/* HERO SECTION */}
       <section style={{ padding: '60px 20px' }}>
