@@ -2,6 +2,7 @@ import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import Link from 'next/link'
 import { ArrowRight, Calendar } from 'lucide-react'
+import { Suspense } from 'react'
 
 const allBlogs = [
   {
@@ -17,7 +18,9 @@ const allBlogs = [
 export default function BlogIndex() {
   return (
     <div style={{ background: '#F9F7F2', minHeight: '100vh' }}>
-      <Navbar />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Navbar />
+      </Suspense>
       <header style={{ padding: '100px 20px 60px', textAlign: 'center' }}>
         <h1 style={{ fontFamily: 'Georgia, serif', fontSize: '3.5rem', color: '#1E2D24' }}>Simdi Chronicles</h1>
         <p style={{ color: '#B58E58', fontSize: '1.2rem', fontStyle: 'italic' }}>Stories of Purity, Tradition, and the Hills</p>
