@@ -1,0 +1,130 @@
+'use client'
+
+import { ProductCard } from '@/components/ProductCard'
+import { Footer } from '@/components/footer'
+import { Navbar } from '@/components/navbar'
+import { useProductsQuery } from '@/hooks/use-products-query'
+
+export default function ProductsPage() {
+  const { data: products = [], isLoading, error } = useProductsQuery()
+
+  return (
+    <div className="min-h-screen" style={{ background: '#F9F7F2' }}>
+      <Navbar />
+
+      <section style={{ padding: '72px 20px 36px' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <p
+            style={{
+              color: '#B58E58',
+              letterSpacing: '0.22em',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              marginBottom: '14px',
+            }}
+          >
+            FROM OUR APPWRITE COLLECTION
+          </p>
+          <h1
+            style={{
+              fontFamily: 'Georgia, serif',
+              fontSize: 'clamp(2.2rem, 5vw, 3.75rem)',
+              color: '#1E2D24',
+              margin: 0,
+            }}
+          >
+            Products
+          </h1>
+          <p
+            style={{
+              color: '#5E6E5E',
+              fontSize: '1rem',
+              lineHeight: 1.8,
+              maxWidth: '700px',
+              marginTop: '18px',
+            }}
+          >
+            Browse the live products coming from your Appwrite products collection. Each card is rendered from the
+            document fields in `useProductsQuery()`.
+          </p>
+        </div>
+      </section>
+
+      <section style={{ padding: '0 20px 100px' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          {isLoading ? (
+            <div
+              style={{
+                background: '#fff',
+                borderRadius: '20px',
+                padding: '48px 24px',
+                textAlign: 'center',
+                color: '#5E6E5E',
+                border: '1px solid #E7E0D4',
+              }}
+            >
+              Loading products...
+            </div>
+          ) : error ? (
+            <div
+              style={{
+                background: '#fff7f5',
+                borderRadius: '20px',
+                padding: '48px 24px',
+                textAlign: 'center',
+                color: '#9F3A20',
+                border: '1px solid #F0C5B7',
+              }}
+            >
+              Unable to load products right now. Please check your Appwrite permissions and collection settings.
+            </div>
+          ) : products.length === 0 ? (
+            <div
+              style={{
+                background: '#fff',
+                borderRadius: '20px',
+                padding: '48px 24px',
+                textAlign: 'center',
+                color: '#5E6E5E',
+                border: '1px solid #E7E0D4',
+              }}
+            >
+              No products were found in the collection yet.
+            </div>
+          ) : (
+            <>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: '16px',
+                  marginBottom: '28px',
+                  flexWrap: 'wrap',
+                }}
+              >
+                <p style={{ margin: 0, color: '#5E6E5E', fontSize: '0.95rem' }}>
+                  Showing {products.length} live products
+                </p>
+              </div>
+
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                  gap: '28px',
+                }}
+              >
+                {products.map((product) => (
+                  <ProductCard key={product.$id} product={product} />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  )
+}

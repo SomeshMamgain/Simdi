@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Merriweather, Open_Sans } from 'next/font/google'
+import { QueryProvider } from '@/components/providers/query-provider'
 import './globals.css'
 
 const merriweather = Merriweather({
@@ -22,7 +23,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${merriweather.variable} ${openSans.variable}`}>
-      <body>{children}</body>
+      <body>
+        <QueryProvider>{children}</QueryProvider>
+      </body>
     </html>
   )
 }
