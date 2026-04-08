@@ -151,7 +151,7 @@ export function ProductCard({ product }: ProductCardProps) {
               disabled={!isInStock}
               style={{
                 padding: '12px 18px',
-                background: isInStock ? '#1E2D24' : '#C7CEC8',
+                background: isInStock ? '#11522b' : '#C7CEC8',
                 color: '#fff',
                 border: 'none',
                 borderRadius: '999px',

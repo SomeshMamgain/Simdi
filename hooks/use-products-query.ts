@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import type { Models } from 'appwrite'
 
-import { appwriteConfig, databases } from '@/lib/appwrite'
+import { databases, getProductsConfig } from '@/lib/appwrite'
 
 export interface ProductDocument extends Models.Document {
   id?: string
@@ -39,9 +39,11 @@ export interface ProductDocument extends Models.Document {
 }
 
 async function getProducts() {
+  const { databaseId, productsCollectionId } = getProductsConfig()
+
   const result = await databases.listDocuments<ProductDocument>({
-    databaseId: appwriteConfig.databaseId,
-    collectionId: appwriteConfig.productsCollectionId,
+    databaseId,
+    collectionId: productsCollectionId,
     queries: [],
   })
 
