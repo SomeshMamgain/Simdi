@@ -20,7 +20,7 @@ export default function ContactPage() {
         <Navbar />
       </Suspense>
 
-      <div style={{ backgroundColor: '#F9F7F2', minHeight: '100vh', padding: '60px 20px' }}>
+      <div className="site-page-shell" style={{ padding: '60px 20px' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
         
         {/* Header Section */}

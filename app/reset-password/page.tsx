@@ -5,7 +5,7 @@ import ResetPasswordForm from './ResetPasswordForm'
 
 export default function ResetPasswordPage() {
   return (
-    <div style={{ backgroundColor: '#F9F7F2', minHeight: '100vh' }}>
+    <div className="site-page-shell">
       <Suspense fallback={<div>Loading...</div>}>
         <Navbar />
       </Suspense>

@@ -10,7 +10,7 @@ export default function ProductsPage() {
   const { data: products = [], isLoading, error } = useProductsQuery()
 
   return (
-    <div className="min-h-screen" style={{ background: '#F9F7F2' }}>
+    <div className="site-page-shell">
       <Suspense fallback={<div>Loading...</div>}>
         <Navbar />
       </Suspense>

@@ -5,6 +5,7 @@ import { createSessionAccount } from '@/lib/appwrite-server'
 
 export async function GET(request: NextRequest) {
   const sessionSecret = request.cookies.get('appwrite-session')?.value
+  const avatarUrl = request.cookies.get('appwrite-user-avatar')?.value ?? null
 
   if (!sessionSecret) {
     return NextResponse.json({ error: 'No backend session found' }, { status: 401 })
@@ -17,7 +18,7 @@ export async function GET(request: NextRequest) {
       account.get(),
     ])
 
-    return NextResponse.json({ session, user })
+    return NextResponse.json({ session, user, avatarUrl })
   } catch (error) {
     console.error('Backend session lookup failed:', error)
     return NextResponse.json({ error: 'Invalid backend session' }, { status: 401 })

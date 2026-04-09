@@ -39,5 +39,15 @@ export async function POST(request: NextRequest) {
     })
   }
 
+  response.cookies.set({
+    name: 'appwrite-user-avatar',
+    value: '',
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 0,
+  })
+
   return response
 }

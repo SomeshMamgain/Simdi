@@ -16,12 +16,14 @@ interface GoogleUserInfoResponse {
   name?: string
   given_name?: string
   family_name?: string
+  picture?: string
 }
 
 function getAuthConfig() {
   const clientId = process.env.GOOGLE_CLIENT_ID
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET
   const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID
+  const configuredBaseUrl = process.env.NEXT_PUBLIC_BASE_URL?.trim()
 
   if (!clientId) {
     throw new Error('Missing GOOGLE_CLIENT_ID')
@@ -39,6 +41,7 @@ function getAuthConfig() {
     clientId,
     clientSecret,
     projectId,
+    configuredBaseUrl,
   }
 }
 
@@ -47,8 +50,8 @@ function buildFailureRedirect(baseUrl: string) {
 }
 
 export async function GET(request: NextRequest) {
-  const { clientId, clientSecret, projectId } = getAuthConfig()
-  const baseUrl = request.nextUrl.origin
+  const { clientId, clientSecret, projectId, configuredBaseUrl } = getAuthConfig()
+  const baseUrl = configuredBaseUrl?.replace(/\/$/, '') || request.nextUrl.origin
   const failureRedirect = buildFailureRedirect(baseUrl)
 
   try {
@@ -134,6 +137,21 @@ export async function GET(request: NextRequest) {
       value: session.secret,
       ...cookieOptions,
     })
+
+    if (userInfo.picture) {
+      response.cookies.set({
+        name: 'appwrite-user-avatar',
+        value: userInfo.picture,
+        ...cookieOptions,
+      })
+    } else {
+      response.cookies.set({
+        name: 'appwrite-user-avatar',
+        value: '',
+        ...cookieOptions,
+        maxAge: 0,
+      })
+    }
 
     return response
   } catch (error) {

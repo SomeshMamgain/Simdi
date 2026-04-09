@@ -5,7 +5,7 @@ import Image from 'next/image'
 import type { Models } from 'appwrite'
 import { LogOut, Menu, Search, ShoppingBag, UserRound, X } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { getDisplayName } from '@/lib/auth-utils'
 import { account } from '@/lib/appwrite'
@@ -23,10 +23,15 @@ export const Navbar = () => {
   const [authModalError, setAuthModalError] = useState<string | null>(null)
   const [currentSession, setCurrentSession] = useState<Models.Session | null>(null)
   const [accountLabel, setAccountLabel] = useState('Account')
+  const [accountEmail, setAccountEmail] = useState('')
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
+  const [hasAvatarError, setHasAvatarError] = useState(false)
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false)
   const [isSigningOut, setIsSigningOut] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
+  const accountMenuRef = useRef<HTMLDivElement | null>(null)
 
   const navLinks = [
     { label: 'Home', href: '/' },
@@ -46,17 +51,20 @@ export const Navbar = () => {
         })
 
         if (backendResponse.ok) {
-          const { session, user } = await backendResponse.json() as {
+          const { session, user, avatarUrl } = await backendResponse.json() as {
             session: Models.Session
             user: { name?: string | null; email?: string | null }
+            avatarUrl?: string | null
           }
 
           if (!isMounted) {
             return
           }
-
+          console.log('Current session loaded from backend:', session, avatarUrl)
           setCurrentSession(session)
           setAccountLabel(getDisplayName(user.name, user.email))
+          setAccountEmail(user.email ?? '')
+          setAvatarUrl(avatarUrl ?? null)
           return
         }
 
@@ -68,6 +76,8 @@ export const Navbar = () => {
 
         setCurrentSession(session)
         setAccountLabel(getDisplayName(user.name, user.email))
+        setAccountEmail(user.email ?? '')
+        setAvatarUrl(null)
       } catch {
         if (!isMounted) {
           return
@@ -75,6 +85,8 @@ export const Navbar = () => {
 
         setCurrentSession(null)
         setAccountLabel('Account')
+        setAccountEmail('')
+        setAvatarUrl(null)
       }
     }
 
@@ -82,6 +94,24 @@ export const Navbar = () => {
 
     return () => {
       isMounted = false
+    }
+  }, [])
+
+  useEffect(() => {
+    setHasAvatarError(false)
+  }, [avatarUrl])
+
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!accountMenuRef.current?.contains(event.target as Node)) {
+        setIsAccountMenuOpen(false)
+      }
+    }
+
+    document.addEventListener('pointerdown', handlePointerDown)
+
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown)
     }
   }, [])
 
@@ -120,17 +150,23 @@ export const Navbar = () => {
 
   const handleAuthSuccess = async (session: Models.Session) => {
     setCurrentSession(session)
+    setIsAccountMenuOpen(false)
 
     try {
       const user = await account.get()
       setAccountLabel(getDisplayName(user.name, user.email))
+      setAccountEmail(user.email ?? '')
+      setAvatarUrl(null)
     } catch {
       setAccountLabel('Account')
+      setAccountEmail('')
+      setAvatarUrl(null)
     }
   }
 
   const handleSignOut = async () => {
     setIsSigningOut(true)
+    setIsAccountMenuOpen(false)
 
     try {
       await fetch('/api/auth/logout', {
@@ -148,9 +184,13 @@ export const Navbar = () => {
     } finally {
       setCurrentSession(null)
       setAccountLabel('Account')
+      setAccountEmail('')
+      setAvatarUrl(null)
       setIsSigningOut(false)
     }
   }
+
+  const shouldShowAvatarImage = Boolean(avatarUrl && !hasAvatarError)
 
   return (
     <>
@@ -183,15 +223,60 @@ export const Navbar = () => {
         {/* Right Icons */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           {currentSession ? (
-            <div className="auth-nav-group">
-              <div className="auth-chip" aria-label={`Signed in as ${accountLabel}`}>
-                <UserRound size={18} />
-                <span>{accountLabel}</span>
-              </div>
-              <button className="auth-logout" onClick={handleSignOut} disabled={isSigningOut}>
-                <LogOut size={18} />
-                <span>{isSigningOut ? 'Signing out...' : 'Sign out'}</span>
+            <div className="auth-nav-group" ref={accountMenuRef}>
+              <button
+                className={`auth-avatar-trigger${isAccountMenuOpen ? ' is-open' : ''}`}
+                onClick={() => setIsAccountMenuOpen((current) => !current)}
+                aria-label={`Signed in as ${accountLabel}`}
+                aria-expanded={isAccountMenuOpen}
+                aria-haspopup="menu"
+              >
+                <span className="auth-avatar-shell">
+                  {shouldShowAvatarImage ? (
+                    <img
+                      src={avatarUrl ?? ''}
+                      alt={`${accountLabel} profile`}
+                      className="auth-avatar-image"
+                      referrerPolicy="no-referrer"
+                      onError={() => setHasAvatarError(true)}
+                    />
+                  ) : (
+                    <UserRound size={18} />
+                  )}
+                </span>
+                <span className="auth-avatar-label">{accountLabel}</span>
               </button>
+
+              <div
+                className={`auth-account-menu${isAccountMenuOpen ? ' is-open' : ''}`}
+                role="menu"
+                aria-hidden={!isAccountMenuOpen}
+              >
+                <div className="auth-account-summary">
+                  <span className="auth-avatar-shell auth-avatar-shell--menu">
+                    {shouldShowAvatarImage ? (
+                      <img
+                        src={avatarUrl ?? ''}
+                        alt={`${accountLabel} profile`}
+                        className="auth-avatar-image"
+                        referrerPolicy="no-referrer"
+                        onError={() => setHasAvatarError(true)}
+                      />
+                    ) : (
+                      <UserRound size={18} />
+                    )}
+                  </span>
+                  <div className="auth-account-copy">
+                    <strong>{accountLabel}</strong>
+                    {accountEmail ? <span>{accountEmail}</span> : null}
+                  </div>
+                </div>
+
+                <button className="auth-account-action" onClick={handleSignOut} disabled={isSigningOut} role="menuitem">
+                  <LogOut size={18} />
+                  <span>{isSigningOut ? 'Signing out...' : 'Logout'}</span>
+                </button>
+              </div>
             </div>
           ) : (
             <button className="auth-trigger" onClick={handleOpenAuthModal}>
@@ -199,7 +284,6 @@ export const Navbar = () => {
               <span>Sign in</span>
             </button>
           )}
-          <button className="icon-btn"><Search size={22} /></button>
           <button onClick={() => setDrawerOpen(true)} style={{ position: 'relative' }} className="icon-btn">
             <ShoppingBag size={22} />
             {totalItems > 0 && (

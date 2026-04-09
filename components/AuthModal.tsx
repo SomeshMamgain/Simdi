@@ -257,7 +257,7 @@ export function AuthModal({
         >
           <div className="auth-modal-intro">
             <p className="auth-modal-eyebrow">SIMDI ACCOUNT</p>
-            <Dialog.Title className="auth-modal-title">Welcome to your mountain market</Dialog.Title>
+            <Dialog.Title className="auth-modal-title">Welcome to your pahadi market</Dialog.Title>
             <Dialog.Description className="auth-modal-description">
               Sign in to continue faster, or create an account to keep your SIMDI orders and details in one place.
             </Dialog.Description>

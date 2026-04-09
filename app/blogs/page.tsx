@@ -17,7 +17,7 @@ const allBlogs = [
 
 export default function BlogIndex() {
   return (
-    <div style={{ background: '#F9F7F2', minHeight: '100vh' }}>
+    <div className="site-page-shell">
       <Suspense fallback={<div>Loading...</div>}>
         <Navbar />
       </Suspense>

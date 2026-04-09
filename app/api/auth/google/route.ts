@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server'
 
 function getGoogleAuthConfig() {
   const clientId = process.env.GOOGLE_CLIENT_ID
+  const configuredBaseUrl = process.env.NEXT_PUBLIC_BASE_URL?.trim()
 
   if (!clientId) {
     throw new Error('Missing GOOGLE_CLIENT_ID')
@@ -11,12 +12,13 @@ function getGoogleAuthConfig() {
 
   return {
     clientId,
+    configuredBaseUrl,
   }
 }
 
 export async function GET(request: NextRequest) {
-  const { clientId } = getGoogleAuthConfig()
-  const baseUrl = request.nextUrl.origin
+  const { clientId, configuredBaseUrl } = getGoogleAuthConfig()
+  const baseUrl = configuredBaseUrl?.replace(/\/$/, '') || request.nextUrl.origin
   const googleUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth')
 
   googleUrl.searchParams.set('client_id', clientId)

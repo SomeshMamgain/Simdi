@@ -15,7 +15,7 @@ export default function PrivacyPolicy() {
         <Navbar />
       </Suspense>
 
-      <div style={{ backgroundColor: '#FDFDFB', minHeight: '100vh', padding: '60px 20px' }}>
+      <div className="site-page-shell" style={{ padding: '60px 20px' }}>
         
         {/* Modern, Central Card Container */}
         <div style={{ 

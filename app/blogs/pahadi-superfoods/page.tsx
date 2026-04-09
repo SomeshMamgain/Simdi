@@ -60,7 +60,7 @@ export default function CowGheeBlog() {
   const t = content[lang];
 
   return (
-    <div style={{ background: '#F9F7F2', minHeight: '100vh', overflowX: 'hidden' }}>
+    <div className="site-page-shell site-page-shell--hidden-overflow">
       <Suspense fallback={<div>Loading...</div>}>
         <Navbar />
       </Suspense>

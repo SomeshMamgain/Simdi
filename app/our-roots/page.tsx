@@ -12,7 +12,7 @@ export default function OurRoots() {
   const paraStyle = { color: '#5E6E5E', fontSize: '1.1rem', lineHeight: 1.8 };
 
   return (
-    <div style={{ background: '#F9F7F2', minHeight: '100vh', overflowX: 'hidden' }}>
+    <div className="site-page-shell site-page-shell--hidden-overflow">
       <Suspense fallback={<div>Loading...</div>}>
         <Navbar />
       </Suspense>

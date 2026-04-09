@@ -22,7 +22,7 @@ const features = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen" style={{ background: '#F9F7F2', overflowX: 'hidden' }}>
+    <div className="site-page-shell site-page-shell--hidden-overflow">
       <Suspense fallback={<div>Loading...</div>}>
         <Navbar />
       </Suspense>
