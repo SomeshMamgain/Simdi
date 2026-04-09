@@ -5,7 +5,6 @@ import { ProductDetailPage } from '@/components/product-detail/ProductDetailPage
 import { getProductBySlug, getRelatedProducts } from '@/lib/product-service'
 import { getProductGalleryImages, getProductKeywords, getProductRating, getProductSlug, toNumber, truncateText } from '@/lib/product-utils'
 import { notFound, permanentRedirect } from 'next/navigation'
-import { Suspense } from 'react'
 
 type ProductDetailRouteProps = {
   params: Promise<{ slug: string }>
@@ -157,9 +156,7 @@ export default async function ProductDetailRoute({ params }: ProductDetailRouteP
 
   return (
     <div className="site-page-shell">
-      <Suspense fallback={<div>Loading...</div>}>
-        <Navbar />
-      </Suspense>
+      <Navbar />
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
 

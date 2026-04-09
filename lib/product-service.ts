@@ -1,6 +1,7 @@
 import 'server-only'
 
-import { Client, Databases } from 'appwrite'
+import { Client, Databases, Query } from 'appwrite'
+import { unstable_cache } from 'next/cache'
 
 import type { ProductDocument } from '@/lib/product-types'
 import { getProductIdFromSlug, getProductSlug, toSerializableProduct } from '@/lib/product-utils'
@@ -25,7 +26,7 @@ function getServerProductsConfig() {
 
   if (!productsCollectionId) {
     throw new Error('Missing NEXT_PUBLIC_APPWRITE_PRODUCTS_COLLECTION_ID')
-  }
+  } 
 
   return {
     endpoint,
@@ -49,38 +50,60 @@ function toPlainProductDocument(product: ProductDocument): ProductDocument {
   return toSerializableProduct(product)
 }
 
+const getCachedProducts = unstable_cache(
+  async () => {
+    const { databaseId, productsCollectionId } = getServerProductsConfig()
+    const databases = createPublicDatabasesClient()
+
+    const result = await databases.listDocuments<ProductDocument>({
+      databaseId,
+      collectionId: productsCollectionId,
+      queries: [Query.limit(100)]
+    })
+
+    return result.documents.map((product) => toPlainProductDocument(product))
+  },
+  ['products'],
+  {
+    revalidate: 300,
+    tags: ['products'],
+  }
+)
+
+const getCachedProductByDocumentId = unstable_cache(
+  async (documentId: string) => {
+    if (!documentId) {
+      return null
+    }
+
+    const { databaseId, productsCollectionId } = getServerProductsConfig()
+    const databases = createPublicDatabasesClient()
+
+    try {
+      const product = await databases.getDocument<ProductDocument>({
+        databaseId,
+        collectionId: productsCollectionId,
+        documentId,
+      })
+
+      return toPlainProductDocument(product)
+    } catch {
+      return null
+    }
+  },
+  ['product-by-document-id'],
+  {
+    revalidate: 300,
+    tags: ['products'],
+  }
+)
+
 export async function getProducts() {
-  const { databaseId, productsCollectionId } = getServerProductsConfig()
-  const databases = createPublicDatabasesClient()
-
-  const result = await databases.listDocuments<ProductDocument>({
-    databaseId,
-    collectionId: productsCollectionId,
-    queries: [],
-  })
-
-  return result.documents.map((product) => toPlainProductDocument(product))
+  return getCachedProducts()
 }
 
 export async function getProductByDocumentId(documentId: string) {
-  if (!documentId) {
-    return null
-  }
-
-  const { databaseId, productsCollectionId } = getServerProductsConfig()
-  const databases = createPublicDatabasesClient()
-
-  try {
-    const product = await databases.getDocument<ProductDocument>({
-      databaseId,
-      collectionId: productsCollectionId,
-      documentId,
-    })
-
-    return toPlainProductDocument(product)
-  } catch {
-    return null
-  }
+  return getCachedProductByDocumentId(documentId)
 }
 
 export async function getProductBySlug(slug: string) {

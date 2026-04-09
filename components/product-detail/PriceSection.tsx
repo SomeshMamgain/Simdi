@@ -1,18 +1,18 @@
 'use client'
 
-import { Minus, Plus, ShieldCheck, ShoppingBag, Truck } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { ShieldCheck, Truck } from 'lucide-react'
+import { useState } from 'react'
 
+import { AddToCartButton } from '@/components/products/AddToCartButton'
+import { QuantitySelector } from '@/components/products/QuantitySelector'
 import type { ProductDocument } from '@/lib/product-types'
 import {
   formatPrice,
-  getPrimaryImage,
   getProductSizeOptions,
   getVariantPrice,
   isProductInStock,
   toNumber,
 } from '@/lib/product-utils'
-import { useCartStore } from '@/store/cartStore'
 
 import styles from './ProductDetailPage.module.css'
 
@@ -21,16 +21,12 @@ interface PriceSectionProps {
 }
 
 export function PriceSection({ product }: PriceSectionProps) {
-  const addItem = useCartStore((state) => state.addItem)
   const sizeOptions = getProductSizeOptions(product.unit)
   const [selectedSizeValue, setSelectedSizeValue] = useState(sizeOptions[0]?.value ?? '')
   const [quantity, setQuantity] = useState(1)
   const inStock = isProductInStock(product)
 
-  const selectedSize = useMemo(
-    () => sizeOptions.find((option) => option.value === selectedSizeValue) ?? sizeOptions[0],
-    [selectedSizeValue, sizeOptions]
-  )
+  const selectedSize = sizeOptions.find((option) => option.value === selectedSizeValue) ?? sizeOptions[0]
 
   const priceForSelection = selectedSize
     ? getVariantPrice(product.price, selectedSize.multiplier, selectedSize.surcharge)
@@ -38,18 +34,6 @@ export function PriceSection({ product }: PriceSectionProps) {
 
   const unitLabel = selectedSize?.label ?? product.unit
   const totalPrice = toNumber(priceForSelection)
-
-  const handleAddToCart = () => {
-    addItem(
-      {
-        id: selectedSize ? `${product.$id}:${selectedSize.value}` : product.$id,
-        name: selectedSize ? `${product.name ?? 'Untitled product'} (${selectedSize.label})` : product.name ?? 'Untitled product',
-        price: formatPrice(priceForSelection, unitLabel),
-        img: getPrimaryImage(product),
-      },
-      quantity
-    )
-  }
 
   return (
     <section className={styles.priceCard} aria-label="Price and purchase options">
@@ -82,32 +66,23 @@ export function PriceSection({ product }: PriceSectionProps) {
 
         <div className={styles.controlCard}>
           <span className={styles.controlLabel}>Quantity</span>
-          <div className={styles.quantityControl}>
-            <button
-              type="button"
-              className={styles.quantityButton}
-              onClick={() => setQuantity((current) => Math.max(1, current - 1))}
-              aria-label="Decrease quantity"
-            >
-              <Minus size={16} />
-            </button>
-            <span className={styles.quantityValue}>{quantity}</span>
-            <button
-              type="button"
-              className={styles.quantityButton}
-              onClick={() => setQuantity((current) => current + 1)}
-              aria-label="Increase quantity"
-            >
-              <Plus size={16} />
-            </button>
-          </div>
+          <QuantitySelector
+            value={quantity}
+            onChange={setQuantity}
+            className={styles.quantityControl}
+            buttonClassName={styles.quantityButton}
+            inputClassName={styles.quantityInput}
+          />
         </div>
       </div>
 
-      <button type="button" className={styles.addButton} disabled={!inStock} onClick={handleAddToCart}>
-        <ShoppingBag size={16} style={{ marginRight: '8px', verticalAlign: 'text-bottom' }} />
-        {inStock ? `Add ${quantity} to Cart` : 'Out of Stock'}
-      </button>
+      <AddToCartButton
+        product={product}
+        quantity={quantity}
+        size={selectedSize}
+        label={inStock ? `Add ${quantity} to Cart` : 'Out of Stock'}
+        className={styles.addButton}
+      />
 
       <div className={styles.helperGrid}>
         <div className={styles.helperCard}>

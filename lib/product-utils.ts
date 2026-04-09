@@ -56,13 +56,18 @@ export function formatPrice(price?: ProductNumericValue, unit?: string) {
     return 'Price unavailable'
   }
 
-  const formattedPrice = new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-    maximumFractionDigits: 0,
-  }).format(numericPrice)
+  const formattedPrice = formatCurrencyAmount(numericPrice, 0)
 
   return unit ? `${formattedPrice} / ${unit}` : formattedPrice
+}
+
+export function formatCurrencyAmount(amount: number, maximumFractionDigits = 2) {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits,
+    minimumFractionDigits: Number.isInteger(amount) || maximumFractionDigits === 0 ? 0 : 2,
+  }).format(amount)
 }
 
 function normalizeImageCandidate(image?: string) {
@@ -181,6 +186,7 @@ export function toSerializableProduct(product: ProductDocument): ProductDocument
     id: product.id,
     name: product.name,
     price: product.price,
+    stock: product.stock,
     image: product.image,
     alias_name: product.alias_name,
     description: product.description,

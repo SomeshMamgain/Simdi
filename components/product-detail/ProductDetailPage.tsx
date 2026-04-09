@@ -281,9 +281,16 @@ export function ProductDetailPage({ product, relatedProducts }: ProductDetailPag
             ) : null}
 
             {serializableRelatedProducts.length > 0 ? (
-              <section className={styles.panel}>
+              <>
+                <section className={styles.panel}>
                 <ProductCard product={serializableRelatedProducts[0]} />
               </section>
+                <section className={styles.panel}>
+                <ProductCard product={serializableRelatedProducts[3]} />
+              </section>
+              </>
+            
+              
             ) : null}
           </aside>
         </div>

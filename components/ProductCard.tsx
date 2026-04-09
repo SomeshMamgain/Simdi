@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 import type { ProductDocument } from '@/lib/product-types'
+import { AddToCartButton } from '@/components/products/AddToCartButton'
 import {
   formatPrice,
   getPrimaryImage,
@@ -12,14 +13,12 @@ import {
   getProductSummary,
   getVariantPrice,
 } from '@/lib/product-utils'
-import { useCartStore } from '@/store/cartStore'
 
 interface ProductCardProps {
   product: ProductDocument
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const addItem = useCartStore((state) => state.addItem)
   const imageSrc = getPrimaryImage(product)
   const isInStock = product.in_stock !== false
   const productLink = `/shop/${getProductSlug(product)}`
@@ -29,21 +28,6 @@ export function ProductCard({ product }: ProductCardProps) {
   const displayBasePrice = selectedSize
     ? formatPrice(getVariantPrice(product.price, selectedSize.multiplier, selectedSize.surcharge))
     : formatPrice(product.price)
-  const displayPrice = selectedSize
-    ? formatPrice(
-        getVariantPrice(product.price, selectedSize.multiplier, selectedSize.surcharge),
-        selectedSize.label
-      )
-    : formatPrice(product.price, product.unit)
-
-  const handleAddToCart = () => {
-    addItem({
-      id: selectedSize ? `${product.$id}:${selectedSize.value}` : product.$id,
-      name: selectedSize ? `${product.name ?? 'Untitled product'} (${selectedSize.label})` : product.name ?? 'Untitled product',
-      price: displayPrice,
-      img: imageSrc,
-    })
-  }
 
   return (
     <article
@@ -178,9 +162,11 @@ export function ProductCard({ product }: ProductCardProps) {
               ) : null}
             </div>
 
-            <button
-              onClick={handleAddToCart}
-              disabled={!isInStock}
+            <AddToCartButton
+              product={product}
+              size={selectedSize}
+              label="ADD TO CART"
+              className=""
               style={{
                 padding: '12px 18px',
                 background: isInStock ? '#11522b' : '#C7CEC8',
@@ -192,9 +178,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 fontWeight: 700,
                 letterSpacing: '0.08em',
               }}
-            >
-              ADD TO CART
-            </button>
+            />
           </div>
         </div>
       </div>

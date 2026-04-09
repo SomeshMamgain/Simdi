@@ -371,6 +371,18 @@
   font-size: 1rem;
 }
 
+.quantityInput {
+  min-width: 42px;
+  width: 54px;
+  border: none;
+  background: transparent;
+  color: #fff7ee;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1rem;
+  outline: none;
+}
+
 .addButton {
   border: none;
   border-radius: 18px;

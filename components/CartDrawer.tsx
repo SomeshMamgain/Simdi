@@ -1,6 +1,8 @@
 'use client'
 
+import Link from 'next/link'
 import { useCartStore } from '@/store/cartStore'
+import { formatCurrencyAmount } from '@/lib/product-utils'
 import { X } from 'lucide-react'
 
 interface CartDrawerProps {
@@ -9,7 +11,9 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
-  const { items, removeItem, totalItems } = useCartStore()
+  const items = useCartStore((state) => state.items)
+  const removeFromCart = useCartStore((state) => state.removeFromCart)
+  const itemCount = useCartStore((state) => state.getItemCount())
 
   if (!open) return null
 
@@ -29,7 +33,7 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
           <h2 style={{ fontFamily: 'Georgia', fontSize: '1.4rem', color: '#1E2D24' }}>
-            Your Cart ({totalItems()})
+            Your Cart ({itemCount})
           </h2>
           <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#1E2D24' }}>
             <X size={22} />
@@ -46,15 +50,15 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
                 display: 'flex', gap: '15px', marginBottom: '20px',
                 paddingBottom: '20px', borderBottom: '1px solid #eee'
               }}>
-                <img src={item.img} alt={item.name} style={{
+                <img src={item.image} alt={item.name} style={{
                   width: '70px', height: '70px', objectFit: 'cover', borderRadius: '8px'
                 }} />
                 <div style={{ flex: 1 }}>
                   <p style={{ fontWeight: 600, color: '#1E2D24', fontSize: '0.9rem' }}>{item.name}</p>
-                  <p style={{ color: '#B58E58', fontWeight: 700, marginTop: '4px' }}>{item.price}</p>
+                  <p style={{ color: '#B58E58', fontWeight: 700, marginTop: '4px' }}>{formatCurrencyAmount(item.price)}</p>
                   <p style={{ fontSize: '0.8rem', color: '#5E6E5E' }}>Qty: {item.quantity}</p>
                 </div>
-                <button onClick={() => removeItem(item.id)} style={{
+                <button onClick={() => removeFromCart(item.id)} style={{
                   background: 'none', border: 'none', cursor: 'pointer', color: '#999', fontSize: '1.2rem'
                 }}>×</button>
               </div>
@@ -64,13 +68,14 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
 
         {/* Checkout Button */}
         {items.length > 0 && (
-          <button style={{
+          <Link href="/cart" onClick={onClose} style={{
             width: '100%', padding: '16px', background: '#1E2D24',
             color: '#fff', border: 'none', cursor: 'pointer',
-            fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.1em'
+            fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.1em',
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none'
           }}>
-            PROCEED TO CHECKOUT
-          </button>
+            VIEW CART
+          </Link>
         )}
       </div>
     </>

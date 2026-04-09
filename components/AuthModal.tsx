@@ -339,7 +339,7 @@ export function AuthModal({
                 >
                   <GoogleMark />
                   <span className="auth-provider-label">
-                    {pendingAction === 'googleSignIn' ? 'Redirecting to Google...' : 'Google Sign in'}
+                    {pendingAction === 'googleSignIn' ? 'Redirecting to Google...' : 'Continue with Google'}
                   </span>
                 </button>
 

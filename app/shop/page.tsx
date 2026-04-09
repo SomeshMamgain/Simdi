@@ -15,7 +15,8 @@ export default async function ProductsPage() {
 
   try {
     products = await getProducts()
-  } catch {
+  } catch (error){
+    console.error('Error fetching products from Appwrite collection', error)
     hasError = true
   }
 

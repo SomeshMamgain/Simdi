@@ -6,6 +6,7 @@ export interface ProductDocument extends Models.Document {
   id?: string
   name?: string
   price?: ProductNumericValue
+  stock?: ProductNumericValue
   image?: string
   alias_name?: string
   description?: string

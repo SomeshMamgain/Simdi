@@ -57,6 +57,16 @@ body::after {
   pointer-events: none;
 }
 
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
 .site-page-shell {
   min-height: 100vh;
   background: transparent;
@@ -129,6 +139,13 @@ a { color: inherit; text-decoration: none; }
   border: none;
   color: #1e2d24;
   cursor: pointer;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .mobile-menu-btn {

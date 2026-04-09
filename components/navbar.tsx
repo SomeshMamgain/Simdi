@@ -3,20 +3,17 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Models } from 'appwrite'
-import { LogOut, Menu, Search, ShoppingBag, UserRound, X } from 'lucide-react'
+import { LogOut, Menu, UserRound, X } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
 import { getDisplayName } from '@/lib/auth-utils'
 import { account } from '@/lib/appwrite'
-import { useCartStore } from '@/store/cartStore'
 
 import { AuthModal } from './AuthModal'
-import { CartDrawer } from './CartDrawer'
+import { CartIcon } from './navigation/CartIcon'
 
 export const Navbar = () => {
-  const totalItems = useCartStore((state) => state.totalItems())
-  const [drawerOpen, setDrawerOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
   const [preferredAuthTab, setPreferredAuthTab] = useState<'signIn' | 'signUp'>('signIn')
@@ -287,14 +284,7 @@ export const Navbar = () => {
               <span>Sign in</span>
             </button>
           )}
-          <button onClick={() => setDrawerOpen(true)} style={{ position: 'relative' }} className="icon-btn">
-            <ShoppingBag size={22} />
-            {totalItems > 0 && (
-              <span className="cart-badge">
-                {totalItems}
-              </span>
-            )}
-          </button>
+          <CartIcon />
         </div>
       </header>
 
@@ -313,7 +303,6 @@ export const Navbar = () => {
         ))}
       </div>
 
-      <CartDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <AuthModal
         open={isAuthModalOpen}
         defaultTab={preferredAuthTab}
