@@ -69,7 +69,7 @@ function getCommerceConfig(options?: {
   const databaseId = getEnvironmentValue('NEXT_PUBLIC_APPWRITE_DATABASE_ID', 'NEXT_PUBLIC_APPWRITE_DB_ID', 'APPWRITE_DATABASE_ID')
   const promoCollectionId = getEnvironmentValue('NEXT_PUBLIC_APPWRITE_PROMO_COLLECTION_ID', 'APPWRITE_PROMO_COLLECTION_ID')
   const orderCollectionId = getEnvironmentValue('NEXT_PUBLIC_APPWRITE_ORDER_COLLECTION_ID', 'APPWRITE_ORDER_COLLECTION_ID')
-  const razorpayKeyId = getEnvironmentValue('NEXT_PUBLIC_RAZORPAY_KEY_ID', 'RAZORPAY_KEY_ID')
+  const razorpayKeyId = getEnvironmentValue('RAZORPAY_KEY_ID', 'NEXT_PUBLIC_RAZORPAY_KEY_ID')
   const razorpaySecret = getEnvironmentValue('RAZORPAY_KEY_SECRET', 'RAZORPAY_SECRET')
   const storeName = getEnvironmentValue('NEXT_PUBLIC_STORE_NAME', 'STORE_NAME') || 'Simdi'
 
@@ -99,7 +99,7 @@ function getCommerceConfig(options?: {
 
   if (options?.requireRazorpay) {
     if (!razorpayKeyId) {
-      throw new Error('Missing NEXT_PUBLIC_RAZORPAY_KEY_ID')
+      throw new Error('Missing RAZORPAY_KEY_ID')
     }
 
     if (!razorpaySecret) {
