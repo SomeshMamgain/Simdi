@@ -1,13 +1,25 @@
-'use client'
+import { Suspense } from 'react'
 
 import { ProductCard } from '@/components/ProductCard'
 import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
-import { useProductsQuery } from '@/hooks/use-products-query'
-import { Suspense } from 'react'
+import { getProducts } from '@/lib/product-service'
+import type { ProductDocument } from '@/lib/product-types'
+import { toSerializableProducts } from '@/lib/product-utils'
 
-export default function ProductsPage() {
-  const { data: products = [], isLoading, error } = useProductsQuery()
+export const revalidate = 300
+
+export default async function ProductsPage() {
+  let products: ProductDocument[] = []
+  let hasError = false
+
+  try {
+    products = await getProducts()
+  } catch {
+    hasError = true
+  }
+
+  const serializableProducts = toSerializableProducts(products)
 
   return (
     <div className="site-page-shell">
@@ -47,28 +59,15 @@ export default function ProductsPage() {
               marginTop: '18px',
             }}
           >
-            Browse the live products coming from your Appwrite products collection. Each card is rendered from the
-            document fields in `useProductsQuery()`.
+            Browse the live products coming from your Appwrite products collection. Each card links to a dedicated
+            detail page with richer product information, media, and purchase context.
           </p>
         </div>
       </section>
 
       <section style={{ padding: '0 20px 100px' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          {isLoading ? (
-            <div
-              style={{
-                background: '#fff',
-                borderRadius: '20px',
-                padding: '48px 24px',
-                textAlign: 'center',
-                color: '#5E6E5E',
-                border: '1px solid #E7E0D4',
-              }}
-            >
-              Loading products...
-            </div>
-          ) : error ? (
+          {hasError ? (
             <div
               style={{
                 background: '#fff7f5',
@@ -106,9 +105,7 @@ export default function ProductsPage() {
                   flexWrap: 'wrap',
                 }}
               >
-                <p style={{ margin: 0, color: '#5E6E5E', fontSize: '0.95rem' }}>
-                  Showing {products.length} live products
-                </p>
+                <p style={{ margin: 0, color: '#5E6E5E', fontSize: '0.95rem' }}>Showing {products.length} live products</p>
               </div>
 
               <div
@@ -118,7 +115,7 @@ export default function ProductsPage() {
                   gap: '28px',
                 }}
               >
-                {products.map((product) => (
+                {serializableProducts.map((product) => (
                   <ProductCard key={product.$id} product={product} />
                 ))}
               </div>

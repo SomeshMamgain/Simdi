@@ -1,9 +1,17 @@
 'use client'
 
+import Link from 'next/link'
 import { useState } from 'react'
 
-import type { ProductDocument } from '@/hooks/use-products-query'
-import { formatPrice, getPrimaryImage, getProductSizeOptions, getProductSummary, getVariantPrice } from '@/lib/product-utils'
+import type { ProductDocument } from '@/lib/product-types'
+import {
+  formatPrice,
+  getPrimaryImage,
+  getProductSizeOptions,
+  getProductSlug,
+  getProductSummary,
+  getVariantPrice,
+} from '@/lib/product-utils'
 import { useCartStore } from '@/store/cartStore'
 
 interface ProductCardProps {
@@ -14,6 +22,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem)
   const imageSrc = getPrimaryImage(product)
   const isInStock = product.in_stock !== false
+  const productLink = `/shop/${getProductSlug(product)}`
   const sizeOptions = getProductSizeOptions(product.unit)
   const [selectedSizeValue, setSelectedSizeValue] = useState(sizeOptions[0]?.value ?? '')
   const selectedSize = sizeOptions.find((option) => option.value === selectedSizeValue) ?? sizeOptions[0]
@@ -48,27 +57,31 @@ export function ProductCard({ product }: ProductCardProps) {
         flexDirection: 'column',
       }}
     >
-      <div style={{ height: '260px', background: '#EEE8DC' }}>
-        <img
-          src={imageSrc}
-          alt={product.name ?? 'Product image'}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-        />
-      </div>
+      <Link href={productLink} aria-label={`View details for ${product.name ?? 'this product'}`}>
+        <div style={{ height: '260px', background: '#EEE8DC' }}>
+          <img
+            src={imageSrc}
+            alt={product.name ?? 'Product image'}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+        </div>
+      </Link>
 
       <div style={{ padding: '22px', display: 'flex', flexDirection: 'column', gap: '14px', flex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'start', justifyContent: 'space-between', gap: '14px' }}>
-          <h2
-            style={{
-              margin: 0,
-              fontSize: '1.2rem',
-              color: '#1E2D24',
-              fontFamily: 'Georgia, serif',
-              lineHeight: 1.2,
-            }}
-          >
-            {product.name ?? 'Untitled product'}
-          </h2>
+          <Link href={productLink} style={{ color: 'inherit', textDecoration: 'none', flex: 1 }}>
+            <h2
+              style={{
+                margin: 0,
+                fontSize: '1.2rem',
+                color: '#1E2D24',
+                fontFamily: 'Georgia, serif',
+                lineHeight: 1.2,
+              }}
+            >
+              {product.name ?? 'Untitled product'}
+            </h2>
+          </Link>
           <span
             style={{
               flexShrink: 0,
@@ -96,8 +109,27 @@ export function ProductCard({ product }: ProductCardProps) {
             WebkitBoxOrient: 'vertical',
           }}
         >
-          {getProductSummary(product)}
+          <Link href={productLink} style={{ color: 'inherit', textDecoration: 'none' }}>
+            {getProductSummary(product)}
+          </Link>
         </p>
+
+        <Link
+          href={productLink}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            color: '#8A6A3D',
+            fontSize: '0.82rem',
+            fontWeight: 700,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            textDecoration: 'none',
+          }}
+        >
+          View Details
+        </Link>
 
         <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>

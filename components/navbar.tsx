@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { Models } from 'appwrite'
 import { LogOut, Menu, Search, ShoppingBag, UserRound, X } from 'lucide-react'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
 import { getDisplayName } from '@/lib/auth-utils'
@@ -30,7 +30,6 @@ export const Navbar = () => {
   const [isSigningOut, setIsSigningOut] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
-  const searchParams = useSearchParams()
   const accountMenuRef = useRef<HTMLDivElement | null>(null)
 
   const navLinks = [
@@ -60,7 +59,6 @@ export const Navbar = () => {
           if (!isMounted) {
             return
           }
-          console.log('Current session loaded from backend:', session, avatarUrl)
           setCurrentSession(session)
           setAccountLabel(getDisplayName(user.name, user.email))
           setAccountEmail(user.email ?? '')
@@ -116,12 +114,17 @@ export const Navbar = () => {
   }, [])
 
   useEffect(() => {
-    if (searchParams.get('authError') !== 'google_oauth') {
+    if (typeof window === 'undefined') {
       return
     }
 
-    const nextTab = searchParams.get('authMode') === 'signUp' ? 'signUp' : 'signIn'
-    const nextParams = new URLSearchParams(searchParams.toString())
+    const nextParams = new URLSearchParams(window.location.search)
+
+    if (nextParams.get('authError') !== 'google_oauth') {
+      return
+    }
+
+    const nextTab = nextParams.get('authMode') === 'signUp' ? 'signUp' : 'signIn'
     const nextMessage = 'Google authentication could not be completed. Please try again.'
 
     nextParams.delete('authError')
@@ -135,7 +138,7 @@ export const Navbar = () => {
     const nextUrl = nextQuery ? `${pathname}?${nextQuery}` : pathname
 
     router.replace(nextUrl, { scroll: false })
-  }, [pathname, router, searchParams])
+  }, [pathname, router])
 
   const handleOpenAuthModal = () => {
     setPreferredAuthTab('signIn')
