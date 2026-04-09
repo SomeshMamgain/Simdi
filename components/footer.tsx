@@ -42,7 +42,7 @@ export const Footer = () => {
               <Link href="/shop" style={linkStyle}>Pure Bilona Ghee</Link>
               <Link href="/shop" style={linkStyle}>Raw Wild Honey</Link>
               <Link href="/shop" style={linkStyle}>Mountain Grains</Link>
-              <Link href="/collections" style={linkStyle}>Our Collections</Link>
+              <Link href="/shop" style={linkStyle}>Our Collections</Link>
             </div>
           </div>
 

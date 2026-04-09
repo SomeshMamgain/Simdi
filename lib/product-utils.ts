@@ -65,18 +65,51 @@ export function formatPrice(price?: ProductNumericValue, unit?: string) {
   return unit ? `${formattedPrice} / ${unit}` : formattedPrice
 }
 
-export function getPrimaryImage(product: Pick<ProductDocument, 'image' | 'image_list_comma_separated_link'>) {
-  if (product.image) {
-    return product.image
+function normalizeImageCandidate(image?: string) {
+  if (!image) {
+    return null
   }
 
-  return splitCommaSeparated(product.image_list_comma_separated_link)[0] ?? '/placeholder.jpg'
+  const trimmedImage = image.trim()
+
+  if (!trimmedImage) {
+    return null
+  }
+
+  if (/^https?:\/\/.+\/vie(\?|$)/i.test(trimmedImage)) {
+    return trimmedImage.replace(/\/vie(\?|$)/i, '/view$1')
+  }
+
+  if (
+    trimmedImage.startsWith('http://') ||
+    trimmedImage.startsWith('https://') ||
+    trimmedImage.startsWith('/') ||
+    trimmedImage.startsWith('data:') ||
+    trimmedImage.startsWith('blob:')
+  ) {
+    return trimmedImage
+  }
+
+  return null
+}
+
+export function getPrimaryImage(product: Pick<ProductDocument, 'image' | 'image_list_comma_separated_link'>) {
+  const primaryImage = normalizeImageCandidate(product.image)
+
+  if (primaryImage) {
+    return primaryImage
+  }
+
+  return (
+    splitCommaSeparated(product.image_list_comma_separated_link)
+      .map((image) => normalizeImageCandidate(image))
+      .find((image): image is string => Boolean(image)) ?? '/placeholder.jpg'
+  )
 }
 
 export function getProductGalleryImages(product: Pick<ProductDocument, 'image' | 'image_list_comma_separated_link'>) {
   const galleryImages = [product.image, ...splitCommaSeparated(product.image_list_comma_separated_link)]
-    .filter(Boolean)
-    .map((image) => image?.trim())
+    .map((image) => normalizeImageCandidate(image))
     .filter((image): image is string => Boolean(image))
 
   return Array.from(new Set(galleryImages)).length > 0 ? Array.from(new Set(galleryImages)) : ['/placeholder.jpg']

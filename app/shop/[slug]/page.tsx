@@ -16,7 +16,6 @@ export const revalidate = 300
 export async function generateMetadata({ params }: ProductDetailRouteProps): Promise<Metadata> {
   const { slug } = await params
   const product = await getProductBySlug(slug)
-  console.log('Generating metadata for product:', product)
 
   if (!product) {
     return {
@@ -76,8 +75,7 @@ export async function generateMetadata({ params }: ProductDetailRouteProps): Pro
 
 export default async function ProductDetailRoute({ params }: ProductDetailRouteProps) {
   const { slug } = await params
-  const product = await getProductBySlug(slug);
-    console.log('Generating metadata for product:', product)
+  const product = await getProductBySlug(slug)
 
 
   if (!product) {
