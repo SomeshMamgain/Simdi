@@ -20,9 +20,20 @@ Create `.env.local` in the project root:
 ```
 NEXT_PUBLIC_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
 NEXT_PUBLIC_APPWRITE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_APPWRITE_DATABASE_ID=your_database_id
+NEXT_PUBLIC_APPWRITE_ORDER_COLLECTION_ID=your_orders_collection_id
 APPWRITE_API_KEY=your_api_key
 RAZORPAY_KEY_ID=your_razorpay_key
 RAZORPAY_SECRET=your_razorpay_secret
+ZOHO_MAIL_USER=orders@simdi.in
+ZOHO_MAIL_PASSWORD=your_zoho_app_password
+ZOHO_MAIL_HOST=smtp.zoho.in
+ZOHO_MAIL_PORT=587
+TEAM_EMAIL_1=team@simdi.in
+TEAM_EMAIL_2=yogeshmamgain2611@gmail.com
+APP_NAME=SIMDI
+APP_SUPPORT_EMAIL=support@simdi.in
+APP_LOGO_URL=https://your-domain/logo.png
 ```
 
 ### 4. Install Dependencies
@@ -212,9 +223,15 @@ Required environment variables in `.env.local`:
 ```
 NEXT_PUBLIC_APPWRITE_ENDPOINT    # Appwrite endpoint URL
 NEXT_PUBLIC_APPWRITE_PROJECT_ID  # Appwrite project ID
+NEXT_PUBLIC_APPWRITE_DATABASE_ID # Appwrite database ID
+NEXT_PUBLIC_APPWRITE_ORDER_COLLECTION_ID # Orders collection ID
 APPWRITE_API_KEY                 # Server-side Appwrite API key
 RAZORPAY_KEY_ID                  # Razorpay public key
 RAZORPAY_SECRET                  # Razorpay secret key
+ZOHO_MAIL_USER                  # Zoho SMTP sender
+ZOHO_MAIL_PASSWORD              # Zoho SMTP app password
+ZOHO_MAIL_HOST                  # Zoho SMTP host
+ZOHO_MAIL_PORT                  # Zoho SMTP port
 ```
 
 ## Deployment

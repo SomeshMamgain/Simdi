@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-import { buildCheckoutPricing, createOrderRecordInAppwrite, resolveCheckoutCustomer, verifyRazorpaySignature } from '@/lib/services/commerce-server'
+import { buildCheckoutPricing, createOrderRecordInAppwrite, resolveCheckoutCustomer, updateOrderRecordInAppwrite, verifyRazorpaySignature } from '@/lib/services/commerce-server'
 import { createOrderRequestSchema } from '@/lib/services/checkout-schemas'
+import { sendOrderConfirmationEmail } from '@/lib/services/emailService'
 
 export async function POST(request: NextRequest) {
   try {
@@ -37,13 +38,34 @@ export async function POST(request: NextRequest) {
       customer,
       razorpayOrderId: parsedRequest.data.razorpayOrderId,
       razorpayPaymentId: parsedRequest.data.razorpayPaymentId,
+      razorpaySignature: parsedRequest.data.signature,
       paymentStatus: 'completed',
+      orderStatus: 'pending',
+      type: parsedRequest.data.type,
+      notes: parsedRequest.data.notes,
     })
 
+    let finalOrder = order
+    let emailMessageId: string | undefined
+
+    try {
+      const emailResult = await sendOrderConfirmationEmail(order)
+      emailMessageId = emailResult.messageId
+      finalOrder = await updateOrderRecordInAppwrite(order.$id, {
+        status: 'confirmed',
+      })
+    } catch (error) {
+      console.error('Order confirmation email failed:', error)
+    }
+
     return NextResponse.json({
-      orderId: order.orderId,
-      status: order.paymentStatus,
-      order,
+      orderId: finalOrder.orderId,
+      orderNumber: finalOrder.order_number,
+      status: finalOrder.status,
+      paymentStatus: finalOrder.payment_status,
+      emailSent: Boolean(emailMessageId),
+      emailMessageId,
+      order: finalOrder,
     })
   } catch (error) {
     console.error('Order creation failed:', error)

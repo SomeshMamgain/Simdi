@@ -12,6 +12,8 @@ export interface CartTotals {
   total: number
 }
 
+export const FIXED_HANDLING_CHARGE_PERCENT = 5
+
 export function roundCurrency(value: number) {
   return Math.round(value * 100) / 100
 }
@@ -53,12 +55,12 @@ export function getPromoDiscountAmount(subtotal: number, promo: AppliedPromo | n
 export function calculateCartTotals(
   items: CartItem[],
   promo: AppliedPromo | null | undefined,
-  handlingChargePercent: number
+  _handlingChargePercent: number
 ): CartTotals {
   const subtotal = getCartSubtotal(items)
   const promoDiscount = getPromoDiscountAmount(subtotal, promo)
   const discountedSubtotal = roundCurrency(Math.max(0, subtotal - promoDiscount))
-  const normalizedHandlingPercent = handlingChargePercent === 10 ? 10 : 5
+  const normalizedHandlingPercent = FIXED_HANDLING_CHARGE_PERCENT
   const handlingCharge = roundCurrency(discountedSubtotal * (normalizedHandlingPercent / 100))
 
   return {

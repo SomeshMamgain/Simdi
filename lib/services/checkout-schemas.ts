@@ -32,7 +32,7 @@ export const promoValidationRequestSchema = z.object({
 export const createPaymentOrderRequestSchema = z.object({
   items: z.array(cartItemSchema).min(1),
   promoCode: z.string().trim().optional().nullable(),
-  handlingChargePercent: z.union([z.literal(5), z.literal(10)]),
+  handlingChargePercent: z.literal(5),
   customer: orderCustomerSchema.optional(),
 })
 
@@ -50,7 +50,7 @@ export const createOrderRequestSchema = z.object({
     subtotal: z.number().nonnegative(),
     promoDiscount: z.number().nonnegative(),
     handlingCharge: z.number().nonnegative(),
-    handlingChargePercent: z.union([z.literal(5), z.literal(10)]),
+    handlingChargePercent: z.literal(5),
     total: z.number().nonnegative(),
     promo: z
       .object({
@@ -67,4 +67,49 @@ export const createOrderRequestSchema = z.object({
   razorpayOrderId: z.string().trim().min(1),
   razorpayPaymentId: z.string().trim().min(1),
   signature: z.string().trim().min(1),
+  type: z.string().trim().max(50).optional(),
+  notes: z.string().trim().max(500).optional(),
+})
+
+export const orderStatusSchema = z.enum([
+  'pending',
+  'confirmed',
+  'processing',
+  'in_transit',
+  'out_for_delivery',
+  'delivered',
+  'cancelled',
+])
+
+export const paymentStatusSchema = z.enum([
+  'pending',
+  'completed',
+  'failed',
+  'refunded',
+])
+
+export const refundStatusSchema = z.enum([
+  'none',
+  'pending',
+  'completed',
+])
+
+export const orderUpdateSchema = z.object({
+  status: orderStatusSchema.optional(),
+  tracking_number: z.string().trim().max(50).optional(),
+  in_transit: z.string().datetime().optional(),
+  out_for_delivery: z.string().datetime().optional(),
+  delivered_date: z.string().datetime().optional(),
+  admin_notes: z.string().trim().max(500).optional(),
+  notes: z.string().trim().max(500).optional(),
+  refund_status: refundStatusSchema.optional(),
+  refund_amount: z.number().nonnegative().optional(),
+  payment_status: paymentStatusSchema.optional(),
+  type: z.string().trim().max(50).optional(),
+}).refine((value) => Object.values(value).some((field) => field !== undefined), {
+  message: 'At least one field is required to update the order',
+})
+
+export const orderEmailRequestSchema = z.object({
+  orderId: z.string().trim().min(1),
 })

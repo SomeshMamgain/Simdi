@@ -65,12 +65,48 @@ Attributes:
 - user_id (String, Required)
 - items (JSON, Required)
 - total (Integer, Required)
-- status (String, Required) - Enum: pending, completed, failed
+- status (String, Required) - Enum: pending, completed, failed, confirmed, processing, in_transit, out_for_delivery, delivered, cancelled
 - razorpay_order_id (String)
 - razorpay_payment_id (String)
 - shipping_address (JSON, Required)
 - created_at (DateTime, Required)
+
+# Recommended additional attributes for the richer order experience
+- email (Email)
+- name (String, 100)
+- phone (String, 20)
+- order_number (String, 50)
+- date (DateTime)
+- subtotal (Float)
+- discount_code (String, 50)
+- discount_amount (Float)
+- discount_percent (Integer)
+- handling_charges (Float)
+- handling_charge_percent (Integer)
+- total_amount (Float)
+- payment_method (String, 30)
+- razorpay_signature (String, 200)
+- payment_status (Enum: pending, completed, failed, refunded)
+- payment_date (DateTime)
+- type (String, 50)
+- in_transit (DateTime)
+- out_for_delivery (DateTime)
+- delivered_date (DateTime)
+- tracking_number (String, 50)
+- notes (Long Text)
+- admin_notes (Long Text)
+- refund_status (Enum: none, pending, completed)
+- refund_amount (Float)
 ```
+
+You can create the additional scalar fields automatically with:
+
+```bash
+npm run sync:order-schema
+```
+
+The app continues to use the existing JSON fields `items` and `shipping_address` for compatibility. If you want a dedicated
+`delivery_address` JSON field, add it manually in the Appwrite console and the app will start using it automatically.
 
 ### Collection 4: Blog Posts
 ```
@@ -134,9 +170,20 @@ Create a `.env.local` file in the project root with:
 ```
 NEXT_PUBLIC_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
 NEXT_PUBLIC_APPWRITE_PROJECT_ID=your_project_id_here
+NEXT_PUBLIC_APPWRITE_DATABASE_ID=your_database_id_here
+NEXT_PUBLIC_APPWRITE_ORDER_COLLECTION_ID=your_orders_collection_id_here
 APPWRITE_API_KEY=your_api_key_here
 RAZORPAY_KEY_ID=your_razorpay_key_id_here
 RAZORPAY_SECRET=your_razorpay_secret_here
+ZOHO_MAIL_USER=orders@simdi.in
+ZOHO_MAIL_PASSWORD=your_zoho_app_password
+ZOHO_MAIL_HOST=smtp.zoho.in
+ZOHO_MAIL_PORT=587
+TEAM_EMAIL_1=team@simdi.in
+TEAM_EMAIL_2=yogeshmamgain2611@gmail.com
+APP_NAME=SIMDI
+APP_SUPPORT_EMAIL=support@simdi.in
+APP_LOGO_URL=https://your-domain/logo.png
 ```
 
 Replace the placeholders with your actual credentials.

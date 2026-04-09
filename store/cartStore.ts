@@ -3,7 +3,14 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { calculateCartTotals, clampCartQuantity, getCartItemCount, getCartSubtotal, getPromoDiscountAmount } from '@/lib/cart-helpers'
+import {
+  FIXED_HANDLING_CHARGE_PERCENT,
+  calculateCartTotals,
+  clampCartQuantity,
+  getCartItemCount,
+  getCartSubtotal,
+  getPromoDiscountAmount,
+} from '@/lib/cart-helpers'
 import type { CartItem } from '@/types/cart'
 import type { OrderRecord } from '@/types/order'
 import type { AppliedPromo } from '@/types/promo'
@@ -38,7 +45,7 @@ export const useCartStore = create<CartStore>()(
     (set, get) => ({
       items: [],
       appliedPromo: null,
-      handlingChargePercent: 5,
+      handlingChargePercent: FIXED_HANDLING_CHARGE_PERCENT,
       hasHydrated: false,
       lastCompletedOrder: null,
 
@@ -92,7 +99,7 @@ export const useCartStore = create<CartStore>()(
         set({
           items: [],
           appliedPromo: null,
-          handlingChargePercent: 5,
+          handlingChargePercent: FIXED_HANDLING_CHARGE_PERCENT,
         })
       },
 
@@ -108,9 +115,9 @@ export const useCartStore = create<CartStore>()(
         })
       },
 
-      setHandlingCharge: (percent) => {
+      setHandlingCharge: (_percent) => {
         set({
-          handlingChargePercent: percent === 10 ? 10 : 5,
+          handlingChargePercent: FIXED_HANDLING_CHARGE_PERCENT,
         })
       },
 
@@ -146,6 +153,11 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: 'simdi-cart-store',
+      merge: (persistedState, currentState) => ({
+        ...currentState,
+        ...(persistedState as Partial<CartStore>),
+        handlingChargePercent: FIXED_HANDLING_CHARGE_PERCENT,
+      }),
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         items: state.items,

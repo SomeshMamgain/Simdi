@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { LogOut, Menu, UserRound, X } from 'lucide-react'
+import { LogOut, Menu, Package, UserRound, X } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
@@ -191,6 +191,11 @@ export const Navbar = () => {
                     {accountEmail ? <span>{accountEmail}</span> : null}
                   </div>
                 </div>
+
+                <Link className="auth-account-action" href="/orders" onClick={() => setIsAccountMenuOpen(false)} role="menuitem">
+                  <Package size={18} />
+                  <span>My Orders</span>
+                </Link>
 
                 <button className="auth-account-action" onClick={handleSignOut} disabled={isSigningOut} role="menuitem">
                   <LogOut size={18} />

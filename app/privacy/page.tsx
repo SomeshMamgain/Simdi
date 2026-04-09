@@ -1,9 +1,17 @@
-'use client'
-
+import type { Metadata } from 'next'
 import { ShieldCheck, UserCheck, Eye, Lock, Zap } from 'lucide-react'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { buildMetadata } from '@/lib/seo'
 import { Suspense } from 'react'
+
+export const metadata: Metadata = buildMetadata({
+  title: 'Privacy Policy | Simdi',
+  description:
+    'Read how SIMDI collects, uses, and protects your personal information when you browse, shop, and interact with our Himalayan products website.',
+  path: '/privacy',
+  keywords: ['SIMDI privacy policy', 'privacy policy', 'customer data privacy', 'ecommerce privacy'],
+})
 
 export default function PrivacyPolicy() {
   

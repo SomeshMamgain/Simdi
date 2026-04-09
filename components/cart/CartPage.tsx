@@ -29,7 +29,7 @@ export function CartPage({ suggestions }: CartPageProps) {
             <div>
               <span className={styles.eyebrow}>SHOPPING CART</span>
               <h1 className={styles.title}>Loading your saved cart</h1>
-              <p className={styles.subtitle}>We&apos;re restoring your selected items, promo code, and handling preference.</p>
+              <p className={styles.subtitle}>We&apos;re restoring your selected items, promo code, and fixed handling charge.</p>
             </div>
           </div>
           <div className={styles.layout}>
@@ -59,8 +59,8 @@ export function CartPage({ suggestions }: CartPageProps) {
             <span className={styles.eyebrow}>SHOPPING CART</span>
             <h1 className={styles.title}>Ready when you are</h1>
             <p className={styles.subtitle}>
-              Review the products you&apos;ve picked, apply a promo, choose your handling charge, and continue to secure
-              payment with Razorpay.
+              Review the products you&apos;ve picked, apply a promo, and continue to secure payment with Razorpay. A
+              fixed 5% handling charge is applied automatically.
             </p>
           </div>
           <div className={styles.countPill}>{itemCount} item{itemCount === 1 ? '' : 's'} in cart</div>

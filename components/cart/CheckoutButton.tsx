@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 
 import { AuthModal } from '@/components/AuthModal'
 import { AddressCollectionModal } from '@/components/modals/AddressCollectionModal'
+import { FIXED_HANDLING_CHARGE_PERCENT } from '@/lib/cart-helpers'
 import { createOrderRecord } from '@/lib/services/order-service'
 import { createPaymentOrder, loadRazorpayScript, verifyPayment } from '@/lib/services/payment-service'
 import { useAuthStore } from '@/store/authStore'
@@ -22,7 +23,6 @@ export function CheckoutButton() {
   const router = useRouter()
   const items = useCartStore((state) => state.items)
   const appliedPromo = useCartStore((state) => state.appliedPromo)
-  const handlingChargePercent = useCartStore((state) => state.handlingChargePercent)
   const clearCart = useCartStore((state) => state.clearCart)
   const setLastCompletedOrder = useCartStore((state) => state.setLastCompletedOrder)
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn)
@@ -58,7 +58,7 @@ export function CheckoutButton() {
       const paymentOrder = await createPaymentOrder({
         items,
         promoCode: appliedPromo?.code ?? null,
-        handlingChargePercent,
+        handlingChargePercent: FIXED_HANDLING_CHARGE_PERCENT,
         customer,
       })
 

@@ -1,12 +1,25 @@
+import type { Metadata } from 'next'
 import { Mail, MessageCircle, Instagram, MapPin, Send } from 'lucide-react'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { buildMetadata } from '@/lib/seo'
 import { Suspense } from 'react'
 
-export const metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Contact SIMDI - Pure Himalayan & Pahadi Products Support',
-  description: 'Reach out to SIMDI for authentic Himalayan food, handpicked Pahadi products, and support. We are based in Uttarakhand and Ghaziabad.'
-}
+  description:
+    'Reach out to SIMDI for authentic Himalayan food, handpicked Pahadi products, and support. We are based in Uttarakhand and Ghaziabad.',
+  path: '/contact',
+  keywords: [
+    'contact SIMDI',
+    'SIMDI support',
+    'Pahadi products support',
+    'Himalayan products contact',
+    'Uttarakhand products help',
+  ],
+  images: ['/simdi.jpg'],
+  imageAlt: 'Contact SIMDI for Himalayan and Pahadi products',
+})
 
 export default function ContactPage() {
   

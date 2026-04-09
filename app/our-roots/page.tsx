@@ -1,9 +1,26 @@
-'use client'
-
+import type { Metadata } from 'next'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { ShieldCheck, Leaf, Target, Eye, Users, Map, Wheat, MapPin } from 'lucide-react'
+import { buildMetadata } from '@/lib/seo'
 import { Suspense } from 'react'
+
+export const metadata: Metadata = buildMetadata({
+  title: 'Our Roots | Simdi',
+  description:
+    'Discover the story behind SIMDI, our mission in Uttarakhand, women-led sourcing, Himalayan heritage, and the villages that shape our products.',
+  path: '/our-roots',
+  keywords: [
+    'about SIMDI',
+    'our roots',
+    'Uttarakhand women producers',
+    'Pauri Garhwal sourcing',
+    'Himalayan heritage brand',
+    'women-led cooperatives Uttarakhand',
+  ],
+  images: ['/mission_main.jpg'],
+  imageAlt: 'SIMDI roots in Uttarakhand and Himalayan village sourcing',
+})
 
 export default function OurRoots() {
   const containerStyle = { maxWidth: '1200px', margin: '0 auto', padding: '0 20px' };

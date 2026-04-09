@@ -1,10 +1,71 @@
-'use client'
-
-import { Navbar } from '@/components/navbar'
-import { Footer } from '@/components/footer'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Leaf, Heart, Mountain, Shield } from 'lucide-react'
 import { Suspense } from 'react'
+
+import { Footer } from '@/components/footer'
+import { Navbar } from '@/components/navbar'
+import { SITE_NAME, buildMetadata, getAbsoluteAssetUrl, getCanonicalUrl } from '@/lib/seo'
+
+const homepageKeywords = [
+  'SIMDI',
+  'Your Himalayan Friend',
+  'authentic Pahadi products',
+  'Himalayan products online',
+  'organic Himalayan products',
+  'Uttarakhand products',
+  'organic Pahadi ghee',
+  'raw wild honey',
+  'mountain grains',
+  'Himalayan wellness products',
+  'handicrafts from Uttarakhand',
+  'seasonal Himalayan products',
+  'Uttarakhand ride booking',
+  'mountain taxi service Uttarakhand',
+  'parcel delivery Uttarakhand',
+  'women-led village products',
+  'fair trade Himalayan products',
+  'Pauri Garhwal products',
+  'Chakisain Uttarakhand',
+]
+
+export const metadata: Metadata = buildMetadata({
+  title: 'SIMDI | Your Himalayan Friend for Pahadi Products, Rides & Parcels',
+  description:
+    'Products, rides, and deliveries straight from Himalayan villages. Shop authentic Pahadi products, book Uttarakhand mountain rides, and send parcels with SIMDI.',
+  path: '/',
+  keywords: homepageKeywords,
+  images: ['/hero_simdi.jpg'],
+  imageAlt: 'SIMDI homepage featuring Himalayan products and village sourcing',
+})
+
+const homepageStructuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      name: SITE_NAME,
+      url: getCanonicalUrl('/'),
+      logo: getAbsoluteAssetUrl('/apple-icon.png'),
+      image: getAbsoluteAssetUrl('/hero_simdi.jpg'),
+      description:
+        'SIMDI connects people with authentic Himalayan products, local delivery support, and Uttarakhand-rooted experiences.',
+      areaServed: 'India',
+    },
+    {
+      '@type': 'WebSite',
+      name: SITE_NAME,
+      url: getCanonicalUrl('/'),
+      description:
+        'Explore authentic Pahadi products, Himalayan pantry essentials, and stories from Uttarakhand.',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: `${getCanonicalUrl('/products')}?q={search_term_string}`,
+        'query-input': 'required name=search_term_string',
+      },
+    },
+  ],
+}
 
 const bestSellers = [
   { id: 1, name: 'Organic Pahadi Ghee', price: '₹799', img: '/ghee.jpg' },
@@ -23,6 +84,8 @@ const features = [
 export default function Home() {
   return (
     <div className="site-page-shell site-page-shell--hidden-overflow">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageStructuredData) }} />
+
       <Suspense fallback={<div>Loading...</div>}>
         <Navbar />
       </Suspense>

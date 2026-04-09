@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import { ProductCard } from '@/components/ProductCard'
 import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
+import { buildMetadata } from '@/lib/seo'
 import { getProducts } from '@/lib/product-service'
 import type { ProductDocument } from '@/lib/product-types'
 import { toSerializableProducts } from '@/lib/product-utils'
@@ -11,32 +12,22 @@ import { toSerializableProducts } from '@/lib/product-utils'
 export const revalidate = 300
 
 export function generateMetadata(): Metadata {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
-  const canonicalPath = '/products'
-  const title = 'Products | Simdi'
-  const description =
-    'Browse Simdi products sourced from Uttarakhand, including Himalayan staples, seasonal harvests, and mountain-made pantry essentials.'
-
-  return {
-    title,
-    description,
-    alternates: siteUrl
-      ? {
-          canonical: new URL(canonicalPath, siteUrl).toString(),
-        }
-      : undefined,
-    openGraph: {
-      title,
-      description,
-      type: 'website',
-      url: siteUrl ? new URL(canonicalPath, siteUrl).toString() : canonicalPath,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
-  }
+  return buildMetadata({
+    title: 'Products | Simdi',
+    description:
+      'Browse Simdi products sourced from Uttarakhand, including Himalayan staples, seasonal harvests, and mountain-made pantry essentials.',
+    path: '/products',
+    keywords: [
+      'buy Himalayan products online',
+      'buy Pahadi products',
+      'organic products from Uttarakhand',
+      'Bilona ghee online',
+      'wild honey online India',
+      'traditional Himalayan pantry',
+    ],
+    images: ['/products.jpg'],
+    imageAlt: 'SIMDI products collection page',
+  })
 }
 
 export default async function ProductsPage() {
@@ -60,17 +51,7 @@ export default async function ProductsPage() {
 
       <section style={{ padding: '72px 20px 36px' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <p
-            style={{
-              color: '#B58E58',
-              letterSpacing: '0.22em',
-              fontSize: '0.75rem',
-              fontWeight: 700,
-              marginBottom: '14px',
-            }}
-          >
-            FROM OUR APPWRITE COLLECTION
-          </p>
+          
           <h1
             style={{
               fontFamily: 'Georgia, serif',
@@ -81,18 +62,7 @@ export default async function ProductsPage() {
           >
             Products
           </h1>
-          <p
-            style={{
-              color: '#5E6E5E',
-              fontSize: '1rem',
-              lineHeight: 1.8,
-              maxWidth: '700px',
-              marginTop: '18px',
-            }}
-          >
-            Browse the live products coming from your Appwrite products collection. Each card links to a dedicated
-            detail page with richer product information, media, and purchase context.
-          </p>
+         
         </div>
       </section>
 

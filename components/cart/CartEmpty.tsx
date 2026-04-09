@@ -19,8 +19,8 @@ export function CartEmpty({ suggestions }: CartEmptyProps) {
         <ShoppingBag size={42} color="#11522b" />
         <h1 className={styles.emptyTitle}>Your cart is waiting for something special</h1>
         <p className={styles.emptyCopy}>
-          Add a few mountain-made favorites and we&apos;ll keep everything ready here, including promo codes and your
-          preferred handling charge.
+          Add a few mountain-made favorites and we&apos;ll keep everything ready here, including promo codes and the
+          fixed 5% handling charge.
         </p>
 
         <div className={styles.emptyActions}>

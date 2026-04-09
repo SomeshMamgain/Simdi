@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CheckCircle2 } from 'lucide-react'
 import { notFound } from 'next/navigation'
@@ -7,10 +8,21 @@ import styles from '@/components/cart/cart.module.css'
 import { Navbar } from '@/components/navbar'
 import { getOrderById } from '@/lib/services/commerce-server'
 import { formatCurrencyAmount } from '@/lib/product-utils'
+import { buildMetadata } from '@/lib/seo'
+import { formatEstimatedDelivery, formatOrderDate } from '@/lib/utils/orderFormatting'
 
 type OrderConfirmationPageProps = {
   params: Promise<{ orderId: string }>
 }
+
+export const metadata: Metadata = buildMetadata({
+  title: 'Order Confirmation | Simdi',
+  description: 'Order confirmation and receipt details for your recent Simdi purchase.',
+  path: '/order-confirmation',
+  index: false,
+  follow: false,
+  keywords: ['order confirmation', 'payment receipt', 'Simdi checkout confirmation'],
+})
 
 export default async function OrderConfirmationPage({ params }: OrderConfirmationPageProps) {
   const { orderId } = await params
@@ -43,29 +55,33 @@ export default async function OrderConfirmationPage({ params }: OrderConfirmatio
 
               <div className={styles.confirmationMeta}>
                 <div className={styles.confirmationMetaRow}>
-                  <span>Order ID</span>
-                  <strong>{order.orderId}</strong>
+                  <span>Order Number</span>
+                  <strong>{order.order_number}</strong>
+                </div>
+                <div className={styles.confirmationMetaRow}>
+                  <span>Placed on</span>
+                  <strong>{formatOrderDate(order.date)}</strong>
                 </div>
                 <div className={styles.confirmationMetaRow}>
                   <span>Payment Receipt</span>
-                  <strong>{order.razorpayPaymentId ?? 'Processing'}</strong>
+                  <strong>{order.razorpay_payment_id ?? 'Processing'}</strong>
                 </div>
                 <div className={styles.confirmationMetaRow}>
                   <span>Estimated delivery</span>
-                  <strong>4-7 business days</strong>
+                  <strong>{formatEstimatedDelivery(order)}</strong>
                 </div>
                 <div className={styles.confirmationMetaRow}>
                   <span>Paid total</span>
-                  <strong>{formatCurrencyAmount(order.total)}</strong>
+                  <strong>{formatCurrencyAmount(order.total_amount)}</strong>
                 </div>
               </div>
 
               <div className={styles.emptyActions} style={{ justifyContent: 'flex-start', marginTop: '28px' }}>
-                <Link href="/products" className={styles.primaryLink}>
-                  Continue Shopping
+                <Link href={`/orders/${order.$id}`} className={styles.primaryLink}>
+                  View Order Details
                 </Link>
-                <Link href="/cart" className={styles.secondaryLink}>
-                  View Cart
+                <Link href="/orders" className={styles.secondaryLink}>
+                  Order History
                 </Link>
               </div>
             </div>
@@ -81,17 +97,17 @@ export default async function OrderConfirmationPage({ params }: OrderConfirmatio
                   </div>
                   <div className={styles.summaryRow}>
                     <span>Promo Discount</span>
-                    <strong>- {formatCurrencyAmount(order.promoDiscount)}</strong>
+                    <strong>- {formatCurrencyAmount(order.discount_amount)}</strong>
                   </div>
                   <div className={styles.summaryRow}>
-                    <span>Handling Charge ({order.handlingChargePercent}%)</span>
-                    <strong>{formatCurrencyAmount(order.handlingCharge)}</strong>
+                    <span>Handling Charge ({order.handling_charge_percent}%)</span>
+                    <strong>{formatCurrencyAmount(order.handling_charges)}</strong>
                   </div>
                 </div>
                 <div className={styles.divider} />
                 <div className={styles.summaryTotal}>
                   <span>Total</span>
-                  <span>{formatCurrencyAmount(order.total)}</span>
+                  <span>{formatCurrencyAmount(order.total_amount)}</span>
                 </div>
               </div>
 
@@ -101,7 +117,7 @@ export default async function OrderConfirmationPage({ params }: OrderConfirmatio
                 <div className={styles.itemsList}>
                   {order.items.map((item) => (
                     <div key={item.id} className={styles.itemCard}>
-                      <img src={item.image} alt={item.name} className={styles.itemImage} />
+                      <img src={item.image ?? '/placeholder.jpg'} alt={item.name} className={styles.itemImage} />
                       <div className={styles.itemBody}>
                         <div className={styles.itemHeading}>
                           <div>
@@ -113,7 +129,7 @@ export default async function OrderConfirmationPage({ params }: OrderConfirmatio
                         </div>
                         <div className={styles.itemTotal}>
                           <span className={styles.itemTotalLabel}>Line Total</span>
-                          <strong className={styles.itemTotalValue}>{formatCurrencyAmount(item.price * item.quantity)}</strong>
+                          <strong className={styles.itemTotalValue}>{formatCurrencyAmount(item.total)}</strong>
                         </div>
                       </div>
                     </div>

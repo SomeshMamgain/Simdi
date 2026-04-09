@@ -1,7 +1,9 @@
+import type { Metadata } from 'next'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import Link from 'next/link'
 import { ArrowRight, Calendar } from 'lucide-react'
+import { buildMetadata } from '@/lib/seo'
 import { Suspense } from 'react'
 
 const allBlogs = [
@@ -14,6 +16,22 @@ const allBlogs = [
     image: "/simdi.jpg"
   }
 ];
+
+export const metadata: Metadata = buildMetadata({
+  title: 'Blogs | Simdi',
+  description:
+    'Read SIMDI blog articles on Himalayan superfoods, traditional Pahadi ingredients, wellness, and the stories behind our Uttarakhand roots.',
+  path: '/blogs',
+  keywords: [
+    'Simdi blog',
+    'Himalayan superfoods blog',
+    'Pahadi food articles',
+    'Uttarakhand wellness blog',
+    'Badri ghee guide',
+  ],
+  images: ['/himalayan.png'],
+  imageAlt: 'SIMDI blog covering Himalayan products and wellness',
+})
 
 export default function BlogIndex() {
   return (

@@ -5,6 +5,7 @@ import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
 import { ProductDetailPage } from '@/components/product-detail/ProductDetailPage'
 import { getProductBySlug, getRelatedProducts } from '@/lib/product-service'
+import { buildMetadata, getCanonicalUrl, mergeKeywords } from '@/lib/seo'
 import {
   getProductGalleryImages,
   getProductKeywords,
@@ -25,14 +26,13 @@ export async function generateMetadata({ params }: ProductDetailRouteProps): Pro
   const product = await getProductBySlug(slug)
 
   if (!product) {
-    return {
+    return buildMetadata({
       title: 'Product Not Found | Simdi',
       description: 'The requested product could not be found in the Simdi collection.',
-      robots: {
-        index: false,
-        follow: false,
-      },
-    }
+      path: `/products/${slug}`,
+      index: false,
+      follow: false,
+    })
   }
 
   const title = `${product.name ?? 'Product'} | Simdi`
@@ -43,41 +43,18 @@ export async function generateMetadata({ params }: ProductDetailRouteProps): Pro
       `Explore ${product.name ?? 'this product'} from Simdi's Himalayan collection.`,
     160
   )
-  const keywords = getProductKeywords(product)
+  const keywords = mergeKeywords(getProductKeywords(product))
   const images = getProductGalleryImages(product)
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
   const canonicalPath = `/products/${getProductSlug(product)}`
 
-  return {
+  return buildMetadata({
     title,
     description,
     keywords,
-    robots: {
-      index: true,
-      follow: true,
-    },
-    alternates: siteUrl
-      ? {
-          canonical: new URL(canonicalPath, siteUrl).toString(),
-        }
-      : undefined,
-    openGraph: {
-      title,
-      description,
-      type: 'website',
-      url: siteUrl ? new URL(canonicalPath, siteUrl).toString() : canonicalPath,
-      images: images.map((image) => ({
-        url: image,
-        alt: product.name ?? 'Simdi product image',
-      })),
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images,
-    },
-  }
+    path: canonicalPath,
+    images: images.length > 0 ? images : undefined,
+    imageAlt: product.name ?? 'Simdi product image',
+  })
 }
 
 export default async function ProductDetailRoute({ params }: ProductDetailRouteProps) {
@@ -95,7 +72,6 @@ export default async function ProductDetailRoute({ params }: ProductDetailRouteP
   }
 
   const relatedProducts = await getRelatedProducts(product, 4)
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
   const canonicalPath = `/products/${canonicalSlug}`
   const numericPrice = toNumber(product.price)
   const rating = getProductRating(product)
@@ -116,11 +92,7 @@ export default async function ProductDetailRoute({ params }: ProductDetailRouteP
       '@type': 'Brand',
       name: 'Simdi',
     },
-    ...(siteUrl
-      ? {
-          url: new URL(canonicalPath, siteUrl).toString(),
-        }
-      : {}),
+    url: getCanonicalUrl(canonicalPath),
     ...(numericPrice !== null
       ? {
           offers: {
@@ -130,11 +102,7 @@ export default async function ProductDetailRoute({ params }: ProductDetailRouteP
             availability:
               product.in_stock === false ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock',
             itemCondition: 'https://schema.org/NewCondition',
-            ...(siteUrl
-              ? {
-                  url: new URL(canonicalPath, siteUrl).toString(),
-                }
-              : {}),
+            url: getCanonicalUrl(canonicalPath),
           },
         }
       : {}),
