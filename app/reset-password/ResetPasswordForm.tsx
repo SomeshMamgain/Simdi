@@ -117,7 +117,7 @@ export default function ResetPasswordForm() {
         </form>
 
         <div className="recovery-footer">
-          <Link href="/shop" className="recovery-link">
+          <Link href="/products" className="recovery-link">
             Back to shop
           </Link>
         </div>

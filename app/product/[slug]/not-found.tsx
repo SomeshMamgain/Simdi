@@ -19,7 +19,7 @@ export default function ProductDetailNotFound() {
             <p className={styles.statusBody}>
               The product you were looking for is no longer available or the link may have changed.
             </p>
-            <Link href="/shop" className={styles.statusAction}>
+            <Link href="/products" className={styles.statusAction}>
               Back to Products
             </Link>
           </div>

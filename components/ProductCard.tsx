@@ -21,7 +21,7 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const imageSrc = getPrimaryImage(product)
   const isInStock = product.in_stock !== false
-  const productLink = `/shop/${getProductSlug(product)}`
+  const productLink = `/products/${getProductSlug(product)}`
   const sizeOptions = getProductSizeOptions(product.unit)
   const [selectedSizeValue, setSelectedSizeValue] = useState(sizeOptions[0]?.value ?? '')
   const selectedSize = sizeOptions.find((option) => option.value === selectedSizeValue) ?? sizeOptions[0]

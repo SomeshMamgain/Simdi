@@ -61,7 +61,7 @@ export default async function OrderConfirmationPage({ params }: OrderConfirmatio
               </div>
 
               <div className={styles.emptyActions} style={{ justifyContent: 'flex-start', marginTop: '28px' }}>
-                <Link href="/shop" className={styles.primaryLink}>
+                <Link href="/products" className={styles.primaryLink}>
                   Continue Shopping
                 </Link>
                 <Link href="/cart" className={styles.secondaryLink}>

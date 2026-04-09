@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
 import { ProductCard } from '@/components/ProductCard'
@@ -9,13 +10,42 @@ import { toSerializableProducts } from '@/lib/product-utils'
 
 export const revalidate = 300
 
+export function generateMetadata(): Metadata {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  const canonicalPath = '/products'
+  const title = 'Products | Simdi'
+  const description =
+    'Browse Simdi products sourced from Uttarakhand, including Himalayan staples, seasonal harvests, and mountain-made pantry essentials.'
+
+  return {
+    title,
+    description,
+    alternates: siteUrl
+      ? {
+          canonical: new URL(canonicalPath, siteUrl).toString(),
+        }
+      : undefined,
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: siteUrl ? new URL(canonicalPath, siteUrl).toString() : canonicalPath,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+  }
+}
+
 export default async function ProductsPage() {
   let products: ProductDocument[] = []
   let hasError = false
 
   try {
     products = await getProducts()
-  } catch (error){
+  } catch (error) {
     console.error('Error fetching products from Appwrite collection', error)
     hasError = true
   }

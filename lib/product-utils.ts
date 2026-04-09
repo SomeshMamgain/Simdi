@@ -141,7 +141,7 @@ export function slugifyProductValue(value?: string) {
 
 export function getProductSlug(product: Pick<ProductDocument, '$id' | 'name' | 'alias_name'>) {
   const label = product.alias_name ?? product.name ?? 'product'
-  return `${slugifyProductValue(label)}--${product.$id}`
+  return `${slugifyProductValue(label)}`
 }
 
 export function getProductIdFromSlug(slug: string) {

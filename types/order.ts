@@ -1,4 +1,5 @@
 import type { CartItem } from '@/types/cart'
+import type { AddressFormData } from '@/types/address'
 import type { AppliedPromo } from '@/types/promo'
 
 export interface OrderCustomer {
@@ -6,6 +7,7 @@ export interface OrderCustomer {
   name?: string
   email?: string
   contact?: string
+  deliveryAddress?: AddressFormData
 }
 
 export interface OrderRecord {

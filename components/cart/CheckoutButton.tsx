@@ -6,9 +6,15 @@ import { Lock, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
+import { AuthModal } from '@/components/AuthModal'
+import { AddressCollectionModal } from '@/components/modals/AddressCollectionModal'
 import { createOrderRecord } from '@/lib/services/order-service'
 import { createPaymentOrder, loadRazorpayScript, verifyPayment } from '@/lib/services/payment-service'
+import { useAuthStore } from '@/store/authStore'
 import { useCartStore } from '@/store/cartStore'
+import { useCheckoutStore } from '@/store/checkoutStore'
+import type { UserProfile } from '@/types/auth'
+import type { OrderCustomer } from '@/types/order'
 
 import styles from './cart.module.css'
 
@@ -19,17 +25,32 @@ export function CheckoutButton() {
   const handlingChargePercent = useCartStore((state) => state.handlingChargePercent)
   const clearCart = useCartStore((state) => state.clearCart)
   const setLastCompletedOrder = useCartStore((state) => state.setLastCompletedOrder)
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn)
+  const currentUser = useAuthStore((state) => state.currentUser)
+  const checkSession = useAuthStore((state) => state.checkSession)
+  const isAuthModalOpen = useCheckoutStore((state) => state.isAuthModalOpen)
+  const isAddressModalOpen = useCheckoutStore((state) => state.isAddressModalOpen)
+  const openAuthModal = useCheckoutStore((state) => state.openAuthModal)
+  const closeAuthModal = useCheckoutStore((state) => state.closeAuthModal)
+  const openAddressModal = useCheckoutStore((state) => state.openAddressModal)
+  const closeAddressModal = useCheckoutStore((state) => state.closeAddressModal)
+  const setPendingAddress = useCheckoutStore((state) => state.setPendingAddress)
+  const setLastSubmittedProfile = useCheckoutStore((state) => state.setLastSubmittedProfile)
+  const resetCheckoutFlow = useCheckoutStore((state) => state.resetCheckoutFlow)
   const [isPreparing, setIsPreparing] = useState(false)
   const [isVerifying, setIsVerifying] = useState(false)
 
   const isDisabled = items.length === 0 || isPreparing || isVerifying
 
-  const handleCheckout = async () => {
-    if (!items.length) {
-      toast.error('Your cart is empty')
-      return
-    }
+  const buildCustomer = (profile: UserProfile): OrderCustomer => ({
+    userId: profile.userId || currentUser?.id,
+    name: profile.fullAddress.fullName || profile.name || currentUser?.name,
+    email: profile.email || currentUser?.email,
+    contact: profile.fullAddress.phoneNumber || profile.phone || currentUser?.phone,
+    deliveryAddress: profile.fullAddress,
+  })
 
+  const startPayment = async (customer?: OrderCustomer) => {
     try {
       setIsPreparing(true)
       await loadRazorpayScript()
@@ -38,6 +59,7 @@ export function CheckoutButton() {
         items,
         promoCode: appliedPromo?.code ?? null,
         handlingChargePercent,
+        customer,
       })
 
       if (!window.Razorpay) {
@@ -84,7 +106,7 @@ export function CheckoutButton() {
               checkoutReference: paymentOrder.checkoutReference,
               items,
               pricing: paymentOrder.pricing,
-              customer: paymentOrder.customer,
+              customer: paymentOrder.customer ?? customer,
               razorpayOrderId: response.razorpay_order_id,
               razorpayPaymentId: response.razorpay_payment_id,
               signature: response.razorpay_signature,
@@ -92,6 +114,7 @@ export function CheckoutButton() {
 
             setLastCompletedOrder(orderResponse.order)
             clearCart()
+            resetCheckoutFlow()
             toast.success('Payment successful. Your order has been placed.')
 
             startTransition(() => {
@@ -119,10 +142,54 @@ export function CheckoutButton() {
     }
   }
 
+  const handleCheckout = async () => {
+    if (!items.length) {
+      toast.error('Your cart is empty')
+      return
+    }
+
+    const sessionState = await checkSession()
+
+    if (!sessionState.isLoggedIn && !isLoggedIn) {
+      openAuthModal()
+      return
+    }
+
+    openAddressModal()
+  }
+
+  const handleAuthSuccess = async () => {
+    closeAuthModal()
+    await checkSession()
+    openAddressModal()
+  }
+
+  const handleAddressSaved = async (profile: UserProfile) => {
+    setPendingAddress(profile.fullAddress)
+    setLastSubmittedProfile(profile)
+    closeAddressModal()
+    await startPayment(buildCustomer(profile))
+  }
+
   return (
-    <button type="button" className={styles.checkoutButton} disabled={isDisabled} onClick={handleCheckout}>
-      {isPreparing || isVerifying ? <Loader2 size={18} className="animate-spin" /> : <Lock size={18} />}
-      {isPreparing ? 'Preparing Checkout...' : isVerifying ? 'Verifying Payment...' : 'Proceed to Checkout'}
-    </button>
+    <>
+      <button type="button" className={styles.checkoutButton} disabled={isDisabled} onClick={handleCheckout}>
+        {isPreparing || isVerifying ? <Loader2 size={18} className="animate-spin" /> : <Lock size={18} />}
+        {isPreparing ? 'Preparing Checkout...' : isVerifying ? 'Verifying Payment...' : 'Proceed to Checkout'}
+      </button>
+
+      <AuthModal
+        open={isAuthModalOpen}
+        defaultTab="signIn"
+        onClose={closeAuthModal}
+        onSuccess={handleAuthSuccess}
+      />
+
+      <AddressCollectionModal
+        open={isAddressModalOpen}
+        onClose={closeAddressModal}
+        onSaved={handleAddressSaved}
+      />
+    </>
   )
 }

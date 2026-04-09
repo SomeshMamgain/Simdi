@@ -1,10 +1,18 @@
 import type { Metadata } from 'next'
+import { notFound, permanentRedirect } from 'next/navigation'
+
 import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
 import { ProductDetailPage } from '@/components/product-detail/ProductDetailPage'
 import { getProductBySlug, getRelatedProducts } from '@/lib/product-service'
-import { getProductGalleryImages, getProductKeywords, getProductRating, getProductSlug, toNumber, truncateText } from '@/lib/product-utils'
-import { notFound, permanentRedirect } from 'next/navigation'
+import {
+  getProductGalleryImages,
+  getProductKeywords,
+  getProductRating,
+  getProductSlug,
+  toNumber,
+  truncateText,
+} from '@/lib/product-utils'
 
 type ProductDetailRouteProps = {
   params: Promise<{ slug: string }>
@@ -38,7 +46,7 @@ export async function generateMetadata({ params }: ProductDetailRouteProps): Pro
   const keywords = getProductKeywords(product)
   const images = getProductGalleryImages(product)
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
-  const canonicalPath = `/shop/${getProductSlug(product)}`
+  const canonicalPath = `/products/${getProductSlug(product)}`
 
   return {
     title,
@@ -76,7 +84,6 @@ export default async function ProductDetailRoute({ params }: ProductDetailRouteP
   const { slug } = await params
   const product = await getProductBySlug(slug)
 
-
   if (!product) {
     notFound()
   }
@@ -84,12 +91,12 @@ export default async function ProductDetailRoute({ params }: ProductDetailRouteP
   const canonicalSlug = getProductSlug(product)
 
   if (slug !== canonicalSlug) {
-    permanentRedirect(`/shop/${canonicalSlug}`)
+    permanentRedirect(`/products/${canonicalSlug}`)
   }
 
   const relatedProducts = await getRelatedProducts(product, 4)
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
-  const canonicalPath = `/shop/${canonicalSlug}`
+  const canonicalPath = `/products/${canonicalSlug}`
   const numericPrice = toNumber(product.price)
   const rating = getProductRating(product)
 

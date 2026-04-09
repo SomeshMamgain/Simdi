@@ -24,7 +24,7 @@ export function CartEmpty({ suggestions }: CartEmptyProps) {
         </p>
 
         <div className={styles.emptyActions}>
-          <Link href="/shop" className={styles.primaryLink}>
+          <Link href="/products" className={styles.primaryLink}>
             Explore Products
           </Link>
           <Link href="/" className={styles.secondaryLink}>
@@ -35,7 +35,7 @@ export function CartEmpty({ suggestions }: CartEmptyProps) {
         {suggestions.length > 0 ? (
           <div className={styles.suggestionsGrid}>
             {suggestions.map((product) => (
-              <Link key={product.$id} href={`/shop/${getProductSlug(product)}`} className={styles.suggestionCard}>
+              <Link key={product.$id} href={`/products/${getProductSlug(product)}`} className={styles.suggestionCard}>
                 <img
                   src={getPrimaryImage(product)}
                   alt={product.name ?? 'Suggested product'}

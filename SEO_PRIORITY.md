@@ -35,7 +35,7 @@ When there is a tradeoff between a purely client-side UX improvement and crawlab
 
 ## Current repo note
 
-The current `/shop` page is client-rendered and loads products via a client hook. This is a known SEO weakness compared with server-rendered product listing content.
+The current `/product` page is client-rendered and loads products via a client hook. This is a known SEO weakness compared with server-rendered product listing content.
 
 ## Pre-change checklist
 

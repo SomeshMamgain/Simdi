@@ -4,9 +4,9 @@ import crypto from 'node:crypto'
 
 import { Client, Databases, Query, type Models } from 'node-appwrite'
 
-import { createSessionAccount } from '@/lib/appwrite-server'
 import { calculateCartTotals, getCartSubtotal, roundCurrency } from '@/lib/cart-helpers'
 import { formatCurrencyAmount } from '@/lib/product-utils'
+import { buildOrderCustomer, getAuthSessionPayload } from '@/lib/services/user-profile-server'
 import type { CartItem } from '@/types/cart'
 import type { CheckoutPricing, OrderCustomer, OrderRecord } from '@/types/order'
 import type { AppliedPromo, PromoCode, PromoValidationResult } from '@/types/promo'
@@ -329,34 +329,17 @@ export async function resolveCheckoutCustomer(
   sessionSecret: string | undefined,
   providedCustomer?: OrderCustomer | null
 ): Promise<OrderCustomer | undefined> {
-  const nextCustomer: OrderCustomer = {
-    userId: providedCustomer?.userId,
-    name: providedCustomer?.name,
-    email: providedCustomer?.email,
-    contact: providedCustomer?.contact,
-  }
-
   if (!sessionSecret) {
-    return nextCustomer.userId || nextCustomer.name || nextCustomer.email || nextCustomer.contact
-      ? nextCustomer
-      : undefined
+    return providedCustomer ?? undefined
   }
 
-  try {
-    const account = createSessionAccount(sessionSecret)
-    const user = await account.get()
+  const authPayload = await getAuthSessionPayload(sessionSecret)
 
-    return {
-      userId: nextCustomer.userId || user.$id,
-      name: nextCustomer.name || user.name || undefined,
-      email: nextCustomer.email || user.email || undefined,
-      contact: nextCustomer.contact || user.phone || undefined,
-    }
-  } catch {
-    return nextCustomer.userId || nextCustomer.name || nextCustomer.email || nextCustomer.contact
-      ? nextCustomer
-      : undefined
-  }
+  return buildOrderCustomer({
+    user: authPayload.user,
+    profile: authPayload.profile,
+    fallback: providedCustomer,
+  })
 }
 
 export async function validatePromoCodeOnServer(code: string, subtotal: number): Promise<PromoValidationResult> {

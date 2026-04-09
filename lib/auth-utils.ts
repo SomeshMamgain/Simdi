@@ -1,9 +1,57 @@
 import { AppwriteException } from 'appwrite'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const STRONG_PASSWORD_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
 
 export function isValidEmail(email: string) {
   return EMAIL_PATTERN.test(email)
+}
+
+export function getStrongPasswordValidationError(password: string) {
+  if (!password) {
+    return 'Password is required.'
+  }
+
+  if (password.length < 8) {
+    return 'Password must be at least 8 characters long.'
+  }
+
+  if (!/[A-Z]/.test(password)) {
+    return 'Password must include at least one uppercase letter.'
+  }
+
+  if (!/[a-z]/.test(password)) {
+    return 'Password must include at least one lowercase letter.'
+  }
+
+  if (!/\d/.test(password)) {
+    return 'Password must include at least one number.'
+  }
+
+  return null
+}
+
+export function getPasswordStrength(password: string) {
+  if (!password) {
+    return 'weak' as const
+  }
+
+  const checks = [
+    password.length >= 8,
+    /[A-Z]/.test(password),
+    /[a-z]/.test(password),
+    /\d/.test(password),
+  ].filter(Boolean).length
+
+  if (checks <= 2) {
+    return 'weak' as const
+  }
+
+  if (checks === 3) {
+    return 'fair' as const
+  }
+
+  return STRONG_PASSWORD_PATTERN.test(password) ? 'strong' as const : 'fair' as const
 }
 
 export function getAuthErrorMessage(error: unknown) {

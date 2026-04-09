@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Merriweather, Open_Sans } from 'next/font/google'
+import { AuthProvider } from '@/components/providers/auth-provider'
 import { QueryProvider } from '@/components/providers/query-provider'
 import './globals.css'
 
@@ -24,7 +25,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${merriweather.variable} ${openSans.variable}`}>
       <body>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </QueryProvider>
       </body>
     </html>
   )

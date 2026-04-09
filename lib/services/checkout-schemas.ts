@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { addressFormDataSchema } from '@/lib/services/auth-schemas'
+
 export const cartItemSchema = z.object({
   id: z.string().min(1),
   productId: z.string().min(1),
@@ -19,6 +21,7 @@ export const orderCustomerSchema = z.object({
   name: z.string().optional(),
   email: z.string().email().optional(),
   contact: z.string().optional(),
+  deliveryAddress: addressFormDataSchema.optional(),
 })
 
 export const promoValidationRequestSchema = z.object({

@@ -3,13 +3,12 @@
 // Client-safe authentication modal. Email/password uses the Appwrite web SDK, Google redirects to our backend OAuth route.
 import * as Dialog from '@radix-ui/react-dialog'
 import * as Tabs from '@radix-ui/react-tabs'
-import type { Models } from 'appwrite'
-import { ID } from 'appwrite'
 import { X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-import { getAuthErrorMessage, isValidEmail } from '@/lib/auth-utils'
+import { getPasswordStrength, getStrongPasswordValidationError, isValidEmail } from '@/lib/auth-utils'
 import { account } from '@/lib/appwrite'
+import { useAuthStore } from '@/store/authStore'
 
 type AuthTab = 'signIn' | 'signUp'
 type AuthStatus = { type: 'error' | 'success'; message: string } | null
@@ -20,7 +19,7 @@ interface AuthModalProps {
   defaultTab?: AuthTab
   initialError?: string | null
   onClose: () => void
-  onSuccess: (session: Models.Session) => void | Promise<void>
+  onSuccess: () => void | Promise<void>
 }
 
 function GoogleMark() {
@@ -48,18 +47,6 @@ function GoogleMark() {
   )
 }
 
-function getPasswordValidationError(password: string) {
-  if (!password) {
-    return 'Password is required.'
-  }
-
-  if (password.length < 8) {
-    return 'Password must be at least 8 characters long.'
-  }
-
-  return null
-}
-
 export function AuthModal({
   open,
   defaultTab = 'signIn',
@@ -67,6 +54,8 @@ export function AuthModal({
   onClose,
   onSuccess,
 }: AuthModalProps) {
+  const login = useAuthStore((state) => state.login)
+  const signup = useAuthStore((state) => state.signup)
   const [activeTab, setActiveTab] = useState<AuthTab>(defaultTab)
   const [signInForm, setSignInForm] = useState({ email: '', password: '' })
   const [signUpForm, setSignUpForm] = useState({
@@ -74,6 +63,7 @@ export function AuthModal({
     lastName: '',
     email: '',
     password: '',
+    confirmPassword: '',
   })
   const [pendingAction, setPendingAction] = useState<PendingAction | null>(null)
   const [signInStatus, setSignInStatus] = useState<AuthStatus>(null)
@@ -116,7 +106,10 @@ export function AuthModal({
     setSignInStatus(null)
   }
 
-  const handleSignUpChange = (field: 'firstName' | 'lastName' | 'email' | 'password', value: string) => {
+  const handleSignUpChange = (
+    field: 'firstName' | 'lastName' | 'email' | 'password' | 'confirmPassword',
+    value: string
+  ) => {
     setSignUpForm((current) => ({ ...current, [field]: value }))
     setSignUpStatus(null)
   }
@@ -125,7 +118,6 @@ export function AuthModal({
     event.preventDefault()
 
     const email = signInForm.email.trim()
-    const passwordError = getPasswordValidationError(signInForm.password)
 
     if (!email || !signInForm.password) {
       setSignInStatus({ type: 'error', message: 'Email and password are required.' })
@@ -137,19 +129,20 @@ export function AuthModal({
       return
     }
 
-    if (passwordError) {
-      setSignInStatus({ type: 'error', message: passwordError })
-      return
-    }
-
     setPendingAction('signIn')
 
     try {
-      const session = await account.createEmailPasswordSession(email, signInForm.password)
-      await Promise.resolve(onSuccess(session))
+      await login({
+        email,
+        password: signInForm.password,
+      })
+      await Promise.resolve(onSuccess())
       onClose()
     } catch (error) {
-      setSignInStatus({ type: 'error', message: getAuthErrorMessage(error) })
+      setSignInStatus({
+        type: 'error',
+        message: error instanceof Error ? error.message : 'Unable to sign in right now.',
+      })
     } finally {
       setPendingAction(null)
     }
@@ -178,7 +171,10 @@ export function AuthModal({
         message: 'Recovery email sent. Check your inbox for the password reset link.',
       })
     } catch (error) {
-      setSignInStatus({ type: 'error', message: getAuthErrorMessage(error) })
+      setSignInStatus({
+        type: 'error',
+        message: error instanceof Error ? error.message : 'Unable to start password recovery.',
+      })
     } finally {
       setPendingAction(null)
     }
@@ -194,7 +190,7 @@ export function AuthModal({
       window.location.href = '/api/auth/google'
     } catch (error) {
       setPendingAction(null)
-      setStatus({ type: 'error', message: getAuthErrorMessage(error) })
+      setStatus({ type: 'error', message: error instanceof Error ? error.message : 'Unable to open Google sign-in.' })
     }
   }
 
@@ -204,9 +200,9 @@ export function AuthModal({
     const firstName = signUpForm.firstName.trim()
     const lastName = signUpForm.lastName.trim()
     const email = signUpForm.email.trim()
-    const passwordError = getPasswordValidationError(signUpForm.password)
+    const passwordError = getStrongPasswordValidationError(signUpForm.password)
 
-    if (!firstName || !lastName || !email || !signUpForm.password) {
+    if (!firstName || !lastName || !email || !signUpForm.password || !signUpForm.confirmPassword) {
       setSignUpStatus({ type: 'error', message: 'First name, last name, email, and password are required.' })
       return
     }
@@ -221,22 +217,33 @@ export function AuthModal({
       return
     }
 
+    if (signUpForm.password !== signUpForm.confirmPassword) {
+      setSignUpStatus({ type: 'error', message: 'Passwords do not match.' })
+      return
+    }
+
     setPendingAction('signUp')
 
     try {
-      const name = `${firstName} ${lastName}`.replace(/\s+/g, ' ').trim()
-
-      await account.create(ID.unique(), email, signUpForm.password, name)
-
-      const session = await account.createEmailPasswordSession(email, signUpForm.password)
-      await Promise.resolve(onSuccess(session))
+      await signup({
+        firstName,
+        lastName,
+        email,
+        password: signUpForm.password,
+      })
+      await Promise.resolve(onSuccess())
       onClose()
     } catch (error) {
-      setSignUpStatus({ type: 'error', message: getAuthErrorMessage(error) })
+      setSignUpStatus({
+        type: 'error',
+        message: error instanceof Error ? error.message : 'Unable to create your account right now.',
+      })
     } finally {
       setPendingAction(null)
     }
   }
+
+  const passwordStrength = getPasswordStrength(signUpForm.password)
 
   return (
     <Dialog.Root open={open} onOpenChange={handleOpenChange}>
@@ -399,7 +406,23 @@ export function AuthModal({
                     type="password"
                     value={signUpForm.password}
                     onChange={(event) => handleSignUpChange('password', event.target.value)}
-                    placeholder="Minimum 8 characters"
+                    placeholder="8+ chars, uppercase, lowercase, number"
+                    autoComplete="new-password"
+                    disabled={isBusy}
+                  />
+                  <span className={`auth-helper-copy auth-strength auth-strength--${passwordStrength}`}>
+                    Password strength: {passwordStrength}
+                  </span>
+                </label>
+
+                <label className="auth-field">
+                  <span>Confirm password</span>
+                  <input
+                    className="auth-input"
+                    type="password"
+                    value={signUpForm.confirmPassword}
+                    onChange={(event) => handleSignUpChange('confirmPassword', event.target.value)}
+                    placeholder="Re-enter your password"
                     autoComplete="new-password"
                     disabled={isBusy}
                   />

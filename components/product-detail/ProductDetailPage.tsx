@@ -55,12 +55,12 @@ export function ProductDetailPage({ product, relatedProducts }: ProductDetailPag
         <div className={styles.breadcrumbs}>
           <Link href="/">Home</Link>
           <ChevronRight size={14} />
-          <Link href="/shop">Products</Link>
+          <Link href="/products">Products</Link>
           <ChevronRight size={14} />
           <span className={styles.breadcrumbAccent}>{serializableProduct.name ?? 'Product'}</span>
         </div>
 
-        {/* <Link href="/shop" className={styles.backLink}>
+        {/* <Link href="/products" className={styles.backLink}>
           <ArrowLeft size={16} />
           Back to Products
         </Link> */}
@@ -227,7 +227,7 @@ export function ProductDetailPage({ product, relatedProducts }: ProductDetailPag
                   {serializableRelatedProducts.map((relatedProduct) => (
                     <Link
                       key={relatedProduct.$id}
-                      href={`/shop/${getProductSlug(relatedProduct)}`}
+                      href={`/products/${getProductSlug(relatedProduct)}`}
                       className={styles.relatedCard}
                     >
                       <img

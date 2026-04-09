@@ -75,7 +75,7 @@ export function CartPage({ suggestions }: CartPageProps) {
             </div>
 
             <div className={styles.actionsRow}>
-              <Link href="/shop" className={styles.continueLink}>
+              <Link href="/products" className={styles.continueLink}>
                 <ArrowLeft size={16} />
                 Continue Shopping
               </Link>

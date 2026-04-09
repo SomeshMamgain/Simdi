@@ -41,7 +41,7 @@ export default function Home() {
             <p style={{ marginTop: '20px', maxWidth: '450px', color: '#5E6E5E', fontSize: '1rem', lineHeight: 1.7 }}>
               Buy pure organic Himalayan products online — Bilona Ghee, Wild Honey, Pahadi Rice, and traditional spices. Sourced directly from women farmers in Uttarakhand.
             </p>
-            <Link href="/shop">
+            <Link href="/products">
               <button style={{ marginTop: '30px', padding: '16px 36px', background: '#1E2D24', color: '#fff', border: 'none', letterSpacing: '0.1em', fontSize: '0.8rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 EXPLORE PRODUCTS <ArrowRight size={16} />
               </button>
@@ -141,7 +141,7 @@ export default function Home() {
             ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: '40px' }}>
-            <Link href="/shop">
+            <Link href="/products">
               <button style={{ padding: '14px 40px', background: '#1E2D24', color: '#fff', border: 'none', letterSpacing: '0.1em', fontSize: '0.8rem', cursor: 'pointer' }}>
                 VIEW ALL PRODUCTS
               </button>

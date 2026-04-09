@@ -2,9 +2,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import { createSessionAccount } from '@/lib/appwrite-server'
+import { clearAuthSessionCookies } from '@/lib/services/auth-server'
 
 export async function POST(request: NextRequest) {
-  const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID
   const sessionSecret = request.cookies.get('appwrite-session')?.value
   const response = NextResponse.json({ success: true })
 
@@ -17,37 +17,7 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  response.cookies.set({
-    name: 'appwrite-session',
-    value: '',
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    path: '/',
-    maxAge: 0,
-  })
-
-  if (projectId) {
-    response.cookies.set({
-      name: `a_session_${projectId}`,
-      value: '',
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 0,
-    })
-  }
-
-  response.cookies.set({
-    name: 'appwrite-user-avatar',
-    value: '',
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    path: '/',
-    maxAge: 0,
-  })
+  clearAuthSessionCookies(response)
 
   return response
 }

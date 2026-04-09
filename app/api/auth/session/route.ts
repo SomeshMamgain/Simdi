@@ -1,26 +1,28 @@
 // Server-only route handler that resolves the current signed-in user from our backend-managed session cookie.
 import { NextRequest, NextResponse } from 'next/server'
 
-import { createSessionAccount } from '@/lib/appwrite-server'
+import { getAuthSessionPayload } from '@/lib/services/user-profile-server'
 
 export async function GET(request: NextRequest) {
   const sessionSecret = request.cookies.get('appwrite-session')?.value
   const avatarUrl = request.cookies.get('appwrite-user-avatar')?.value ?? null
+  const payload = await getAuthSessionPayload(sessionSecret, avatarUrl)
 
-  if (!sessionSecret) {
-    return NextResponse.json({ error: 'No backend session found' }, { status: 401 })
+  if (!payload.isLoggedIn) {
+    return NextResponse.json(
+      {
+        success: false,
+        ...payload,
+      },
+      { status: 200 }
+    )
   }
 
-  try {
-    const account = createSessionAccount(sessionSecret)
-    const [session, user] = await Promise.all([
-      account.getSession('current'),
-      account.get(),
-    ])
-
-    return NextResponse.json({ session, user, avatarUrl })
-  } catch (error) {
-    console.error('Backend session lookup failed:', error)
-    return NextResponse.json({ error: 'Invalid backend session' }, { status: 401 })
-  }
+  return NextResponse.json(
+    {
+      success: true,
+      ...payload,
+    },
+    { status: 200 }
+  )
 }

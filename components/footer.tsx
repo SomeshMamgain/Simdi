@@ -39,10 +39,10 @@ export const Footer = () => {
           <div style={{ flex: '1 1 150px' }}>
             <h4 style={headingStyle}>Shop Organic</h4>
             <div style={{ marginTop: '20px' }}>
-              <Link href="/shop" style={linkStyle}>Pure Bilona Ghee</Link>
-              <Link href="/shop" style={linkStyle}>Raw Wild Honey</Link>
-              <Link href="/shop" style={linkStyle}>Mountain Grains</Link>
-              <Link href="/shop" style={linkStyle}>Our Collections</Link>
+              <Link href="/products" style={linkStyle}>Pure Bilona Ghee</Link>
+              <Link href="/products" style={linkStyle}>Raw Wild Honey</Link>
+              <Link href="/products" style={linkStyle}>Mountain Grains</Link>
+              <Link href="/products" style={linkStyle}>Our Collections</Link>
             </div>
           </div>
 

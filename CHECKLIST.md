@@ -26,7 +26,7 @@
 - [ ] Create Appwrite orders collection with fields: `userId`, `items` (JSON string), `total`, `status`, `placedAt`
 
 ## New Commerce Features
-- [x] Shop page created at `/shop` with tile-based product grid
+- [x] Shop page created at `/product` with tile-based product grid
 - [x] Product tiles show first image, name, price, description
 - [x] Clicking tile image or name navigates to `/products/[slug]`
 - [x] Product detail page created with image gallery, ingredients, nutrition, recipes, reviews
