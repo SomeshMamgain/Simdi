@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowRight, Leaf, Heart, Mountain, Shield } from 'lucide-react'
 import { Suspense } from 'react'
 import { ProductCard } from '@/components/ProductCard'
+import { ImageCarousel } from '@/components/ImageCarousel'
 import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
 import { SITE_NAME, buildMetadata, getAbsoluteAssetUrl, getCanonicalUrl } from '@/lib/seo'
@@ -90,36 +91,79 @@ export default async function Home() {
       </Suspense>
 
       {/* HERO SECTION */}
-      <section style={{ padding: '60px 20px' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '40px', alignItems: 'center' }}>
-          <div style={{ flex: '1 1 500px' }}>
-            <p style={{ color: '#B58E58', letterSpacing: '0.2em', fontSize: '0.75rem', marginBottom: '20px', fontWeight: 600 }}>
-              STRAIGHT FROM THE HILLS
-            </p>
-            <h1 style={{ fontFamily: 'Georgia, serif', lineHeight: 1.1, margin: 0 }}>
-              <span style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, color: '#1E2D24' }}>Crafted by Mountains.</span>
-              <span style={{ display: 'block', fontSize: 'clamp(1.5rem, 3vw, 2rem)', color: '#B58E58', marginTop: '10px' }}>Untouched by Cities</span>
-            </h1>
-            <p style={{ marginTop: '20px', maxWidth: '450px', color: '#5E6E5E', fontSize: '1rem', lineHeight: 1.7 }}>
-              Buy pure organic Himalayan products online — Bilona Ghee, Wild Honey, Pahadi Rice, and traditional spices. Sourced directly from women farmers in Uttarakhand.
-            </p>
-            <Link href="/products">
-              <button style={{ marginTop: '30px', padding: '16px 36px', background: '#1E2D24', color: '#fff', border: 'none', letterSpacing: '0.1em', fontSize: '0.8rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                EXPLORE PRODUCTS <ArrowRight size={16} />
-              </button>
-            </Link>
-          </div>
-          <div style={{ flex: '1 1 400px' }}>
-            <div style={{ position: 'relative', borderRadius: '10px', overflow: 'hidden', backgroundColor: '#e5e7eb' }}>
-              <img src="/mahila.jpeg" alt="Himalayan women artisans Uttarakhand" style={{ width: '100%', height: 'auto', display: 'block' }} />
-            </div>
-            <div style={{ background: '#1E2D24', color: '#fff', padding: '25px', marginTop: '-20px', position: 'relative', zIndex: 1, marginInline: '20px' }}>
-              <h4 style={{ color: '#B58E58', marginBottom: '8px', fontSize: '1.1rem' }}>Empowering Himalayan Roots</h4>
-              <p style={{ fontSize: '0.9rem', opacity: 0.9, lineHeight: 1.5 }}>Supporting women-led cooperatives across Pauri Garhwal, Uttarakhand.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <style>{`
+  .hero-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .hero-text {
+    flex: 1 1 500px;
+    order: 1;
+  }
+
+  .hero-image {
+    flex: 1 1 400px;
+    order: 2;
+  }
+
+  @media (max-width: 768px) {
+    .hero-image {
+      order: 1;   /* image goes first on mobile */
+      flex: 1 1 100%;
+    }
+    .hero-text {
+      order: 2;   /* text goes below on mobile */
+      flex: 1 1 100%;
+    }
+  }
+`}</style>
+
+<section style={{ padding: '60px 20px' }}>
+  <div className="hero-wrapper">
+
+    <div className="hero-text">
+      <p style={{ color: '#B58E58', letterSpacing: '0.2em', fontSize: '0.75rem', marginBottom: '20px', fontWeight: 600 }}>
+        STRAIGHT FROM THE HILLS
+      </p>
+      <h1 style={{ fontFamily: 'Georgia, serif', lineHeight: 1.1, margin: 0 }}>
+        <span style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, color: '#1E2D24' }}>
+          Crafted by Mountains.
+        </span>
+        <span style={{ display: 'block', fontSize: 'clamp(1.5rem, 3vw, 2rem)', color: '#B58E58', marginTop: '10px' }}>
+          Untouched by Cities
+        </span>
+      </h1>
+      <p style={{ marginTop: '20px', maxWidth: '450px', color: '#5E6E5E', fontSize: '1rem', lineHeight: 1.7 }}>
+        Buy pure organic Himalayan products online — Bilona Ghee, Wild Honey, Pahadi Rice,
+        and traditional spices. Sourced directly from women farmers in Uttarakhand.
+      </p>
+      <Link href="/products">
+        <button style={{ marginTop: '30px', padding: '16px 36px', background: '#1E2D24', color: '#fff', border: 'none', letterSpacing: '0.1em', fontSize: '0.8rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          EXPLORE PRODUCTS <ArrowRight size={16} />
+        </button>
+      </Link>
+    </div>
+
+    <div className="hero-image">
+      <ImageCarousel
+        images={[
+          { src: '/pure_honey.png', alt: 'Himalayan raw honey being poured' },
+          { src: '/ghee.png', alt: 'Pure Bilona Ghee' },
+          { src: '/pisyu_loon.png', alt: 'Traditional spice grinding with mortar and pestle' },
+          { src: '/kaafal.png', alt: 'Kafal himalayan berries' },
+          { src: '/bal_mithai.png', alt: 'Choclate Sweet' },
+          { src: '/buransh.png', alt: 'Traditional buransh petal juice' },
+        ]}
+      />
+    </div>
+
+  </div>
+</section>
 
       {/* WHY SIMDI - FEATURES */}
       <section style={{ padding: '80px 20px', background: '#fff' }}>
