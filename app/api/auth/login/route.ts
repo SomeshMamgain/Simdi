@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       email: parsedRequest.data.email,
       password: parsedRequest.data.password,
     })
-
+    console.log('Login successful, session created:', session)
     if (!session.secret) {
       throw new Error('Session could not be created')
     }
