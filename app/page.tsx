@@ -2,10 +2,11 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Leaf, Heart, Mountain, Shield } from 'lucide-react'
 import { Suspense } from 'react'
-
+import { ProductCard } from '@/components/ProductCard'
 import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
 import { SITE_NAME, buildMetadata, getAbsoluteAssetUrl, getCanonicalUrl } from '@/lib/seo'
+import { getProducts } from '@/lib/product-service'
 
 const homepageKeywords = [
   'SIMDI',
@@ -67,13 +68,6 @@ const homepageStructuredData = {
   ],
 }
 
-const bestSellers = [
-  { id: 1, name: 'Organic Pahadi Ghee', price: '₹799', img: '/ghee.jpg' },
-  { id: 2, name: 'Raw Wild Honey', price: '₹649', img: '/wild_honey.jpg' },
-  { id: 3, name: 'Pahadi Red Rice', price: '₹349', img: '/pahad-rice.png' },
-  { id: 4, name: 'Traditional Pisyu Loon', price: '₹199', img: '/pisyuloon.jpg' },
-]
-
 const features = [
   { icon: <Leaf size={28} />, title: 'Certified Organic', desc: 'No pesticides, no chemicals. Grown the way nature intended in the pristine hills of Uttarakhand.' },
   { icon: <Mountain size={28} />, title: 'Himalayan Origin', desc: 'Sourced from altitudes above 1500m where clean air and glacier water produce the purest ingredients.' },
@@ -81,7 +75,12 @@ const features = [
   { icon: <Shield size={28} />, title: 'FSSAI Certified', desc: "All products are lab-tested and certified. What you see on the label is exactly what's in the jar." },
 ]
 
-export default function Home() {
+export default async function Home() {
+  const products = await getProducts()
+  const bestSellers = products
+  .filter(p => Number(p.review) > 0 && Number(p.review) !== 100)
+  .sort((a, b) => Number(b.review) - Number(a.review)) // descending (highest first)
+  .slice(0, 6)
   return (
     <div className="site-page-shell site-page-shell--hidden-overflow">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageStructuredData) }} />
@@ -189,19 +188,14 @@ export default function Home() {
           <p style={{ color: '#5E6E5E', textAlign: 'center', fontSize: '0.95rem', marginBottom: '50px' }}>
             Buy organic Pahadi products trusted by thousands of families across India.
           </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '25px', justifyContent: 'center' }}>
-            {bestSellers.map(p => (
-              <div key={p.id} style={{ flex: '1 1 260px', maxWidth: '300px', border: '1px solid #eee', padding: '15px', borderRadius: '12px' }}>
-                <div style={{ backgroundColor: '#f3f4f6', height: '280px', borderRadius: '8px', overflow: 'hidden', marginBottom: '20px' }}>
-                  <img src={p.img} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </div>
-                <h3 style={{ fontSize: '1.1rem', color: '#1E2D24', marginBottom: '5px' }}>{p.name}</h3>
-                <p style={{ color: '#B58E58', fontWeight: 700, fontSize: '1.1rem' }}>{p.price}</p>
-                <button style={{ marginTop: '15px', width: '100%', padding: '12px', background: 'transparent', border: '1px solid #1E2D24', fontWeight: 600, cursor: 'pointer', fontSize: '0.8rem' }}>
-                  ADD TO CART
-                </button>
-              </div>
-            ))}
+          <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                  gap: '28px',
+                }}>
+            {bestSellers.map((product) => (
+                  <ProductCard key={product.$id} product={product} />
+                ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: '40px' }}>
             <Link href="/products">
