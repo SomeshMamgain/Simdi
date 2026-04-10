@@ -121,7 +121,8 @@ export function getProductGalleryImages(product: Pick<ProductDocument, 'image' |
 }
 
 export function getProductSummary(product: Pick<ProductDocument, 'description' | 'alias_name' | 'type'>) {
-  return product.description ?? product.alias_name ?? product.type ?? 'Authentic Himalayan product.'
+  const raw = product.description ?? product.alias_name ?? product.type ?? 'Authentic Himalayan product.'
+  return cleanProductText(raw)
 }
 
 export function slugifyProductValue(value?: string) {
@@ -371,6 +372,18 @@ export function getProductVideoPresentation(videoUrl?: string): ProductVideoPres
   }
 
   return null
+}
+
+/**
+ * Strips leading and trailing double/smart quotes from product text.
+ * Handles both regular ("…") and Unicode smart quotes ("…", „…", etc.)
+ */
+export function cleanProductText(text?: string | null): string {
+  if (!text) return ''
+  return text
+    .replace(/^[\u201C\u201D\u201E\u201F\u2033\u2036\u0022]+/g, '')
+    .replace(/[\u201C\u201D\u201E\u201F\u2033\u2036\u0022]+$/g, '')
+    .trim()
 }
 
 export function stripHtml(html?: string) {

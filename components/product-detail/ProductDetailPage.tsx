@@ -4,6 +4,7 @@ import { ArrowLeft, ChevronRight, Leaf, Sparkles } from 'lucide-react'
 import { ProductCard } from '@/components/ProductCard'
 import type { ProductDocument } from '@/lib/product-types'
 import {
+  cleanProductText,
   formatPrice,
   getPrimaryImage,
   getProductGalleryImages,
@@ -83,7 +84,7 @@ export function ProductDetailPage({ product, relatedProducts }: ProductDetailPag
               <p
                 className={styles.sectionLead}
                 dangerouslySetInnerHTML={{
-                  __html: serializableProduct.description ?? 'A handcrafted Himalayan specialty sourced directly from the mountains.',
+                  __html: cleanProductText(serializableProduct.description) || 'A handcrafted Himalayan specialty sourced directly from the mountains.',
                 }}
               />
 
@@ -178,7 +179,7 @@ export function ProductDetailPage({ product, relatedProducts }: ProductDetailPag
               <p
                 className={styles.sectionLead}
                 dangerouslySetInnerHTML={{
-                  __html: serializableProduct.preparation ?? serializableProduct.method ?? 'Preparation guidance will be shared here once available.',
+                  __html: cleanProductText(serializableProduct.preparation ?? serializableProduct.method) || 'Preparation guidance will be shared here once available.',
                 }}
               />
 
@@ -186,7 +187,7 @@ export function ProductDetailPage({ product, relatedProducts }: ProductDetailPag
                 <div className={styles.quote}>
                   <span
                     className={styles.quoteBody}
-                    dangerouslySetInnerHTML={{ __html: serializableProduct.method }}
+                    dangerouslySetInnerHTML={{ __html: cleanProductText(serializableProduct.method) }}
                   />
                 </div>
               ) : null}
