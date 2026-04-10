@@ -177,8 +177,51 @@ export function getProductIngredients(product: Pick<ProductDocument, 'ingredient
   return splitContentList(product.ingredients)
 }
 
-export function getProductKeywords(product: Pick<ProductDocument, 'keywords'>) {
-  return splitContentList(product.keywords)
+function generateFallbackKeywords(
+  product: Pick<ProductDocument, 'name' | 'alias_name' | 'type' | 'village'>
+): string[] {
+  const keywords: string[] = []
+  const name = product.name?.trim()
+  const alias = product.alias_name?.trim()
+  const type = product.type?.trim()
+  const village = product.village?.trim()
+
+  if (name) {
+    keywords.push(`buy ${name} online`)
+    keywords.push(`${name} from Uttarakhand`)
+    keywords.push(`organic ${name}`)
+    keywords.push(`pahadi ${name}`)
+  }
+
+  if (alias && alias.toLowerCase() !== name?.toLowerCase()) {
+    keywords.push(`buy ${alias} online`)
+    keywords.push(`${alias} Uttarakhand`)
+  }
+
+  if (type) {
+    keywords.push(`himalayan ${type}`)
+    keywords.push(`organic ${type} from Uttarakhand`)
+    keywords.push(`pahadi ${type} online India`)
+  }
+
+  if (village) {
+    keywords.push(`${name ?? type ?? 'product'} from ${village}`)
+  }
+
+  keywords.push('authentic Himalayan products online')
+  keywords.push('Pahadi products India')
+  keywords.push('organic Uttarakhand products')
+  keywords.push('SIMDI Himalayan store')
+
+  return keywords
+}
+
+export function getProductKeywords(
+  product: Pick<ProductDocument, 'keywords' | 'name' | 'alias_name' | 'type' | 'village'>
+) {
+  const explicit = splitContentList(product.keywords)
+  const raw = explicit.length > 0 ? explicit : generateFallbackKeywords(product)
+  return Array.from(new Set(raw))
 }
 
 export function toSerializableProduct(product: ProductDocument): ProductDocument {
