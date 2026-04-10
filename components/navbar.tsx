@@ -117,7 +117,7 @@ export const Navbar = () => {
       <header className="navbar">
         {/* Mobile Menu Trigger */}
         <button className="mobile-menu-btn" onClick={() => setIsMobileMenuOpen(true)}>
-          <Menu size={28} />
+          <Menu size={28} style={{color:"#ffffff"}}/>
         </button>
 
         {/* Brand */}
