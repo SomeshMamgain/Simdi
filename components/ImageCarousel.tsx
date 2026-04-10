@@ -189,8 +189,8 @@ export function ImageCarousel({ images, interval = 4000 }: ImageCarouselProps) {
               key={index}
               onClick={() => goToSlide(index)}
               style={{
-                width: index === currentIndex ? '24px' : '8px',
-                height: '8px',
+                width: index === currentIndex ? '4px' : '4px',
+                height: '2px',
                 borderRadius: '4px',
                 border: 'none',
                 background: index === currentIndex
