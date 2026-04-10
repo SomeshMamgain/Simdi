@@ -12,6 +12,7 @@ import {
   getProductSlug,
   getProductSummary,
   getVariantPrice,
+  stripHtml,
 } from '@/lib/product-utils'
 
 interface ProductCardProps {
@@ -94,7 +95,7 @@ export function ProductCard({ product }: ProductCardProps) {
           }}
         >
           <Link href={productLink} style={{ color: 'inherit', textDecoration: 'none' }}>
-            {getProductSummary(product)}
+          {stripHtml(getProductSummary(product))}
           </Link>
         </p>
 

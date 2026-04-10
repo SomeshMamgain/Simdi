@@ -121,7 +121,8 @@ export function getProductGalleryImages(product: Pick<ProductDocument, 'image' |
 }
 
 export function getProductSummary(product: Pick<ProductDocument, 'description' | 'alias_name' | 'type'>) {
-  return product.description ?? product.alias_name ?? product.type ?? 'Authentic Himalayan product.'
+  const raw = product.description ?? product.alias_name ?? product.type ?? 'Authentic Himalayan product.'
+  return cleanProductText(raw)
 }
 
 export function slugifyProductValue(value?: string) {
@@ -177,8 +178,51 @@ export function getProductIngredients(product: Pick<ProductDocument, 'ingredient
   return splitContentList(product.ingredients)
 }
 
-export function getProductKeywords(product: Pick<ProductDocument, 'keywords'>) {
-  return splitContentList(product.keywords)
+function generateFallbackKeywords(
+  product: Pick<ProductDocument, 'name' | 'alias_name' | 'type' | 'village'>
+): string[] {
+  const keywords: string[] = []
+  const name = product.name?.trim()
+  const alias = product.alias_name?.trim()
+  const type = product.type?.trim()
+  const village = product.village?.trim()
+
+  if (name) {
+    keywords.push(`buy ${name} online`)
+    keywords.push(`${name} from Uttarakhand`)
+    keywords.push(`organic ${name}`)
+    keywords.push(`pahadi ${name}`)
+  }
+
+  if (alias && alias.toLowerCase() !== name?.toLowerCase()) {
+    keywords.push(`buy ${alias} online`)
+    keywords.push(`${alias} Uttarakhand`)
+  }
+
+  if (type) {
+    keywords.push(`himalayan ${type}`)
+    keywords.push(`organic ${type} from Uttarakhand`)
+    keywords.push(`pahadi ${type} online India`)
+  }
+
+  if (village) {
+    keywords.push(`${name ?? type ?? 'product'} from ${village}`)
+  }
+
+  keywords.push('authentic Himalayan products online')
+  keywords.push('Pahadi products India')
+  keywords.push('organic Uttarakhand products')
+  keywords.push('SIMDI Himalayan store')
+
+  return keywords
+}
+
+export function getProductKeywords(
+  product: Pick<ProductDocument, 'keywords' | 'name' | 'alias_name' | 'type' | 'village'>
+) {
+  const explicit = splitContentList(product.keywords)
+  const raw = explicit.length > 0 ? explicit : generateFallbackKeywords(product)
+  return Array.from(new Set(raw))
 }
 
 export function toSerializableProduct(product: ProductDocument): ProductDocument {
@@ -328,6 +372,23 @@ export function getProductVideoPresentation(videoUrl?: string): ProductVideoPres
   }
 
   return null
+}
+
+/**
+ * Strips leading and trailing double/smart quotes from product text.
+ * Handles both regular ("…") and Unicode smart quotes ("…", „…", etc.)
+ */
+export function cleanProductText(text?: string | null): string {
+  if (!text) return ''
+  return text
+    .replace(/^[\u201C\u201D\u201E\u201F\u2033\u2036\u0022]+/g, '')
+    .replace(/[\u201C\u201D\u201E\u201F\u2033\u2036\u0022]+$/g, '')
+    .trim()
+}
+
+export function stripHtml(html?: string) {
+  if (!html) return ''
+  return html.replace(/<[^>]*>/g, ' ').replace(/\s{2,}/g, ' ').trim()
 }
 
 export function truncateText(value?: string, maxLength = 160) {
