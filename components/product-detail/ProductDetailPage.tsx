@@ -80,9 +80,12 @@ export function ProductDetailPage({ product, relatedProducts }: ProductDetailPag
           <div className={styles.contentColumn}>
             <section id="overview" className={`${styles.panel} ${styles.sectionCard}`}>
               <h2 className={styles.sectionTitle}>Overview</h2>
-              <p className={styles.sectionLead}>
-                {serializableProduct.description ?? 'A handcrafted Himalayan specialty sourced directly from the mountains.'}
-              </p>
+              <p
+                className={styles.sectionLead}
+                dangerouslySetInnerHTML={{
+                  __html: serializableProduct.description ?? 'A handcrafted Himalayan specialty sourced directly from the mountains.',
+                }}
+              />
 
               <div className={styles.infoGrid}>
                 <div className={styles.infoTile}>
@@ -172,22 +175,31 @@ export function ProductDetailPage({ product, relatedProducts }: ProductDetailPag
 
             <section id="preparation" className={`${styles.panel} ${styles.sectionCard}`}>
               <h2 className={styles.sectionTitle}>Preparation</h2>
-              <p className={styles.sectionLead}>
-                {serializableProduct.preparation ?? serializableProduct.method ?? 'Preparation guidance will be shared here once available.'}
-              </p>
+              <p
+                className={styles.sectionLead}
+                dangerouslySetInnerHTML={{
+                  __html: serializableProduct.preparation ?? serializableProduct.method ?? 'Preparation guidance will be shared here once available.',
+                }}
+              />
 
               {serializableProduct.method && serializableProduct.method !== serializableProduct.preparation ? (
                 <div className={styles.quote}>
-                  <span className={styles.quoteBody}>{serializableProduct.method}</span>
+                  <span
+                    className={styles.quoteBody}
+                    dangerouslySetInnerHTML={{ __html: serializableProduct.method }}
+                  />
                 </div>
               ) : null}
             </section>
 
             <section id="history" className={`${styles.panel} ${styles.sectionCard}`}>
               <h2 className={styles.sectionTitle}>History</h2>
-              <p className={styles.sectionLead}>
-                {serializableProduct.history ?? 'This product carries the heritage, techniques, and seasonal rhythms of Himalayan village life.'}
-              </p>
+              <p
+                className={styles.sectionLead}
+                dangerouslySetInnerHTML={{
+                  __html: serializableProduct.history ?? 'This product carries the heritage, techniques, and seasonal rhythms of Himalayan village life.',
+                }}
+              />
             </section>
 
             <section id="reviews" className={`${styles.panel} ${styles.sectionCard}`}>

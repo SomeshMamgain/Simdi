@@ -62,7 +62,9 @@ export function ProductHeader({ product }: ProductHeaderProps) {
         </div>
       </div>
 
-      {product.description ? <p className={styles.subtitle}>{product.description}</p> : null}
+      {product.description ? (
+        <p className={styles.subtitle} dangerouslySetInnerHTML={{ __html: product.description }} />
+      ) : null}
 
       {product.village ? (
         <div className={styles.ratingRow}>

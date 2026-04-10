@@ -37,7 +37,7 @@ export function NutritionFacts({ product }: NutritionFactsProps) {
 
       {product.nutrition_fact ? (
         <div className={styles.quote}>
-          <span className={styles.quoteBody}>{product.nutrition_fact}</span>
+          <span className={styles.quoteBody} dangerouslySetInnerHTML={{ __html: product.nutrition_fact }} />
         </div>
       ) : null}
     </div>

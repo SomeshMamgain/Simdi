@@ -330,6 +330,11 @@ export function getProductVideoPresentation(videoUrl?: string): ProductVideoPres
   return null
 }
 
+export function stripHtml(html?: string) {
+  if (!html) return ''
+  return html.replace(/<[^>]*>/g, ' ').replace(/\s{2,}/g, ' ').trim()
+}
+
 export function truncateText(value?: string, maxLength = 160) {
   if (!value) {
     return ''
