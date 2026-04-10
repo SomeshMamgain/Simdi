@@ -72,10 +72,10 @@ export function AddressCollectionModal({ open, onClose, onSaved }: AddressCollec
         : value
 
     setFormData((current) => {
-      const nextForm = normalizeAddressFormData({
+      const nextForm = {
         ...current,
         [field]: nextValue,
-      })
+      }
 
       setErrors(validateAddressForm(nextForm))
       return nextForm
@@ -86,7 +86,8 @@ export function AddressCollectionModal({ open, onClose, onSaved }: AddressCollec
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    const validationErrors = validateAddressForm(formData)
+    const normalizedForm = normalizeAddressFormData(formData)
+    const validationErrors = validateAddressForm(normalizedForm)
     setErrors(validationErrors)
 
     if (hasAddressErrors(validationErrors)) {
@@ -99,7 +100,7 @@ export function AddressCollectionModal({ open, onClose, onSaved }: AddressCollec
 
     try {
       const result = await updateUserProfile({
-        fullAddress: formData,
+        fullAddress: normalizedForm,
         saveForFutureOrders,
       })
 

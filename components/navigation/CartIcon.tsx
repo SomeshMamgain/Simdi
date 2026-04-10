@@ -9,7 +9,7 @@ export function CartIcon() {
   const itemCount = useCartStore((state) => state.getItemCount())
 
   return (
-    <Link href="/cart" className="icon-btn" style={{ position: 'relative' }} aria-label={`Cart with ${itemCount} items`}>
+    <Link href="/cart" className="icon-btn" style={{ position: 'relative', color:"#ffffff" }} aria-label={`Cart with ${itemCount} items`}>
       <ShoppingBag size={22} />
       {itemCount > 0 ? <span className="cart-badge">{itemCount}</span> : null}
     </Link>
