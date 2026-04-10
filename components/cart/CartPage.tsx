@@ -59,8 +59,7 @@ export function CartPage({ suggestions }: CartPageProps) {
             <span className={styles.eyebrow}>SHOPPING CART</span>
             <h1 className={styles.title}>Ready when you are</h1>
             <p className={styles.subtitle}>
-              Review the products you&apos;ve picked, apply a promo, and continue to secure payment with Razorpay. A
-              fixed 5% handling charge is applied automatically.
+              Review the products you&apos;ve picked, apply a promo, and continue to secure payment with Razorpay.
             </p>
           </div>
           <div className={styles.countPill}>{itemCount} item{itemCount === 1 ? '' : 's'} in cart</div>

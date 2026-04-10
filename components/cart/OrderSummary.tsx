@@ -48,9 +48,6 @@ export function OrderSummary() {
         <span>{formatCurrencyAmount(total)}</span>
       </div>
 
-      <p className={styles.summaryNote}>
-        A fixed 5% handling charge is applied automatically on the discounted subtotal.
-      </p>
 
       <div className={styles.divider} />
 

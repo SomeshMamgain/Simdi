@@ -219,7 +219,7 @@ export const Navbar = () => {
         aria-hidden={!isMobileMenuOpen}
       >
         <button className="close-btn" onClick={() => setIsMobileMenuOpen(false)}>
-          <X size={32} color="#1E2D24" />
+          <X size={32} color="#d4d7d5" />
         </button>
         {navLinks.map(({ label, href }) => (
           <Link key={label} href={href} onClick={() => setIsMobileMenuOpen(false)} className="mobile-menu-link">
