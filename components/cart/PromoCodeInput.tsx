@@ -111,7 +111,6 @@ export function PromoCodeInput({ subtotal }: PromoCodeInputProps) {
       <div className={styles.panelHeading}>
         <div>
           <h3 className={styles.panelTitle}>Promo Code</h3>
-          <p className={styles.panelSubtitle}>Apply an offer from your Appwrite promotions collection.</p>
         </div>
         {appliedPromo ? (
           <button type="button" className={styles.textButton} onClick={handleRemovePromo}>
