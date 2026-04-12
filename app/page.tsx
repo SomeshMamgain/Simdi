@@ -30,42 +30,222 @@ const homepageKeywords = [
   'fair trade Himalayan products',
   'Pauri Garhwal products',
   'Chakisain Uttarakhand',
+  'organic ghee online',
+  'raw honey from Himalayas',
+  'pure Pahadi products',
+  'Uttarakhand organic products online',
+  'chemical-free food India',
+  'authentic mountain products',
+  'organic products Uttarakhand',
+  'Bilona ghee authentic',
+  'wild Himalayan honey',
+  'women farmer cooperative',
+  'farm to home organic',
+  'FSSAI certified honey',
+  'Pahadi rice online',
+  'Garhwal products',
+  'mountain organic food',
 ]
 
-export const metadata: Metadata = buildMetadata({
-  title: 'SIMDI | Your Himalayan Friend for Pahadi Products, Rides & Parcels',
+export const metadata: Metadata = {
+  // Primary metadata
+  title: 'Pure Himalayan Organic Products | SIMDI - Farm to Home from Uttarakhand',
   description:
-    'Products, rides, and deliveries straight from Himalayan villages. Shop authentic Pahadi products, book Uttarakhand mountain rides, and send parcels with SIMDI.',
-  path: '/',
-  keywords: homepageKeywords,
-  images: ['/hero_simdi.jpg'],
-  imageAlt: 'SIMDI homepage featuring Himalayan products and village sourcing',
-})
+    'Shop authentic, pure organic products from Uttarakhand mountains - Raw Bilona Ghee, Wild Honey, Pahadi Rice. FSSAI certified, no chemicals. Support 35+ women farmers.',
 
-const homepageStructuredData = {
+  // SEO optimization
+  keywords: homepageKeywords,
+
+  // Additional search engine directives
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+
+  // Canonical URL (prevents duplicate content issues)
+  alternates: {
+    canonical: 'https://www.simdi.in',
+  },
+
+  // Open Graph (Social Media Sharing) - Critical for conversion
+  openGraph: {
+    type: 'website',
+    url: 'https://www.simdi.in',
+    title: '🏔️ Pure Himalayan Organic Products | SIMDI - Trusted by 500+ Families',
+    description:
+      '100% pure, raw, unprocessed organic food from Uttarakhand mountains. Lab-tested. Certified. Direct from women farmers. Try today - Money-back guarantee.',
+    siteName: 'SIMDI',
+    locale: 'en_IN',
+    images: [
+      {
+        url: 'https://www.simdi.in/ghee.png',
+        width: 1200,
+        height: 630,
+        alt: 'SIMDI Himalayan organic products - ghee, honey, rice',
+        type: 'image/jpeg',
+      },
+      {
+        url: 'https://www.simdi.in/mahila.jpeg',
+        width: 1200,
+        height: 630,
+        alt: 'Women farmers of Uttarakhand making pure organic products',
+        type: 'image/jpeg',
+      },
+    ],
+  },
+
+  // Twitter Card (X) - For better engagement
+  twitter: {
+    card: 'summary_large_image',
+    site: '@simdi_pahadi',
+    creator: '@simdi_pahadi',
+    title: 'Pure Himalayan Organic Products Direct from Uttarakhand',
+    description:
+      'Raw ghee, wild honey, Pahadi rice from mountain women. Pure. Certified. No chemicals. Support farmers.',
+    images: ['https://www.simdi.in/ghee.png'],
+  },
+
+  // Viewport and mobile optimization
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+  },
+
+  // Additional metadata for trust signals
+  authors: [{ name: 'SIMDI', url: 'https://www.simdi.in' }],
+  creator: 'SIMDI',
+  publisher: 'SIMDI',
+
+  // Mobile app metadata
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'SIMDI - Pahadi Products',
+  },
+
+  // Icons
+  icons: {
+    icon: [
+      {
+        url: '/favicon.ico',
+        sizes: '32x32',
+        type: 'image/x-icon',
+      },
+      {
+        url: '/favicon-16x16.png',
+        sizes: '16x16',
+        type: 'image/png',
+      },
+      {
+        url: '/favicon-32x32.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+    ],
+    apple: [
+      {
+        url: '/`apple-touch-icon`.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+    ],
+  },
+
+  // Verification for search engines (if you have these)
+  // verification: {
+  //   google: 'your-google-verification-code',
+  //   // yandex: 'your-yandex-verification-code',
+  // },
+}
+
+/**
+ * STRUCTURED DATA (JSON-LD) for Rich Snippets
+ * This helps Google show richer results in search
+ * Include this in your <head> section
+ */
+export const homepageStructuredData = {
   '@context': 'https://schema.org',
   '@graph': [
     {
       '@type': 'Organization',
-      name: SITE_NAME,
-      url: getCanonicalUrl('/'),
-      logo: getAbsoluteAssetUrl('/apple-icon.png'),
-      image: getAbsoluteAssetUrl('/hero_simdi.jpg'),
+      name: 'SIMDI',
+      url: 'https://www.simdi.in',
+      logo: 'https://www.simdi.in/logo.jpeg',
       description:
-        'SIMDI connects people with authentic Himalayan products, local delivery support, and Uttarakhand-rooted experiences.',
-      areaServed: 'India',
+        'Pure organic Himalayan products sourced directly from women farmers in Uttarakhand',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Chakisain',
+        addressLocality: 'Pauri Garhwal',
+        addressRegion: 'Uttarakhand',
+        postalCode: '246130',
+        addressCountry: 'IN',
+      },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+91-7042735331',
+        contactType: 'Customer Service',
+        email: 'team@simdi.in',
+      },
+      sameAs: [
+        'https://www.instagram.com/simdi.in',
+        'https://www.facebook.com/SimdiUK12/',
+      ],
     },
     {
-      '@type': 'WebSite',
-      name: SITE_NAME,
-      url: getCanonicalUrl('/'),
+      '@type': 'LocalBusiness',
+      name: 'SIMDI - Himalayan Organic Products',
+      image: 'https://www.simdi.in/logo.jpeg',
       description:
-        'Explore authentic Pahadi products, Himalayan pantry essentials, and stories from Uttarakhand.',
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: `${getCanonicalUrl('/products')}?q={search_term_string}`,
-        'query-input': 'required name=search_term_string',
+        'Organic products from Uttarakhand mountains - pure, certified, women-empowered',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Chakisain',
+        addressLocality: 'Pauri Garhwal',
+        postalCode: '246130',
+        addressCountry: 'IN',
       },
+      telephone: '+91-7042735331',
+      priceRange: '₹119 - ₹2999',
+    },
+    {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'INR',
+      lowPrice: '119',
+      highPrice: '2999',
+      offerCount: '15+',
+      description: 'Organic Himalayan products',
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'SIMDI',
+          item: 'https://www.simdi.in',
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Products',
+          item: 'https://www.simdi.in/products',
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: 'Our Story',
+          item: 'https://www.simdi.in/our-roots',
+        },
+      ],
     },
   ],
 }
@@ -208,21 +388,7 @@ directly supporting 35+ families and preserving mountain agriculture.
       <ReviewsSection />
 
       {/* STATS SECTION */}
-      <section style={{ background: '#1E2D24', padding: '80px 20px' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', gap: '40px', textAlign: 'center' }}>
-          {[
-            { val: '12+', label: 'Villages Connected' },
-            { val: '35+', label: 'Women Empowered' },
-            { val: '100%', label: 'Organic Products' },
-            { val: '500+', label: 'Happy Families' },
-          ].map((s, i) => (
-            <div key={i} style={{ flex: '1 1 180px' }}>
-              <p style={{ color: '#B58E58', fontSize: '3.5rem', fontWeight: 800, margin: 0 }}>{s.val}</p>
-              <p style={{ color: '#F9F7F2', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.2em', marginTop: '10px' }}>{s.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+     
 
       {/* BEST SELLERS SECTION */}
       <section style={{ padding: '100px 20px', background: '#fff' }}>
@@ -248,6 +414,21 @@ directly supporting 35+ families and preserving mountain agriculture.
               </button>
             </Link>
           </div>
+        </div>
+      </section>
+       <section style={{ background: '#1E2D24', padding: '80px 20px' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', gap: '40px', textAlign: 'center' }}>
+          {[
+            { val: '12+', label: 'Villages Connected' },
+            { val: '35+', label: 'Women Empowered' },
+            { val: '100%', label: 'Organic Products' },
+            { val: '500+', label: 'Happy Families' },
+          ].map((s, i) => (
+            <div key={i} style={{ flex: '1 1 180px' }}>
+              <p style={{ color: '#B58E58', fontSize: '3.5rem', fontWeight: 800, margin: 0 }}>{s.val}</p>
+              <p style={{ color: '#F9F7F2', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.2em', marginTop: '10px' }}>{s.label}</p>
+            </div>
+          ))}
         </div>
       </section>
 
