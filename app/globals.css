@@ -887,3 +887,49 @@ a { color: inherit; text-decoration: none; }
 .auth-avatar-trigger{
   padding: unset;
 }
+
+.cta-outline {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: 1px solid #1E2D24;
+  background: #fff;
+  color: #1E2D24;
+  font-family: Georgia, serif;
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cta-outline:hover {
+  background: #34d574;
+  color: #fff;
+}
+
+.cta-filled {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: 1px solid #B58E58;
+  background: #B58E58;
+  color: #fff;
+  font-family: Georgia, serif;
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cta-filled:hover {
+  background: #9A7640;
+  border-color: #9A7640;
+}
+
+.cta-icon {
+  width: 14px;
+  height: 14px;
+  fill: #fff;
+}

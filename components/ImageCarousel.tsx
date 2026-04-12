@@ -199,8 +199,6 @@ export function ImageCarousel({ images, interval = 4000 }: ImageCarouselProps) {
                 cursor: 'pointer',
                 transition: 'width 400ms ease, background 400ms ease',
                 padding: '4px',
-                minWidth: '16px',
-                minHeight: '16px',
                 touchAction: 'manipulation',
               } as React.CSSProperties}
               aria-label={`Go to slide ${index + 1}`}
@@ -234,9 +232,9 @@ export function ImageCarousel({ images, interval = 4000 }: ImageCarouselProps) {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px 20px', alignItems: 'center', justifyContent: 'center' }}>
   {[
     { icon: '🌿', text: 'FSSAI Certified' },
-    { icon: '✅', text: '100% Organic' },
-    { icon: '🚫', text: 'No Middlemen' },
-    { icon: '🚚', text: 'Pan India Delivery' },
+    { icon: '🧪', text: '100% Organic' },
+    { icon: '🚫', text: 'No Additives' },
+    { icon: '👩‍🌾', text: '35+ Women Farmers' },
   ].map(({ icon, text }) => (
     <span key={text} style={{ fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.05em', opacity: 0.92, whiteSpace: 'nowrap' }}>
       {icon} {text}

@@ -6,6 +6,7 @@ import { ProductCard } from '@/components/ProductCard'
 import { ImageCarousel } from '@/components/ImageCarousel'
 import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
+import { ReviewsSection } from '@/components/Review/Review'
 import { SITE_NAME, buildMetadata, getAbsoluteAssetUrl, getCanonicalUrl } from '@/lib/seo'
 import { getProducts } from '@/lib/product-service'
 
@@ -132,10 +133,7 @@ export default async function Home() {
       </p>
       <h1 style={{ fontFamily: 'Georgia, serif', lineHeight: 1.1, margin: 0 }}>
         <span style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, color: '#1E2D24' }}>
-          Crafted by Mountains.
-        </span>
-        <span style={{ display: 'block', fontSize: 'clamp(1.5rem, 3vw, 2rem)', color: '#B58E58', marginTop: '10px' }}>
-          Untouched by Cities
+          Taste the Himalayas
         </span>
       </h1>
       <p style={{ marginTop: '20px', maxWidth: '450px', color: '#5E6E5E', fontSize: '1rem', lineHeight: 1.7 }}>
@@ -194,10 +192,10 @@ export default async function Home() {
             <h2 style={{ fontFamily: 'Georgia', fontStyle: 'italic', fontSize: '1.5rem', color: '#B58E58' }}>Born in the Mountains</h2>
             <h3 style={{ fontFamily: 'Georgia', fontSize: '3rem', fontWeight: 700, color: '#1E2D24', marginTop: '10px', marginBottom: '30px' }}>Made with Love</h3>
             <div style={{ color: '#5E6E5E', fontSize: '1.05rem', lineHeight: 1.85, display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <p>High in the Himalayas, life moves with the rhythm of seasons. Village women carry centuries of wisdom — from making Bilona ghee at dawn to harvesting wild honey from cliffsides.</p>
-              <p>Simdi was born to bridge mountain hearts and modern homes. We work directly with farmer cooperatives in Chakisain, Pauri Garhwal — cutting out middlemen so artisans earn fairly and you get products that are genuinely pure.</p>
-              <p>When you buy from Simdi, you're not just buying food. You're preserving a way of life.</p>
-            </div>
+             <p>Every jar of SIMDI Ghee comes from Himalayan women farmers who've 
+perfected this craft for generations. When you buy from us, you're 
+directly supporting 35+ families and preserving mountain agriculture.
+</p></div>
             <Link href="/our-roots">
               <button style={{ marginTop: '30px', padding: '14px 32px', background: 'transparent', color: '#1E2D24', border: '1px solid #1E2D24', letterSpacing: '0.1em', fontSize: '0.8rem', cursor: 'pointer' }}>
                 READ OUR STORY
@@ -206,6 +204,8 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <ReviewsSection />
 
       {/* STATS SECTION */}
       <section style={{ background: '#1E2D24', padding: '80px 20px' }}>
