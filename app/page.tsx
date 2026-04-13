@@ -330,12 +330,12 @@ export default async function Home() {
     <div className="hero-image">
       <ImageCarousel
         images={[
-          { src: '/pure_honey.png', alt: 'Himalayan raw honey being poured' },
-          { src: '/ghee.png', alt: 'Pure Bilona Ghee' },
-          { src: '/pisyu_loon.png', alt: 'Traditional spice grinding with mortar and pestle' },
-          { src: '/kaafal.png', alt: 'Kafal himalayan berries' },
-          { src: '/bal_mithai.png', alt: 'Choclate Sweet' },
-          { src: '/buransh.png', alt: 'Traditional buransh petal juice' },
+          { src: '/product_images/pahadi_honey/pahadi_honey.webp', alt: 'Himalayan raw honey being poured' },
+          { src: '/product_images/ghee/ghee.webp', alt: 'Pure Bilona Ghee' },
+          { src: '/product_images/pisyu_loon/pisyu_loon.webp', alt: 'Traditional spice grinding with mortar and pestle' },
+          { src: '/product_images/kaafal/kaafal.webp', alt: 'Kafal himalayan berries' },
+          { src: '/product_images/bal_mithai/bal_mithai.webp', alt: 'Choclate Sweet' },
+          { src: '/product_images/buransh/buransh.webp', alt: 'Traditional buransh petal juice' },
         ]}
       />
     </div>
@@ -366,7 +366,7 @@ export default async function Home() {
       <section style={{ padding: '100px 20px', background: '#F9F7F2' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '60px', alignItems: 'center' }}>
           <div style={{ flex: '1 1 400px' }}>
-            <img src="/born_with_love.jpg" alt="Handcrafted organic products Uttarakhand" style={{ width: '100%', borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }} />
+            <img src="/site_images/born_with_love.webp" alt="Himalyan women feeding cow" style={{ width: '100%', borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }} />
           </div>
           <div style={{ flex: '1 1 500px' }}>
             <h2 style={{ fontFamily: 'Georgia', fontStyle: 'italic', fontSize: '1.5rem', color: '#B58E58' }}>Born in the Mountains</h2>
