@@ -21,11 +21,36 @@ function getServerAuthConfig() {
   }
 }
 
+function getServerSessionAuthConfig() {
+  const { endpoint, projectId } = getServerAuthConfig()
+  const apiKey = process.env.APPWRITE_API_KEY
+
+  if (!apiKey) {
+    throw new Error('Missing APPWRITE_API_KEY')
+  }
+
+  return {
+    endpoint,
+    projectId,
+    apiKey,
+  }
+}
+
 export function createPublicAccountClient() {
   const { endpoint, projectId } = getServerAuthConfig()
   const client = new Client()
     .setEndpoint(endpoint)
     .setProject(projectId)
+
+  return new Account(client)
+}
+
+export function createServerSessionAccountClient() {
+  const { endpoint, projectId, apiKey } = getServerSessionAuthConfig()
+  const client = new Client()
+    .setEndpoint(endpoint)
+    .setProject(projectId)
+    .setKey(apiKey)
 
   return new Account(client)
 }
@@ -102,6 +127,19 @@ export function clearAuthSessionCookies(response: NextResponse) {
   })
 }
 
+export async function createServerEmailPasswordSession(input: {
+  email: string
+  password: string
+}) {
+  // Appwrite only returns `session.secret` when the session is created through an API-key-backed server request.
+  const account = createServerSessionAccountClient()
+
+  return account.createEmailPasswordSession({
+    email: input.email,
+    password: input.password,
+  })
+}
+
 export async function createAccountAndSession(input: {
   email: string
   password: string
@@ -118,7 +156,7 @@ export async function createAccountAndSession(input: {
     name,
   })
 
-  return account.createEmailPasswordSession({
+  return createServerEmailPasswordSession({
     email: input.email,
     password: input.password,
   })

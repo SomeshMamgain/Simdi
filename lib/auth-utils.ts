@@ -81,3 +81,24 @@ export function getDisplayName(name?: string | null, email?: string | null) {
 
   return value.split(/\s+/)[0] ?? 'Account'
 }
+
+export function getUserInitials(name?: string | null, email?: string | null) {
+  const normalizedName = name?.trim()
+
+  if (normalizedName) {
+    const words = normalizedName.split(/\s+/).filter(Boolean)
+    const initials = words.slice(0, 2).map((word) => word[0]?.toUpperCase() ?? '').join('')
+
+    if (initials) {
+      return initials
+    }
+  }
+
+  const emailPrefix = email?.split('@')[0]?.replace(/[^a-zA-Z0-9]/g, '') ?? ''
+
+  if (emailPrefix) {
+    return emailPrefix.slice(0, 2).toUpperCase()
+  }
+
+  return 'A'
+}

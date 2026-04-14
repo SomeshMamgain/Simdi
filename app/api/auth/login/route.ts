@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import { getAuthErrorMessage } from '@/lib/auth-utils'
-import { applyAuthSessionCookies, createPublicAccountClient } from '@/lib/services/auth-server'
+import { applyAuthSessionCookies, createServerEmailPasswordSession } from '@/lib/services/auth-server'
 import { loginRequestSchema } from '@/lib/services/auth-schemas'
 import { getAuthSessionPayload } from '@/lib/services/user-profile-server'
 
@@ -14,14 +14,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Email and password are required' }, { status: 400 })
     }
 
-    const account = createPublicAccountClient()
-    const session = await account.createEmailPasswordSession({
-      email: parsedRequest.data.email,
-      password: parsedRequest.data.password,
-    })
-    console.log('Login successful, session created:', session)
+    const session = await createServerEmailPasswordSession(parsedRequest.data)
+
     if (!session.secret) {
-      throw new Error('Session could not be created')
+      throw new Error('Appwrite session secret was not returned')
     }
 
     const payload = await getAuthSessionPayload(session.secret)

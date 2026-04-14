@@ -6,7 +6,7 @@ import { LogOut, Menu, Package, UserRound, X } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
-import { getDisplayName } from '@/lib/auth-utils'
+import { getDisplayName, getUserInitials } from '@/lib/auth-utils'
 import { useAuthStore } from '@/store/authStore'
 
 import { AuthModal } from './AuthModal'
@@ -110,7 +110,26 @@ export const Navbar = () => {
 
   const accountLabel = getDisplayName(currentUser?.name, currentUser?.email)
   const accountEmail = currentUser?.email ?? ''
+  const accountInitials = getUserInitials(currentUser?.name, currentUser?.email)
   const shouldShowAvatarImage = Boolean(avatarUrl && !hasAvatarError)
+
+  const renderAccountAvatar = (size: 'default' | 'menu' = 'default') => (
+    <span className={`auth-avatar-shell${size === 'menu' ? ' auth-avatar-shell--menu' : ''}`}>
+      {shouldShowAvatarImage ? (
+        <img
+          src={avatarUrl ?? ''}
+          alt={`${accountLabel} profile`}
+          className="auth-avatar-image"
+          referrerPolicy="no-referrer"
+          onError={() => setHasAvatarError(true)}
+        />
+      ) : (
+        <span className="auth-avatar-initials" aria-hidden="true">
+          {accountInitials}
+        </span>
+      )}
+    </span>
+  )
 
   return (
     <>
@@ -151,19 +170,7 @@ export const Navbar = () => {
                 aria-expanded={isAccountMenuOpen}
                 aria-haspopup="menu"
               >
-                <span className="auth-avatar-shell">
-                  {shouldShowAvatarImage ? (
-                    <img
-                      src={avatarUrl ?? ''}
-                      alt={`${accountLabel} profile`}
-                      className="auth-avatar-image"
-                      referrerPolicy="no-referrer"
-                      onError={() => setHasAvatarError(true)}
-                    />
-                  ) : (
-                    <UserRound size={18} />
-                  )}
-                </span>
+                {renderAccountAvatar()}
                 <span className="auth-avatar-label">{accountLabel}</span>
               </button>
 
@@ -173,19 +180,7 @@ export const Navbar = () => {
                 aria-hidden={!isAccountMenuOpen}
               >
                 <div className="auth-account-summary">
-                  <span className="auth-avatar-shell auth-avatar-shell--menu">
-                    {shouldShowAvatarImage ? (
-                      <img
-                        src={avatarUrl ?? ''}
-                        alt={`${accountLabel} profile`}
-                        className="auth-avatar-image"
-                        referrerPolicy="no-referrer"
-                        onError={() => setHasAvatarError(true)}
-                      />
-                    ) : (
-                      <UserRound size={18} />
-                    )}
-                  </span>
+                  {renderAccountAvatar('menu')}
                   <div className="auth-account-copy">
                     <strong>{accountLabel}</strong>
                     {accountEmail ? <span>{accountEmail}</span> : null}
