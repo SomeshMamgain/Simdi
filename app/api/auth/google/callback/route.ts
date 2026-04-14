@@ -116,8 +116,10 @@ export async function GET(request: NextRequest) {
     if (!session.secret) {
       throw new Error('Appwrite session secret was not returned')
     }
+    const state = request.nextUrl.searchParams.get('state')
+const redirectPath = state ? `/${state}` : '/'
 
-    const response = NextResponse.redirect(new URL('/', baseUrl))
+const response = NextResponse.redirect(new URL(redirectPath, baseUrl))
     const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

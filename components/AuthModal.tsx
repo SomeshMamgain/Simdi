@@ -185,9 +185,10 @@ export function AuthModal({
 
     setStatus(null)
     setPendingAction(tab === 'signIn' ? 'googleSignIn' : 'googleSignUp')
-
+    const currentPage= window.location.href.split('/').pop()
+    console.log('Current page before redirecting to Google OAuth:', currentPage)
     try {
-      window.location.href = '/api/auth/google'
+      window.location.href = `/api/auth/google?info=${currentPage}`
     } catch (error) {
       setPendingAction(null)
       setStatus({ type: 'error', message: error instanceof Error ? error.message : 'Unable to open Google sign-in.' })

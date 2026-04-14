@@ -20,11 +20,13 @@ export async function GET(request: NextRequest) {
   const { clientId, configuredBaseUrl } = getGoogleAuthConfig()
   const baseUrl = configuredBaseUrl?.replace(/\/$/, '') || request.nextUrl.origin
   const googleUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth')
-
+  const info = request.nextUrl.searchParams.get('info');
+  console.log('Received info parameter in Google auth route:', info)
   googleUrl.searchParams.set('client_id', clientId)
   googleUrl.searchParams.set('redirect_uri', `${baseUrl}/api/auth/google/callback`)
   googleUrl.searchParams.set('response_type', 'code')
   googleUrl.searchParams.set('scope', 'openid email profile')
+  googleUrl.searchParams.set('state', info || '') // Pass the info parameter as state to the callback
 
   return NextResponse.redirect(googleUrl)
 }
