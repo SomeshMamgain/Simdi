@@ -4,6 +4,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { Loader2, MapPin, X } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 
+import { trackEvent } from '@/lib/analytics/gtag'
 import { hasAddressErrors, normalizeAddressFormData, normalizePhoneNumber, validateAddressForm } from '@/lib/address-utils'
 import { INDIAN_STATES } from '@/lib/constants/indian-states'
 import { useAuthStore } from '@/store/authStore'
@@ -97,6 +98,14 @@ export function AddressCollectionModal({ open, onClose, onSaved }: AddressCollec
 
     setIsSaving(true)
     setStatusMessage(null)
+    void trackEvent('save_delivery_address_click', {
+      category: 'CTA',
+      priority: 'secondary',
+      page: '/cart',
+      save_for_future_orders: saveForFutureOrders,
+      address_country: normalizedForm.country,
+      address_state: normalizedForm.state,
+    })
 
     try {
       const result = await updateUserProfile({

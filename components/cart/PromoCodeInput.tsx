@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { toast } from 'sonner'
 
+import { trackEvent } from '@/lib/analytics/gtag'
 import { validatePromoCode } from '@/lib/services/promo-code-service'
 import { useCartStore } from '@/store/cartStore'
 
@@ -85,6 +86,22 @@ export function PromoCodeInput({ subtotal }: PromoCodeInputProps) {
         tone: 'success',
         message: result.message,
       })
+      void trackEvent(
+        'apply_coupon',
+        {
+          category: 'CTA',
+          priority: 'secondary',
+          page: '/cart',
+          promo_code: result.code ?? code.trim().toUpperCase(),
+          cart_subtotal: subtotal,
+          discount_percent: result.discountPercent,
+          discount_amount: result.discountAmount,
+          currency: 'INR',
+        },
+        {
+          debounceKey: `apply_coupon:${result.code ?? code.trim().toUpperCase()}`,
+        }
+      )
       toast.success(result.message)
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unable to validate promo code'

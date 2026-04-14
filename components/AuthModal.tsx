@@ -6,6 +6,7 @@ import * as Tabs from '@radix-ui/react-tabs'
 import { X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
+import { storeGoogleAuthIntent, trackEvent, trackEventBeforeNavigation } from '@/lib/analytics/gtag'
 import { getPasswordStrength, getStrongPasswordValidationError, isValidEmail } from '@/lib/auth-utils'
 import { account } from '@/lib/appwrite'
 import { useAuthStore } from '@/store/authStore'
@@ -130,11 +131,25 @@ export function AuthModal({
     }
 
     setPendingAction('signIn')
+    void trackEvent('login_click', {
+      category: 'CTA',
+      priority: 'primary',
+      page: 'auth_modal',
+      auth_method: 'password',
+      auth_mode: 'signIn',
+    })
 
     try {
       await login({
         email,
         password: signInForm.password,
+      })
+      void trackEvent('login_success', {
+        category: 'CTA',
+        priority: 'primary',
+        page: 'auth_modal',
+        auth_method: 'password',
+        auth_mode: 'signIn',
       })
       await Promise.resolve(onSuccess())
       onClose()
@@ -180,15 +195,33 @@ export function AuthModal({
     }
   }
 
-  const handleGoogleAuth = (tab: AuthTab) => {
+  const handleGoogleAuth = async (tab: AuthTab) => {
     const setStatus = tab === 'signIn' ? setSignInStatus : setSignUpStatus
 
     setStatus(null)
     setPendingAction(tab === 'signIn' ? 'googleSignIn' : 'googleSignUp')
-    const currentPage= window.location.href.split('/').pop()
-    console.log('Current page before redirecting to Google OAuth:', currentPage)
+    const currentPage = `${window.location.pathname}${window.location.search}` || '/'
+    storeGoogleAuthIntent({
+      mode: tab,
+      sourcePage: currentPage,
+      startedAt: Date.now(),
+    })
+
     try {
-      window.location.href = `/api/auth/google?info=${currentPage}`
+      await trackEventBeforeNavigation({
+        eventName: tab === 'signIn' ? 'google_sign_in_click' : 'google_sign_up_click',
+        params: {
+          category: 'CTA',
+          priority: 'primary',
+          page: 'auth_modal',
+          auth_method: 'google',
+          auth_mode: tab,
+          source_page: currentPage,
+        },
+        navigate: () => {
+          window.location.assign(`/api/auth/google?info=${encodeURIComponent(currentPage)}`)
+        },
+      })
     } catch (error) {
       setPendingAction(null)
       setStatus({ type: 'error', message: error instanceof Error ? error.message : 'Unable to open Google sign-in.' })
@@ -224,6 +257,13 @@ export function AuthModal({
     }
 
     setPendingAction('signUp')
+    void trackEvent('signup_click', {
+      category: 'CTA',
+      priority: 'secondary',
+      page: 'auth_modal',
+      auth_method: 'password',
+      auth_mode: 'signUp',
+    })
 
     try {
       await signup({
@@ -231,6 +271,13 @@ export function AuthModal({
         lastName,
         email,
         password: signUpForm.password,
+      })
+      void trackEvent('signup_success', {
+        category: 'CTA',
+        priority: 'secondary',
+        page: 'auth_modal',
+        auth_method: 'password',
+        auth_mode: 'signUp',
       })
       await Promise.resolve(onSuccess())
       onClose()
@@ -341,7 +388,7 @@ export function AuthModal({
                 <button
                   className="auth-secondary-button"
                   type="button"
-                  onClick={() => handleGoogleAuth('signIn')}
+                  onClick={() => void handleGoogleAuth('signIn')}
                   disabled={isBusy}
                   aria-label="Continue with Google"
                 >
@@ -440,7 +487,7 @@ export function AuthModal({
                 <button
                   className="auth-secondary-button"
                   type="button"
-                  onClick={() => handleGoogleAuth('signUp')}
+                  onClick={() => void handleGoogleAuth('signUp')}
                   disabled={isBusy}
                   aria-label="Continue with Google"
                 >

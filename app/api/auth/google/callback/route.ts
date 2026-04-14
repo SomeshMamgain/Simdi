@@ -49,6 +49,20 @@ function buildFailureRedirect(baseUrl: string) {
   return new URL('/login?error=auth_failed', baseUrl)
 }
 
+function buildSuccessRedirect(baseUrl: string, redirectPath?: string | null) {
+  const normalizedPath = redirectPath
+    ? redirectPath.startsWith('/')
+      ? redirectPath
+      : `/${redirectPath}`
+    : '/'
+  const redirectUrl = new URL(normalizedPath, baseUrl)
+
+  redirectUrl.searchParams.set('authFlow', 'google')
+  redirectUrl.searchParams.set('authStatus', 'success')
+
+  return redirectUrl
+}
+
 export async function GET(request: NextRequest) {
   const { clientId, clientSecret, projectId, configuredBaseUrl } = getAuthConfig()
   const baseUrl = configuredBaseUrl?.replace(/\/$/, '') || request.nextUrl.origin
@@ -117,9 +131,7 @@ export async function GET(request: NextRequest) {
       throw new Error('Appwrite session secret was not returned')
     }
     const state = request.nextUrl.searchParams.get('state')
-const redirectPath = state ? `/${state}` : '/'
-
-const response = NextResponse.redirect(new URL(redirectPath, baseUrl))
+    const response = NextResponse.redirect(buildSuccessRedirect(baseUrl, state))
     const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

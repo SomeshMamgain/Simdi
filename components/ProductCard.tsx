@@ -1,8 +1,8 @@
 'use client'
 
-import Link from 'next/link'
 import { useState } from 'react'
 
+import { TrackedLink } from '@/components/analytics/TrackedLink'
 import type { ProductDocument } from '@/lib/product-types'
 import { AddToCartButton } from '@/components/products/AddToCartButton'
 import {
@@ -29,6 +29,15 @@ export function ProductCard({ product }: ProductCardProps) {
   const displayBasePrice = selectedSize
     ? formatPrice(getVariantPrice(product.price, selectedSize.multiplier, selectedSize.surcharge))
     : formatPrice(product.price)
+  const ctaEventParams = {
+    category: 'CTA',
+    priority: 'secondary' as const,
+    page: '/products',
+    product_id: product.$id,
+    product_name: product.name ?? 'Untitled product',
+    product_slug: getProductSlug(product),
+    price: displayBasePrice,
+  }
 
   return (
     <article
@@ -42,7 +51,12 @@ export function ProductCard({ product }: ProductCardProps) {
         flexDirection: 'column',
       }}
     >
-      <Link href={productLink} aria-label={`View details for ${product.name ?? 'this product'}`}>
+      <TrackedLink
+        href={productLink}
+        eventName="view_product_click"
+        eventParams={ctaEventParams}
+        aria-label={`View details for ${product.name ?? 'this product'}`}
+      >
         <div style={{ height: '260px', background: '#EEE8DC' }}>
           <img
             src={imageSrc}
@@ -50,11 +64,16 @@ export function ProductCard({ product }: ProductCardProps) {
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
         </div>
-      </Link>
+      </TrackedLink>
 
       <div style={{ padding: '22px', display: 'flex', flexDirection: 'column', gap: '14px', flex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'start', justifyContent: 'space-between', gap: '14px' }}>
-          <Link href={productLink} style={{ color: 'inherit', textDecoration: 'none', flex: 1 }}>
+          <TrackedLink
+            href={productLink}
+            eventName="view_product_click"
+            eventParams={ctaEventParams}
+            style={{ color: 'inherit', textDecoration: 'none', flex: 1 }}
+          >
             <h2
               style={{
                 margin: 0,
@@ -66,7 +85,7 @@ export function ProductCard({ product }: ProductCardProps) {
             >
               {product.name ?? 'Untitled product'}
             </h2>
-          </Link>
+          </TrackedLink>
           <span
             style={{
               flexShrink: 0,
@@ -94,13 +113,20 @@ export function ProductCard({ product }: ProductCardProps) {
             WebkitBoxOrient: 'vertical',
           }}
         >
-          <Link href={productLink} style={{ color: 'inherit', textDecoration: 'none' }}>
-          {stripHtml(getProductSummary(product))}
-          </Link>
+          <TrackedLink
+            href={productLink}
+            eventName="view_product_click"
+            eventParams={ctaEventParams}
+            style={{ color: 'inherit', textDecoration: 'none' }}
+          >
+            {stripHtml(getProductSummary(product))}
+          </TrackedLink>
         </p>
 
-        <Link
+        <TrackedLink
           href={productLink}
+          eventName="view_product_click"
+          eventParams={ctaEventParams}
           style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -114,7 +140,7 @@ export function ProductCard({ product }: ProductCardProps) {
           }}
         >
           View Details
-        </Link>
+        </TrackedLink>
 
         <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>

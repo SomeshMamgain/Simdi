@@ -5,6 +5,7 @@ import type { CSSProperties } from 'react'
 import { ShoppingBag } from 'lucide-react'
 import { toast } from 'sonner'
 
+import { trackEvent } from '@/lib/analytics/gtag'
 import { buildCartItem } from '@/lib/cart-helpers'
 import type { ProductDocument } from '@/lib/product-types'
 import type { ProductSizeOption } from '@/lib/product-utils'
@@ -36,6 +37,24 @@ export function AddToCartButton({
     const item = buildCartItem(product, { size })
 
     addToCart(item, quantity)
+    void trackEvent(
+      'add_to_cart',
+      {
+        category: 'CTA',
+        priority: 'primary',
+        page: '/products/[slug]',
+        product_id: item.productId,
+        product_name: item.name,
+        product_slug: item.slug,
+        price: item.price,
+        quantity,
+        currency: 'INR',
+        variant: item.variant,
+      },
+      {
+        debounceKey: `add_to_cart:${item.id}`,
+      }
+    )
     toast.success(
       quantity > 1
         ? `${quantity} × ${item.name} added to your cart`

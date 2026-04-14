@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Leaf, Heart, Mountain, Shield } from 'lucide-react'
 import { Suspense } from 'react'
+import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { ProductCard } from '@/components/ProductCard'
 import { ImageCarousel } from '@/components/ImageCarousel'
 import { Footer } from '@/components/footer'
@@ -320,11 +321,31 @@ export default async function Home() {
         Buy pure organic Himalayan products online — Bilona Ghee, Wild Honey, Pahadi Rice,
         and traditional spices. Sourced directly from women farmers in Uttarakhand.
       </p>
-      <Link href="/products">
-        <button style={{ marginTop: '30px', padding: '16px 36px', background: '#1E2D24', color: '#fff', border: 'none', letterSpacing: '0.1em', fontSize: '0.8rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          EXPLORE PRODUCTS <ArrowRight size={16} />
-        </button>
-      </Link>
+      <TrackedLink
+        href="/products"
+        eventName="explore_products_click"
+        eventParams={{
+          category: 'CTA',
+          priority: 'secondary',
+          page: '/',
+        }}
+        style={{
+          marginTop: '30px',
+          padding: '16px 36px',
+          background: '#1E2D24',
+          color: '#fff',
+          border: 'none',
+          letterSpacing: '0.1em',
+          fontSize: '0.8rem',
+          cursor: 'pointer',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '8px',
+          textDecoration: 'none',
+        }}
+      >
+        EXPLORE PRODUCTS <ArrowRight size={16} />
+      </TrackedLink>
     </div>
 
     <div className="hero-image">
@@ -408,11 +429,28 @@ directly supporting 35+ families and preserving mountain agriculture.
                 ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: '40px' }}>
-            <Link href="/products">
-              <button style={{ padding: '14px 40px', background: '#1E2D24', color: '#fff', border: 'none', letterSpacing: '0.1em', fontSize: '0.8rem', cursor: 'pointer' }}>
-                VIEW ALL PRODUCTS
-              </button>
-            </Link>
+            <TrackedLink
+              href="/products"
+              eventName="view_all_products_click"
+              eventParams={{
+                category: 'CTA',
+                priority: 'secondary',
+                page: '/',
+              }}
+              style={{
+                padding: '14px 40px',
+                background: '#1E2D24',
+                color: '#fff',
+                border: 'none',
+                letterSpacing: '0.1em',
+                fontSize: '0.8rem',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                textDecoration: 'none',
+              }}
+            >
+              VIEW ALL PRODUCTS
+            </TrackedLink>
           </div>
         </div>
       </section>

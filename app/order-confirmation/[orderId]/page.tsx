@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { CheckCircle2 } from 'lucide-react'
 import { notFound } from 'next/navigation'
 
+import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { Footer } from '@/components/footer'
 import styles from '@/components/cart/cart.module.css'
 import { Navbar } from '@/components/navbar'
@@ -77,12 +77,34 @@ export default async function OrderConfirmationPage({ params }: OrderConfirmatio
               </div>
 
               <div className={styles.emptyActions} style={{ justifyContent: 'flex-start', marginTop: '28px' }}>
-                <Link href={`/orders/${order.$id}`} className={styles.primaryLink}>
+                <TrackedLink
+                  href={`/orders/${order.$id}`}
+                  className={styles.primaryLink}
+                  eventName="view_order_details_click"
+                  eventParams={{
+                    category: 'CTA',
+                    priority: 'tertiary',
+                    page: '/order-confirmation/[orderId]',
+                    order_id: order.$id,
+                    order_number: order.order_number,
+                  }}
+                >
                   View Order Details
-                </Link>
-                <Link href="/orders" className={styles.secondaryLink}>
+                </TrackedLink>
+                <TrackedLink
+                  href="/orders"
+                  className={styles.secondaryLink}
+                  eventName="order_history_click"
+                  eventParams={{
+                    category: 'CTA',
+                    priority: 'tertiary',
+                    page: '/order-confirmation/[orderId]',
+                    order_id: order.$id,
+                    order_number: order.order_number,
+                  }}
+                >
                   Order History
-                </Link>
+                </TrackedLink>
               </div>
             </div>
 
