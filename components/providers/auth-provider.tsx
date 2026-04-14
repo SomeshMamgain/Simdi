@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect } from 'react'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { clearGoogleAuthIntent, readGoogleAuthIntent, trackEvent } from '@/lib/analytics/gtag'
 import { useAuthStore } from '@/store/authStore'
@@ -11,9 +10,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const hasCheckedSession = useAuthStore((state) => state.hasCheckedSession)
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn)
   const currentUser = useAuthStore((state) => state.currentUser)
-  const pathname = usePathname()
-  const router = useRouter()
-  const searchParams = useSearchParams()
 
   useEffect(() => {
     if (!hasCheckedSession) {
@@ -22,8 +18,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [checkSession, hasCheckedSession])
 
   useEffect(() => {
-    const authFlow = searchParams.get('authFlow')
-    const authStatus = searchParams.get('authStatus')
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const currentUrl = new URL(window.location.href)
+    const authFlow = currentUrl.searchParams.get('authFlow')
+    const authStatus = currentUrl.searchParams.get('authStatus')
 
     if (authFlow !== 'google' || authStatus !== 'success' || !isLoggedIn || !currentUser?.id) {
       return
@@ -32,13 +33,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const authIntent = readGoogleAuthIntent()
     clearGoogleAuthIntent()
 
-    const nextParams = new URLSearchParams(searchParams.toString())
-    nextParams.delete('authFlow')
-    nextParams.delete('authStatus')
-
-    const nextQuery = nextParams.toString()
-    const nextUrl = nextQuery ? `${pathname}?${nextQuery}` : pathname
-
     void (async () => {
       await trackEvent('google_auth_success', {
         category: 'CTA',
@@ -46,15 +40,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         page: 'auth_modal',
         auth_method: 'google',
         auth_mode: authIntent?.mode ?? 'signIn',
-        source_page: authIntent?.sourcePage ?? pathname,
+        source_page: authIntent?.sourcePage ?? currentUrl.pathname,
         user_id: currentUser.id,
       }, {
         awaitAck: true,
       })
 
-      router.replace(nextUrl, { scroll: false })
+      currentUrl.searchParams.delete('authFlow')
+      currentUrl.searchParams.delete('authStatus')
+      window.history.replaceState({}, '', `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`)
     })()
-  }, [currentUser?.id, isLoggedIn, pathname, router, searchParams])
+  }, [currentUser?.id, isLoggedIn])
 
   return <>{children}</>
 }
