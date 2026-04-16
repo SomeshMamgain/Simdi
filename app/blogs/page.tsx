@@ -9,11 +9,11 @@ import { Suspense } from 'react'
 const allBlogs = [
   {
     id: 1,
-    title: "Why Himalayan Superfoods are the Future of Nutrition",
+    title: "From High-Altitude Pastures to Your Home: The Sacred Journey of Badri Cow Ghee",
     slug: "pahadi-superfoods",
     date: "April 3, 2026",
-    excerpt: "Discover the hidden health secrets of Mandua, Jakhiya, and Badri Ghee from Uttarakhand.",
-    image: "/simdi.jpg"
+    excerpt: "Experience the Rare Potency of Himalayan A2 Badri Ghee",
+    image: "/ghee1.jpg"
   }
 ];
 
