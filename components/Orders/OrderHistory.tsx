@@ -26,7 +26,7 @@ export function OrderHistory({ orders }: { orders: OrderRecord[] }) {
   const [statusFilter, setStatusFilter] = useState<'all' | OrderStatus>('all')
   const [sortMode, setSortMode] = useState<SortMode>('date_desc')
   const [expandedOrders, setExpandedOrders] = useState<Record<string, boolean>>({})
-
+  // console.log('orders', orders)
   const filteredOrders = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase()
 

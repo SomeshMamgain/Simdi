@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
-import { ProductCard } from '@/components/ProductCard'
 import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
+import { ProductsCatalog } from '@/components/products/ProductsCatalog'
 import { buildMetadata } from '@/lib/seo'
 import { getProducts } from '@/lib/product-service'
 import type { ProductDocument } from '@/lib/product-types'
@@ -95,32 +95,7 @@ export default async function ProductsPage() {
               No products were found in the collection yet.
             </div>
           ) : (
-            <>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  gap: '16px',
-                  marginBottom: '28px',
-                  flexWrap: 'wrap',
-                }}
-              >
-                <p style={{ margin: 0, color: '#5E6E5E', fontSize: '0.95rem' }}>Showing {products.length} live products</p>
-              </div>
-
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                  gap: '28px',
-                }}
-              >
-                {serializableProducts.map((product) => (
-                  <ProductCard key={product.$id} product={product} />
-                ))}
-              </div>
-            </>
+            <ProductsCatalog products={serializableProducts} />
           )}
         </div>
       </section>
