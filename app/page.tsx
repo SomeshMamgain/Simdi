@@ -352,9 +352,9 @@ export default async function Home() {
       <ImageCarousel
         images={[
           { src: '/product_images/pahadi_honey/pahadi_honey.webp', alt: 'Himalayan raw honey being poured' },
-          { src: '/product_images/pahadi_honey/honey3.webp', alt: 'Packed Himalayan honey' },
           { src: '/product_images/ghee/ghee.webp', alt: 'Pure Bilona Ghee' },
           { src: '/product_images/pisyu_loon/pisyu_loon.webp', alt: 'Traditional spice grinding with mortar and pestle' },
+          { src: '/product_images/pahadi_honey/honey3.webp', alt: 'Packed Himalayan honey' },
           { src: '/product_images/kaafal/kaafal.webp', alt: 'Kafal himalayan berries' },
           { src: '/product_images/bal_mithai/bal_mithai.webp', alt: 'Choclate Sweet' },
           { src: '/product_images/buransh/buransh.webp', alt: 'Traditional buransh petal juice' },
