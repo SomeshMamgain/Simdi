@@ -9,12 +9,20 @@ import { Suspense } from 'react'
 const allBlogs = [
   {
     id: 1,
-    title: "Why Himalayan Superfoods are the Future of Nutrition",
+    title: "From High-Altitude Pastures to Your Home: The Sacred Journey of Badri Cow Ghee",
     slug: "pahadi-superfoods",
     date: "April 3, 2026",
-    excerpt: "Discover the hidden health secrets of Mandua, Jakhiya, and Badri Ghee from Uttarakhand.",
-    image: "/simdi.jpg"
-  }
+    excerpt: "Experience the Rare Potency of Himalayan A2 Badri Ghee",
+    image: "/ghee1.jpg"
+  },
+  {
+  id: 2,
+  title: "Kaafal: The Wild Himalayan Berry You Didn’t Know You Needed",
+  slug: "kaafal-superfruit",
+  date: "April 16, 2026",
+  excerpt: "Discover the tangy-sweet magic of Kaafal — a rare forest fruit from Uttarakhand.",
+  image: "/kaafal.png"
+}
 ];
 
 export const metadata: Metadata = buildMetadata({
