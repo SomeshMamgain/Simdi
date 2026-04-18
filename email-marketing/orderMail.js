@@ -11,15 +11,19 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// 👇 customers list
+// 👇 customers (NEW ORDERS)
 const customers = [
   {
-    name: "Pankaj",
-    email: "pankajprachi72@gmail.com"
+    name: "Rishaan",
+    email: "artimalhotra6@rediffmail.com"
   },
+  {
+    name: "Rajvardhan",
+    email: "ranachiragsingh2444@gmail.com"
+  }
 ];
 
-// 👇 TEMPLATE (FINAL)
+// 👇 TEMPLATE
 const getTemplate = (customer) => `
 <!DOCTYPE html>
 <html>
@@ -49,7 +53,7 @@ const getTemplate = (customer) => `
 Hi ${customer.name},<br><br>
 
 Thank you for placing your order with <b>SIMDI 🌿</b>.<br>
-We’ve received your order and started processing it.
+We’ve successfully received your order and started processing it.
 </p>
 
 <div style="background:#f7f9f8;padding:15px;border-radius:8px;margin-top:15px">
@@ -57,22 +61,21 @@ We’ve received your order and started processing it.
 <h3 style="color:#1f4d2e;margin:0 0 10px 0">🧾 Order Details</h3>
 
 <ul style="padding-left:18px;font-size:14px;color:#333">
-<li>Pahadi Honey (1) — ₹999</li>
-<li>Bal Mithai (1) — ₹699</li>
+<li>Pisyu Loon (250g) — ₹172.99</li>
 </ul>
 
 <p style="font-weight:bold;color:#1f4d2e">
-Total Paid: ₹1782.9
+Total Paid: ₹172.99
 </p>
 
 </div>
 
 <p style="font-size:14px;color:#444;margin-top:15px">
-📦 Your order will be packed and dispatched soon.
+📦 Your order will be carefully packed and dispatched soon.
 </p>
 
 <p style="font-size:14px;color:#444">
-You can also track your order here:
+You can track your order here:
 </p>
 
 <div style="text-align:center;margin:15px 0">
@@ -113,20 +116,22 @@ Bringing authentic Himalayan products directly to your home ❤️
 </html>
 `;
 
-// 👇 MAIN FUNCTION
+// 👇 SEND FUNCTION
 async function sendOrderMails() {
   for (let customer of customers) {
     try {
       await transporter.sendMail({
         from: '"SIMDI" <team@simdi.in>',
         to: customer.email,
+
         subject: `🌿 ${customer.name}, Your SIMDI Order is Confirmed`,
+
         html: getTemplate(customer)
       });
 
       console.log("✅ Sent to:", customer.email);
 
-      // 👇 delay (spam avoid)
+      // 👇 delay (important)
       await new Promise(res => setTimeout(res, 3000));
 
     } catch (err) {
