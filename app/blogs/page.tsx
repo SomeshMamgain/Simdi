@@ -8,6 +8,14 @@ import { Suspense } from 'react'
 
 const allBlogs = [
   {
+  id: 4,
+  title: "Pisyu Loon: The Stone-Ground Himalayan Salt That Defines Real Taste",
+  slug: "pisyu-loon-pahadi-rock-salt",
+  date: "April 27, 2026",
+  excerpt: "Discover the authentic stone-ground Himalayan salt blend that adds real pahadi flavor to every meal.",
+  image: "/product_images/pisyu_loon/pisyu_loon.webp"
+},
+  {
   id: 3,
   title: "The Crimson Flower of the Hills: Why Buransh is Uttarakhand's Most Powerful Wild Drink",
   slug: "buransh-rhododendron-sharbat",
