@@ -26,7 +26,6 @@ export const metadata: Metadata = {
   applicationName: SITE_NAME,
   keywords: defaultKeywords,
   category: 'food',
-  // Yahan verification code add kar diya hai
   verification: {
     google: 'z0vgQDwjFBMqSmCPWDTpYgiz2i_ltvwVkV0VW-Z98pw',
   },
@@ -65,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://googletagmanager.com;
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;
           f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','GTM-5MTGHP44');
         `}
@@ -76,15 +75,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
         `}
       </Script>
-      <Script
-        async
-        src="https://googlesyndication.com"
-        strategy="afterInteractive"
-      />
       <body>
         <noscript>
           <iframe
-            src="https://googletagmanager.com"
+            src="https://www.googletagmanager.com/ns.html?id=GTM-5MTGHP44"
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
