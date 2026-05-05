@@ -1,17 +1,30 @@
+'use client'
+
 import { Leaf, MapPin, Sparkles, Star } from 'lucide-react'
 
 import type { ProductDocument } from '@/lib/product-types'
 import { getProductRating, isProductInStock } from '@/lib/product-utils'
 
 import styles from './ProductDetailPage.module.css'
+import { useProductReviewState } from './ProductReviewState'
 
 interface ProductHeaderProps {
   product: ProductDocument
 }
 
 export function ProductHeader({ product }: ProductHeaderProps) {
-  const rating = getProductRating(product)
+  const { averageRating, reviewCount } = useProductReviewState()
+  const fallbackRating = getProductRating(product)
+  const rating = reviewCount > 0 ? averageRating : fallbackRating
   const displayRating = rating > 0 ? rating.toFixed(1) : null
+  const ratingSummary =
+    reviewCount > 0
+      ? displayRating
+        ? `${displayRating} / 5 from ${reviewCount} review${reviewCount === 1 ? '' : 's'}`
+        : `${reviewCount} customer review${reviewCount === 1 ? '' : 's'}`
+      : displayRating
+        ? `${displayRating} / 5 rating`
+        : 'Freshly added to the collection'
   const inStock = isProductInStock(product)
 
   return (
@@ -31,7 +44,7 @@ export function ProductHeader({ product }: ProductHeaderProps) {
             />
           ))}
         </div>
-        <span className={styles.ratingText}>{displayRating ? `${displayRating} / 5 rating` : 'Freshly added to the collection'}</span>
+        <span className={styles.ratingText}>{ratingSummary}</span>
       </div>
 
       <div className={styles.badgeRow}>

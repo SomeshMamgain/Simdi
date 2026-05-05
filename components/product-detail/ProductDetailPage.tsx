@@ -1,8 +1,9 @@
 import Link from 'next/link'
-import { ArrowLeft, ChevronRight, Leaf, Sparkles } from 'lucide-react'
+import { ChevronRight, Leaf, Sparkles } from 'lucide-react'
 
 import { ProductCard } from '@/components/ProductCard'
 import type { ProductDocument } from '@/lib/product-types'
+import type { Review } from '@/lib/review-types'
 import {
   cleanProductText,
   formatPrice,
@@ -22,15 +23,17 @@ import { ImageGallery } from './ImageGallery'
 import { NutritionFacts } from './NutritionFacts'
 import { PriceSection } from './PriceSection'
 import { ProductHeader } from './ProductHeader'
+import { ProductReviewStateProvider } from './ProductReviewState'
 import { ProductTabs } from './ProductTabs'
 import { ReviewSection } from './ReviewSection'
 
 interface ProductDetailPageProps {
   product: ProductDocument
   relatedProducts: ProductDocument[]
+  reviews: Review[]
 }
 
-export function ProductDetailPage({ product, relatedProducts }: ProductDetailPageProps) {
+export function ProductDetailPage({ product, relatedProducts, reviews }: ProductDetailPageProps) {
   const serializableProduct = toSerializableProduct(product)
   const serializableRelatedProducts = toSerializableProducts(relatedProducts)
   const galleryImages = getProductGalleryImages(serializableProduct)
@@ -66,20 +69,21 @@ export function ProductDetailPage({ product, relatedProducts }: ProductDetailPag
           Back to Products
         </Link> */}
 
-        <div className={styles.heroGrid}>
-          <ImageGallery images={galleryImages} productName={serializableProduct.name ?? 'Product image'} />
+        <ProductReviewStateProvider initialReviews={reviews}>
+          <div className={styles.heroGrid}>
+            <ImageGallery images={galleryImages} productName={serializableProduct.name ?? 'Product image'} />
 
-          <div className={`${styles.panel} ${styles.summaryPanel}`}>
-            <ProductHeader product={serializableProduct} />
-            <PriceSection product={serializableProduct} />
+            <div className={`${styles.panel} ${styles.summaryPanel}`}>
+              <ProductHeader product={serializableProduct} />
+              <PriceSection product={serializableProduct} />
+            </div>
           </div>
-        </div>
 
-        <ProductTabs sections={sections} />
+          <ProductTabs sections={sections} />
 
-        <div className={styles.contentGrid}>
-          <div className={styles.contentColumn}>
-            <section id="overview" className={`${styles.panel} ${styles.sectionCard}`}>
+          <div className={styles.contentGrid}>
+            <div className={styles.contentColumn}>
+              <section id="overview" className={`${styles.panel} ${styles.sectionCard}`}>
               <h2 className={styles.sectionTitle}>Overview</h2>
               <p
                 className={styles.sectionLead}
@@ -206,7 +210,7 @@ export function ProductDetailPage({ product, relatedProducts }: ProductDetailPag
             <section id="reviews" className={`${styles.panel} ${styles.sectionCard}`}>
               <h2 className={styles.sectionTitle}>Customer Reviews</h2>
               <p className={styles.sectionLead}>A quick look at what customers are saying about this mountain-made product.</p>
-              <ReviewSection product={serializableProduct} />
+              <ReviewSection productSlug={getProductSlug(serializableProduct)} productName={serializableProduct.name} />
             </section>
 
             {video ? (
@@ -295,18 +299,16 @@ export function ProductDetailPage({ product, relatedProducts }: ProductDetailPag
 
             {serializableRelatedProducts.length > 0 ? (
               <>
-                <section className={styles.panel}>
-                <ProductCard product={serializableRelatedProducts[0]} />
-              </section>
-                <section className={styles.panel}>
-                <ProductCard product={serializableRelatedProducts[3]} />
-              </section>
+                {serializableRelatedProducts.slice(0, 2).map((relatedProduct) => (
+                  <section key={relatedProduct.$id} className={styles.panel}>
+                    <ProductCard product={relatedProduct} />
+                  </section>
+                ))}
               </>
-            
-              
             ) : null}
-          </aside>
-        </div>
+            </aside>
+          </div>
+        </ProductReviewStateProvider>
       </div>
     </div>
   )

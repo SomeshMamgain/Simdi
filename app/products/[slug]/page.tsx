@@ -5,11 +5,11 @@ import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
 import { ProductDetailPage } from '@/components/product-detail/ProductDetailPage'
 import { getProductBySlug, getRelatedProducts } from '@/lib/product-service'
+import { getReviewsByProductSlug } from '@/lib/review-service'
 import { buildMetadata, getCanonicalUrl, mergeKeywords } from '@/lib/seo'
 import {
   getProductGalleryImages,
   getProductKeywords,
-  getProductRating,
   getProductSlug,
   toNumber,
   truncateText,
@@ -71,10 +71,16 @@ export default async function ProductDetailRoute({ params }: ProductDetailRouteP
     permanentRedirect(`/products/${canonicalSlug}`)
   }
 
-  const relatedProducts = await getRelatedProducts(product, 4)
+  const [relatedProducts, reviews] = await Promise.all([
+    getRelatedProducts(product, 4),
+    getReviewsByProductSlug(canonicalSlug),
+  ])
   const canonicalPath = `/products/${canonicalSlug}`
   const numericPrice = toNumber(product.price)
-  const rating = getProductRating(product)
+  const reviewCount = reviews.length
+  const averageRating = reviewCount
+    ? reviews.reduce((total, review) => total + review.rating, 0) / reviewCount
+    : 0
 
   const structuredData = {
     '@context': 'https://schema.org',
@@ -106,25 +112,32 @@ export default async function ProductDetailRoute({ params }: ProductDetailRouteP
           },
         }
       : {}),
-    ...(rating > 0
+    ...(reviewCount > 0
       ? {
           aggregateRating: {
             '@type': 'AggregateRating',
-            ratingValue: rating.toFixed(1),
-            reviewCount: 1,
+            ratingValue: averageRating.toFixed(1),
+            reviewCount,
           },
         }
       : {}),
-    ...(product.review
+    ...(reviewCount > 0
       ? {
-          review: {
+          review: reviews.map((review) => ({
             '@type': 'Review',
-            reviewBody: product.review,
+            ...(review.title ? { name: review.title } : {}),
             author: {
-              '@type': 'Organization',
-              name: 'Simdi Customer',
+              '@type': 'Person',
+              name: review.user_name || 'Customer',
             },
-          },
+            reviewRating: {
+              '@type': 'Rating',
+              ratingValue: review.rating,
+              bestRating: '5',
+            },
+            reviewBody: review.review,
+            datePublished: review.$createdAt,
+          })),
         }
       : {}),
   }
@@ -135,7 +148,11 @@ export default async function ProductDetailRoute({ params }: ProductDetailRouteP
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
 
-      <ProductDetailPage product={product} relatedProducts={relatedProducts} />
+      <ProductDetailPage
+        product={product}
+        relatedProducts={relatedProducts}
+        reviews={reviews}
+      />
 
       <Footer />
     </div>
