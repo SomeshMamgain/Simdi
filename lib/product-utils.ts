@@ -179,50 +179,84 @@ export function getProductIngredients(product: Pick<ProductDocument, 'ingredient
 }
 
 function generateFallbackKeywords(
-  product: Pick<ProductDocument, 'name' | 'alias_name' | 'type' | 'village'>
+  product: Pick<ProductDocument, 'name' | 'alias_name' | 'type' | 'village' | 'description' | 'keywords'>
 ): string[] {
   const keywords: string[] = []
   const name = product.name?.trim()
   const alias = product.alias_name?.trim()
   const type = product.type?.trim()
   const village = product.village?.trim()
+  const searchableText = [name, alias, type, village, product.description, product.keywords].filter(Boolean).join(' ').toLowerCase()
+  const primaryLabel = alias && alias.toLowerCase() !== name?.toLowerCase() ? alias : name ?? type ?? 'Himalayan product'
+  const normalizedType = type && type.toLowerCase() !== primaryLabel.toLowerCase() ? type : null
+
+  function pushKeyword(value?: string) {
+    const normalizedKeyword = value?.trim().replace(/\s+/g, ' ')
+
+    if (!normalizedKeyword) {
+      return
+    }
+
+    if (!keywords.some((keyword) => keyword.toLowerCase() === normalizedKeyword.toLowerCase())) {
+      keywords.push(normalizedKeyword)
+    }
+  }
 
   if (name) {
-    keywords.push(`buy ${name} online`)
-    keywords.push(`${name} from Uttarakhand`)
-    keywords.push(`organic ${name}`)
-    keywords.push(`pahadi ${name}`)
+    pushKeyword(`buy ${name} online`)
+    pushKeyword(`${name} online India`)
+    pushKeyword(`${name} price India`)
+    pushKeyword(`${name} from Uttarakhand`)
   }
 
   if (alias && alias.toLowerCase() !== name?.toLowerCase()) {
-    keywords.push(`buy ${alias} online`)
-    keywords.push(`${alias} Uttarakhand`)
+    pushKeyword(`buy ${alias} online`)
+    pushKeyword(`${alias} online India`)
   }
 
-  if (type) {
-    keywords.push(`himalayan ${type}`)
-    keywords.push(`organic ${type} from Uttarakhand`)
-    keywords.push(`pahadi ${type} online India`)
+  if (normalizedType) {
+    pushKeyword(`buy ${normalizedType} online`)
+    pushKeyword(`${normalizedType} from Uttarakhand`)
   }
 
   if (village) {
-    keywords.push(`${name ?? type ?? 'product'} from ${village}`)
+    pushKeyword(`${primaryLabel} from ${village}`)
   }
 
-  keywords.push('authentic Himalayan products online')
-  keywords.push('Pahadi products India')
-  keywords.push('organic Uttarakhand products')
-  keywords.push('SIMDI Himalayan store')
+  if (/\borganic\b/.test(searchableText)) {
+    pushKeyword(`organic ${primaryLabel}`)
+  }
 
-  return keywords
+  if (/\ba2\b/.test(searchableText)) {
+    pushKeyword(`buy A2 ${primaryLabel} online`)
+  }
+
+  pushKeyword(`buy ${primaryLabel} online`)
+  pushKeyword(`${primaryLabel} Uttarakhand`)
+  pushKeyword('authentic Himalayan products online')
+  pushKeyword('Uttarakhand products online')
+  pushKeyword('Simdi online store')
+
+  return keywords.slice(0, 12)
 }
 
 export function getProductKeywords(
-  product: Pick<ProductDocument, 'keywords' | 'name' | 'alias_name' | 'type' | 'village'>
+  product: Pick<ProductDocument, 'keywords' | 'name' | 'alias_name' | 'type' | 'village' | 'description'>
 ) {
   const explicit = splitContentList(product.keywords)
-  const raw = explicit.length > 0 ? explicit : generateFallbackKeywords(product)
-  return Array.from(new Set(raw))
+  const raw = explicit.length > 0 ? [...explicit, ...generateFallbackKeywords(product)] : generateFallbackKeywords(product)
+  const seen = new Set<string>()
+
+  return raw.filter((keyword) => {
+    const normalizedKeyword = keyword.trim().toLowerCase()
+
+    if (!normalizedKeyword || seen.has(normalizedKeyword)) {
+      return false
+    }
+
+    seen.add(normalizedKeyword)
+    return true
+  }).slice(0, 12)
 }
 
 export function toSerializableProduct(product: ProductDocument): ProductDocument {
@@ -386,7 +420,7 @@ export function cleanProductText(text?: string | null): string {
     .trim()
 }
 
-export function stripHtml(html?: string) {
+export function stripHtml(html?: string | null) {
   if (!html) return ''
   return html.replace(/<[^>]*>/g, ' ').replace(/\s{2,}/g, ' ').trim()
 }
@@ -396,9 +430,28 @@ export function truncateText(value?: string, maxLength = 160) {
     return ''
   }
 
-  if (value.length <= maxLength) {
-    return value
+  const normalizedValue = stripHtml(cleanProductText(value)).replace(/\s+/g, ' ').trim()
+
+  if (normalizedValue.length <= maxLength) {
+    return normalizedValue
   }
 
-  return `${value.slice(0, maxLength - 1).trimEnd()}…`
+  const sentenceSlice = normalizedValue.slice(0, maxLength)
+  const sentenceEndIndex = Math.max(
+    sentenceSlice.lastIndexOf('.'),
+    sentenceSlice.lastIndexOf('!'),
+    sentenceSlice.lastIndexOf('?')
+  )
+
+  if (sentenceEndIndex >= Math.floor(maxLength * 0.6)) {
+    return sentenceSlice.slice(0, sentenceEndIndex + 1).trim()
+  }
+
+  const wordBoundaryIndex = sentenceSlice.lastIndexOf(' ')
+
+  if (wordBoundaryIndex >= Math.floor(maxLength * 0.6)) {
+    return `${sentenceSlice.slice(0, wordBoundaryIndex).trim()}…`
+  }
+
+  return `${sentenceSlice.trimEnd()}…`
 }

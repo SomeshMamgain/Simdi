@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 const FALLBACK_SITE_URL = 'https://simdi.in'
-const DEFAULT_OG_IMAGE = '/simdi.jpg'
+export const DEFAULT_OG_IMAGE = '/simdi.jpg'
 
 export const SITE_NAME = 'SIMDI'
 export const SITE_TAGLINE = 'Your Himalayan Friend'
@@ -84,6 +84,8 @@ type BuildMetadataInput = {
   imageAlt?: string
   publishedTime?: string
   modifiedTime?: string
+  category?: string
+  other?: NonNullable<Metadata['other']>
 }
 
 export function buildMetadata({
@@ -98,9 +100,14 @@ export function buildMetadata({
   imageAlt,
   publishedTime,
   modifiedTime,
+  category,
+  other,
 }: BuildMetadataInput): Metadata {
   const canonical = getCanonicalUrl(path)
-  const resolvedImages = images.map((image) => ({
+  const uniqueImages = Array.from(
+    new Set(images.map((image) => image.trim()).filter(Boolean))
+  )
+  const resolvedImages = (uniqueImages.length > 0 ? uniqueImages : [DEFAULT_OG_IMAGE]).map((image) => ({
     url: getAbsoluteAssetUrl(image),
     alt: imageAlt ?? title,
   }))
@@ -108,7 +115,9 @@ export function buildMetadata({
   return {
     title,
     description,
+    category,
     keywords: mergeKeywords(keywords),
+    other,
     robots: {
       index,
       follow,
