@@ -62,6 +62,7 @@ export const Footer = () => {
               <Link href="/blogs" style={linkStyle}>Blogs</Link>
               <Link href="/contact" style={linkStyle}>Contact Us</Link>
               <Link href="/privacy" style={linkStyle}>Privacy Policy</Link>
+<Link href="/terms" style={linkStyle}>Terms & Conditions</Link>
             </div>
           </div>
 

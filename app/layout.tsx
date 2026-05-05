@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   applicationName: SITE_NAME,
   keywords: defaultKeywords,
   category: 'food',
+  verification: {
+    google: 'z0vgQDwjFBMqSmCPWDTpYgiz2i_ltvwVkV0VW-Z98pw',
+  },
   openGraph: {
     siteName: SITE_NAME,
     title: `${SITE_NAME} | ${SITE_TAGLINE}`,
@@ -72,11 +75,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
         `}
       </Script>
-      <Script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8608011086075517"
-        strategy="afterInteractive"
-      />
       <body>
         <noscript>
           <iframe

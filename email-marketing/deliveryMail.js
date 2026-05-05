@@ -118,10 +118,10 @@ Shop Again
 
 // ✅ customer
 const customer = {
-  name: "Rishaan",
-  email: "artimalhotra6@rediffmail.com",
-  product: "Pisyu Loon (250gm)",
-  total: "172.99"
+  name: "Pankaj",
+  email: "pankajprachi72@gmail.com",
+  product: "1Kg Pahadi Shahad and 1Kg Bal Mithai",
+  total: "1782.99"
 };
 
 // ✅ send mail
@@ -129,7 +129,8 @@ async function sendMail() {
   try {
     await transporter.sendMail({
       from: '"SIMDI" <team@simdi.in>',
-      to: "artimalhotra6@rediffmail.com",
+      to: "pankajprachi72@gmail.com",
+
 
       subject: "Your SIMDI Order Delivered 🎉",
 
