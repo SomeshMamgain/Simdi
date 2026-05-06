@@ -157,7 +157,29 @@ const nextConfig = {
     source: '/products/kathal-ka-achaar',
     destination: '/products/jackfruit-pickle',
     permanent: true,
+  },
+  {
+    source: '/blog',
+    destination: '/blogs',
+    permanent: true,
+  },
+  {
+    source: '/faqs',
+    destination: '/terms',
+    permanent: true,
+  },
+  {
+    source: '/privacy-policy',
+    destination: '/privacy',
+    permanent: true,
+  },
+  {
+    source: '/growth',
+    destination: '/our-roots',
+    permanent: true,
   }
+
+
     ]
   },
 }
