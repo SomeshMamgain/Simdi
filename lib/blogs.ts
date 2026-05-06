@@ -524,17 +524,17 @@ export const blogs: Blog[] = [
       ],
     },
 
-    {
-      type: "section",
-      title: "Frequently Asked Questions (FAQs)",
-      paragraphs: [],
-      list: [
-        "Is Himalayan honey better than regular honey? Yes, because it is raw and retains natural nutrients.",
-        "Does raw honey expire? Pure honey does not spoil if stored properly.",
-        "Why does honey crystallize? Crystallization is a natural process and indicates purity.",
-        "Can I consume honey daily? Yes, in moderate amounts as part of a balanced diet.",
-      ],
-    },
+    // {
+    //   type: "section",
+    //   title: "Frequently Asked Questions (FAQs)",
+    //   paragraphs: [],
+    //   list: [
+    //     "Is Himalayan honey better than regular honey? Yes, because it is raw and retains natural nutrients.",
+    //     "Does raw honey expire? Pure honey does not spoil if stored properly.",
+    //     "Why does honey crystallize? Crystallization is a natural process and indicates purity.",
+    //     "Can I consume honey daily? Yes, in moderate amounts as part of a balanced diet.",
+    //   ],
+    // },
   ],
 },
   {
