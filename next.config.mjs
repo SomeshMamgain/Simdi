@@ -177,6 +177,11 @@ const nextConfig = {
     source: '/growth',
     destination: '/our-roots',
     permanent: true,
+  },
+  {
+    source: '/faq',
+    destination: '/terms',
+    permanent: true,
   }
 
 
