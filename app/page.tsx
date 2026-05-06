@@ -8,8 +8,13 @@ import { ImageCarousel } from '@/components/ImageCarousel'
 import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
 import { ReviewsSection } from '@/components/Review/Review'
-import { SITE_NAME, buildMetadata, getAbsoluteAssetUrl, getCanonicalUrl } from '@/lib/seo'
+import { getCanonicalUrl, getSiteUrl } from '@/lib/seo'
 import { getProducts } from '@/lib/product-service'
+
+const homepageUrl = getSiteUrl()
+const homepageImageUrl = getCanonicalUrl('/ghee.png')
+const homepageCommunityImageUrl = getCanonicalUrl('/mahila.jpeg')
+const homepageLogoUrl = getCanonicalUrl('/logo.jpeg')
 
 const homepageKeywords = [
   'SIMDI',
@@ -72,13 +77,13 @@ export const metadata: Metadata = {
 
   // Canonical URL (prevents duplicate content issues)
   alternates: {
-    canonical: 'https://www.simdi.in',
+    canonical: homepageUrl,
   },
 
   // Open Graph (Social Media Sharing) - Critical for conversion
   openGraph: {
     type: 'website',
-    url: 'https://www.simdi.in',
+    url: homepageUrl,
     title: '🏔️ Pure Himalayan Organic Products | SIMDI - Trusted by 500+ Families',
     description:
       '100% pure, raw, unprocessed organic food from Uttarakhand mountains. Lab-tested. Certified. Direct from women farmers. Try today - Money-back guarantee.',
@@ -86,14 +91,14 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     images: [
       {
-        url: 'https://www.simdi.in/ghee.png',
+        url: homepageImageUrl,
         width: 1200,
         height: 630,
         alt: 'SIMDI Himalayan organic products - ghee, honey, rice',
         type: 'image/jpeg',
       },
       {
-        url: 'https://www.simdi.in/mahila.jpeg',
+        url: homepageCommunityImageUrl,
         width: 1200,
         height: 630,
         alt: 'Women farmers of Uttarakhand making pure organic products',
@@ -110,7 +115,7 @@ export const metadata: Metadata = {
     title: 'Pure Himalayan Organic Products Direct from Uttarakhand',
     description:
       'Raw ghee, wild honey, Pahadi rice from mountain women. Pure. Certified. No chemicals. Support farmers.',
-    images: ['https://www.simdi.in/ghee.png'],
+    images: [homepageImageUrl],
   },
 
   // Viewport and mobile optimization
@@ -121,7 +126,7 @@ export const metadata: Metadata = {
   },
 
   // Additional metadata for trust signals
-  authors: [{ name: 'SIMDI', url: 'https://www.simdi.in' }],
+  authors: [{ name: 'SIMDI', url: homepageUrl }],
   creator: 'SIMDI',
   publisher: 'SIMDI',
 
@@ -178,8 +183,8 @@ export const homepageStructuredData = {
     {
       '@type': 'Organization',
       name: 'SIMDI',
-      url: 'https://www.simdi.in',
-      logo: 'https://www.simdi.in/logo.jpeg',
+      url: homepageUrl,
+      logo: homepageLogoUrl,
       description:
         'Pure organic Himalayan products sourced directly from women farmers in Uttarakhand',
       address: {
@@ -204,7 +209,7 @@ export const homepageStructuredData = {
     {
       '@type': 'LocalBusiness',
       name: 'SIMDI - Himalayan Organic Products',
-      image: 'https://www.simdi.in/logo.jpeg',
+      image: homepageLogoUrl,
       description:
         'Organic products from Uttarakhand mountains - pure, certified, women-empowered',
       address: {
@@ -232,19 +237,19 @@ export const homepageStructuredData = {
           '@type': 'ListItem',
           position: 1,
           name: 'SIMDI',
-          item: 'https://www.simdi.in',
+          item: homepageUrl,
         },
         {
           '@type': 'ListItem',
           position: 2,
           name: 'Products',
-          item: 'https://www.simdi.in/products',
+          item: getCanonicalUrl('/products'),
         },
         {
           '@type': 'ListItem',
           position: 3,
           name: 'Our Story',
-          item: 'https://www.simdi.in/our-roots',
+          item: getCanonicalUrl('/our-roots'),
         },
       ],
     },

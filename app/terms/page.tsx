@@ -256,7 +256,7 @@ const sections = [
             <a href="https://wa.me/919211803346" style={{ color: '#B58E58', textDecoration: 'underline' }}>+91 92118 03346</a>
           </p>
           <p style={{ margin: 0, color: '#1E2D24' }}><strong>Website:</strong>{' '}
-            <a href="https://www.simdi.in" style={{ color: '#B58E58', textDecoration: 'underline' }}>simdi.in</a>
+            <a href="https://simdi.in" style={{ color: '#B58E58', textDecoration: 'underline' }}>simdi.in</a>
           </p>
           <p style={{ margin: 0, color: '#1E2D24' }}><strong>Business:</strong> Simdi, Uttarakhand / Ghaziabad, India</p>
         </div>

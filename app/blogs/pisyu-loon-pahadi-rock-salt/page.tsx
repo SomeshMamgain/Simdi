@@ -156,7 +156,7 @@ export default function PisyuLoonSuperblog() {
           <Droplets size={48} color="#B58E58" style={{ margin: '0 auto 20px' }} />
           <h3 style={{ fontSize: '2.2rem', marginBottom: '15px', fontFamily: 'Georgia' }}>{t.ctaTitle}</h3>
           <p style={{ color: '#A3B3A3', marginBottom: '35px', maxWidth: '650px', margin: '0 auto 35px', fontSize: '1.1rem' }}>{t.ctaSub}</p>
-          <Link href="https://www.simdi.in/products/pahadi-rock-salt" style={{ background: '#B58E58', color: '#fff', padding: '20px 50px', borderRadius: '5px', textDecoration: 'none', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center', gap: '12px', letterSpacing: '0.1em' }}>
+          <Link href="https://simdi.in/products/pahadi-rock-salt" style={{ background: '#B58E58', color: '#fff', padding: '20px 50px', borderRadius: '5px', textDecoration: 'none', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center', gap: '12px', letterSpacing: '0.1em' }}>
             <ShoppingCart size={22} /> {t.ctaBtn}
           </Link>
           <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'center', gap: '20px', color: '#A3B3A3', fontSize: '0.8rem' }}>
