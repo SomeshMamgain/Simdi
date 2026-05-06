@@ -131,17 +131,17 @@ export const blogs: Blog[] = [
         "Consume chilled during summer",
       ],
     },
-    {
-      type: "section",
-      title: "Frequently Asked Questions (FAQs)",
-      paragraphs: [],
-      list: [
-        "Is sea buckthorn juice good for immunity? Yes, it is naturally rich in Vitamin C and antioxidants.",
-        "Can I drink sea buckthorn juice daily? Yes, moderate daily consumption is common.",
-        "What does sea buckthorn juice taste like? It has a tangy and citrus-like flavor.",
-        "Is sea buckthorn naturally grown in the Himalayas? Yes, it grows in high-altitude Himalayan regions.",
-      ],
-    },
+    // {
+    //   type: "section",
+    //   title: "Frequently Asked Questions (FAQs)",
+    //   paragraphs: [],
+    //   list: [
+    //     "Is sea buckthorn juice good for immunity? Yes, it is naturally rich in Vitamin C and antioxidants.",
+    //     "Can I drink sea buckthorn juice daily? Yes, moderate daily consumption is common.",
+    //     "What does sea buckthorn juice taste like? It has a tangy and citrus-like flavor.",
+    //     "Is sea buckthorn naturally grown in the Himalayas? Yes, it grows in high-altitude Himalayan regions.",
+    //   ],
+    // },
   ],
 },
 {
@@ -205,17 +205,17 @@ export const blogs: Blog[] = [
         },
       ],
     },
-    {
-      type: "section",
-      title: "Frequently Asked Questions (FAQs)",
-      paragraphs: [],
-      list: [
-        "What is Bal Mithai made of? It is made from roasted khoya and sugar balls.",
-        "Which state is famous for Bal Mithai? Uttarakhand is famous for Bal Mithai.",
-        "Does Bal Mithai taste like chocolate? It has a caramel-like flavor similar to chocolate fudge.",
-        "Can Bal Mithai be gifted? Yes, it is commonly gifted during festivals.",
-      ],
-    },
+    // {
+    //   type: "section",
+    //   title: "Frequently Asked Questions (FAQs)",
+    //   paragraphs: [],
+    //   list: [
+    //     "What is Bal Mithai made of? It is made from roasted khoya and sugar balls.",
+    //     "Which state is famous for Bal Mithai? Uttarakhand is famous for Bal Mithai.",
+    //     "Does Bal Mithai taste like chocolate? It has a caramel-like flavor similar to chocolate fudge.",
+    //     "Can Bal Mithai be gifted? Yes, it is commonly gifted during festivals.",
+    //   ],
+    // },
   ],
 },
 {
@@ -279,17 +279,17 @@ export const blogs: Blog[] = [
         },
       ],
     },
-    {
-      type: "section",
-      title: "Frequently Asked Questions (FAQs)",
-      paragraphs: [],
-      list: [
-        "What is Bhatt ki daal? It is a traditional black soybean grown in Uttarakhand.",
-        "Is Bhatt daal high in protein? Yes, it is naturally protein-rich.",
-        "How is Bhatt daal cooked? It is commonly prepared as Bhatt ki Churkani.",
-        "Is Bhatt daal healthy? Yes, it contains fiber, protein, and minerals.",
-      ],
-    },
+    // {
+    //   type: "section",
+    //   title: "Frequently Asked Questions (FAQs)",
+    //   paragraphs: [],
+    //   list: [
+    //     "What is Bhatt ki daal? It is a traditional black soybean grown in Uttarakhand.",
+    //     "Is Bhatt daal high in protein? Yes, it is naturally protein-rich.",
+    //     "How is Bhatt daal cooked? It is commonly prepared as Bhatt ki Churkani.",
+    //     "Is Bhatt daal healthy? Yes, it contains fiber, protein, and minerals.",
+    //   ],
+    // },
   ],
 },
 {
@@ -335,21 +335,21 @@ export const blogs: Blog[] = [
         },
       ],
     },
-    {
-      type: "section",
-      title: "Frequently Asked Questions (FAQs)",
-      paragraphs: [],
-      list: [
-        "What is Gahat daal? It is horse gram traditionally consumed in Uttarakhand.",
-        "Is Gahat daal healthy? Yes, it is rich in protein and fiber.",
-        "When is Gahat daal usually eaten? Mostly during winters.",
-        "Can Gahat daal be included in daily meals? Yes, in moderate amounts.",
-      ],
-       image: {
-        src: "/product_images/gauth/gauth2.webp",
-        alt: "Traditional Gahat daal from Uttarakhand",
-      },
-    },
+    // {
+    //   type: "section",
+    //   title: "Frequently Asked Questions (FAQs)",
+    //   paragraphs: [],
+    //   list: [
+    //     "What is Gahat daal? It is horse gram traditionally consumed in Uttarakhand.",
+    //     "Is Gahat daal healthy? Yes, it is rich in protein and fiber.",
+    //     "When is Gahat daal usually eaten? Mostly during winters.",
+    //     "Can Gahat daal be included in daily meals? Yes, in moderate amounts.",
+    //   ],
+    //    image: {
+    //     src: "/product_images/gauth/gauth2.webp",
+    //     alt: "Traditional Gahat daal from Uttarakhand",
+    //   },
+    // },
   ],
 },
 {
@@ -395,21 +395,21 @@ export const blogs: Blog[] = [
         },
       ],
     },
-    {
-      type: "section",
-      title: "Frequently Asked Questions (FAQs)",
-      paragraphs: [],
-      list: [
-        "What is ragi? Ragi is also called finger millet.",
-        "Is ragi healthy? Yes, it is rich in calcium and fiber.",
-        "Can ragi replace wheat? Many people use it as a healthier alternative.",
-        "How can ragi be consumed? It can be used in rotis, porridge, and baked foods.",
-      ],
-       image: {
-        src: "/product_images/ragi/ragi2.webp",
-        alt: "Traditional Ragi Millet from Uttarakhand",
-      },
-    },
+    // {
+    //   type: "section",
+    //   title: "Frequently Asked Questions (FAQs)",
+    //   paragraphs: [],
+    //   list: [
+    //     "What is ragi? Ragi is also called finger millet.",
+    //     "Is ragi healthy? Yes, it is rich in calcium and fiber.",
+    //     "Can ragi replace wheat? Many people use it as a healthier alternative.",
+    //     "How can ragi be consumed? It can be used in rotis, porridge, and baked foods.",
+    //   ],
+    //    image: {
+    //     src: "/product_images/ragi/ragi2.webp",
+    //     alt: "Traditional Ragi Millet from Uttarakhand",
+    //   },
+    // },
   ],
 }
   ,
