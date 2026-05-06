@@ -182,9 +182,17 @@ const nextConfig = {
     source: '/faq',
     destination: '/terms',
     permanent: true,
+  },
+  {
+    source: '/mission',
+    destination: '/our-roots',
+    permanent: true,
+  },
+  {
+    source: '/about',
+    destination: '/our-roots',
+    permanent: true,
   }
-
-
     ]
   },
 }
