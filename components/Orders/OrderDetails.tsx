@@ -150,7 +150,7 @@ export function OrderDetails({ order, detailPage = false }: OrderDetailsProps) {
             </button>
             {detailPage ? (
               <Link
-                href={order.tracking_number ? `https://www.google.com/search?q=${encodeURIComponent(order.tracking_number)}` : '#'}
+                href={order.tracking_number ? ` https://shiprocket.co/tracking/${encodeURIComponent(order.tracking_number)}` : '#'}
                 className={styles.linkButton}
                 target={order.tracking_number ? '_blank' : undefined}
                 rel={order.tracking_number ? 'noreferrer' : undefined}

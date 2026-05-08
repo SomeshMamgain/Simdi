@@ -13,7 +13,7 @@ export const revalidate = 300
 
 export function generateMetadata(): Metadata {
   return buildMetadata({
-    title: 'Products | Simdi',
+    title: 'Buy Organic Himalayan Products | Ghee, Honey, Millet & More – SIMDI',
     description:
       'Browse Simdi products sourced from Uttarakhand, including Himalayan staples, seasonal harvests, and mountain-made pantry essentials.',
     path: '/products',
@@ -24,6 +24,11 @@ export function generateMetadata(): Metadata {
       'Bilona ghee online',
       'wild honey online India',
       'traditional Himalayan pantry',
+         'Uttarakhand products delivered across India',
+    'Pauri Garhwal organic food online',
+    'Chakisain Uttarakhand women farmer cooperative',
+    'Garhwali food products buy online',
+    'Kumaon Garhwal traditional food gifts',
     ],
     images: ['/products.jpg'],
     imageAlt: 'SIMDI products collection page',

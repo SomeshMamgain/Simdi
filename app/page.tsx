@@ -17,42 +17,159 @@ const homepageCommunityImageUrl = getCanonicalUrl('/mahila.jpeg')
 const homepageLogoUrl = getCanonicalUrl('/logo.jpeg')
 
 const homepageKeywords = [
-  'SIMDI',
-  'Your Himalayan Friend',
-  'authentic Pahadi products',
-  'Himalayan products online',
   'organic Himalayan products',
-  'Uttarakhand products',
-  'organic Pahadi ghee',
-  'raw wild honey',
-  'mountain grains',
-  'Himalayan wellness products',
-  'handicrafts from Uttarakhand',
-  'seasonal Himalayan products',
-  'Uttarakhand ride booking',
-  'mountain taxi service Uttarakhand',
-  'parcel delivery Uttarakhand',
-  'women-led village products',
-  'fair trade Himalayan products',
-  'Pauri Garhwal products',
-  'Chakisain Uttarakhand',
-  'organic ghee online',
-  'raw honey from Himalayas',
-  'pure Pahadi products',
-  'Uttarakhand organic products online',
-  'chemical-free food India',
-  'authentic mountain products',
-  'organic products Uttarakhand',
-  'Bilona ghee authentic',
+  'Uttarakhand organic products',
+  'Bilona ghee online',
+  'A2 Bilona ghee',
   'wild Himalayan honey',
-  'women farmer cooperative',
-  'farm to home organic',
-  'FSSAI certified honey',
+  'raw honey online',
   'Pahadi rice online',
+  'organic mountain products',
+  'organic food from Uttarakhand',
+  'pure Pahadi products',
+  'Himalayan wellness products',
+  'Pisyu Loon',
   'Garhwal products',
-  'mountain organic food',
+  'farm to home organic products',
+  'chemical free food India',
 ]
+const faqSchema = {
+  '@type': 'FAQPage',
+  mainEntity: [
 
+    // --- GHEE ---
+    {
+      '@type': 'Question',
+      name: 'What is Bilona ghee and how is it different from regular ghee?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Bilona ghee is made using the traditional hand-churning (bilona) method: cow milk is first curd-set, then the curd is hand-churned to extract butter, which is then slow-heated into ghee. This process preserves natural A2 proteins, butyric acid, and fat-soluble vitamins. Regular commercial ghee is made by direct cream separation at high speed, which strips out many of these nutrients. SIMDI\'s Pahadi Bilona Cow Ghee follows the original Himalayan method used by women farmers in Pauri Garhwal, Uttarakhand.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is the difference between SIMDI Cow Ghee and Buffalo Ghee?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'SIMDI Pahadi Bilona Cow Ghee is lighter, golden-yellow, and made using the traditional bilona hand-churning method — ideal for daily cooking, Ayurvedic use, and easier digestion. SIMDI Buffalo Ghee is richer, creamier, and has a stronger aroma with higher fat content — preferred for deep flavour in curries and sweets. Both are 100% pure, sourced from Himalayan villages in Uttarakhand.',
+      },
+    },
+
+    // --- HONEY ---
+    {
+      '@type': 'Question',
+      name: 'Is SIMDI honey raw and unprocessed?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. SIMDI Raw Pahadi Honey is collected from wildflowers and herbs in the untouched hills of Uttarakhand. It is completely raw and unheated, which preserves all natural enzymes, antioxidants, and medicinal properties. Unlike supermarket honey that is heated and filtered to extend shelf life, our honey retains its natural pollen, slight cloudiness, and floral aroma. It is FSSAI certified with no added sugar or preservatives.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Why does my Pahadi honey crystallise or turn thick?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Crystallisation is a natural sign of pure, raw honey — it is not spoilage. The natural glucose in raw Himalayan honey crystallises over time, especially in cooler temperatures. To liquefy it, simply place the jar in warm water (below 40°C). Never microwave it, as heat destroys the natural enzymes. If honey never crystallises, it has likely been overheated or adulterated.',
+      },
+    },
+
+    // --- PRODUCTS / WHAT IS ---
+    {
+      '@type': 'Question',
+      name: 'What is Pisyu Loon and how do I use it?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Pisyu Loon is a traditional hand-pounded salt blend from the Uttarakhand Himalayas. "Pisyu" means ground and "Loon" means salt in Garhwali and Kumaoni dialects. It is made by grinding rock salt with local herbs like garlic, green chilli, ginger, cumin, and mustard — giving it a tangy, earthy flavour. Use it as a dip for fresh veggies and fruits, as a seasoning on salads, or as a finishing salt on traditional Pahadi dishes like kafuli and phanu.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is Bal Mithai and what does it taste like?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Bal Mithai is a traditional chocolate-brown sweet from Uttarakhand, especially popular in the Garhwal and Kumaon regions. It is made by slowly caramelising khoya (evaporated milk solids) until it turns dark and fudge-like, then coated with tiny white sugar balls. The taste is rich, mildly sweet, and chocolatey — often described as Pahadi chocolate. SIMDI\'s Bal Mithai is handmade with no preservatives and ships pan-India.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is Jhangora (Barnyard Millet) and is it good for fasting?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Jhangora, also called Barnyard Millet, is a traditional Himalayan grain grown in Uttarakhand. It is gluten-free, rich in fibre and protein, and considered a supergrain. It is widely consumed as a rice substitute and is especially popular during fasting (vrat) days in Hindu households, making it an authentic and nutritious alternative to sabudana. When cooked, it is light and fluffy with a mildly nutty, sweet taste.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is Buransh Squash and what are its health benefits?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Buransh Squash is a drink made from the vibrant crimson petals of the Rhododendron arboreum flower — the state flower of Uttarakhand. It is naturally cooling, tangy-sweet, and rich in antioxidants. Traditionally consumed in spring and summer, it is believed to support heart health, liver function, and immunity. SIMDI\'s Buransh Squash contains no artificial colour or preservatives — the deep red colour is entirely natural from the flower.',
+      },
+    },
+
+    // --- TRUST & QUALITY ---
+    {
+      '@type': 'Question',
+      name: 'Are SIMDI products FSSAI certified and lab-tested?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. All SIMDI products are FSSAI certified and meet Indian food safety standards. Our honey is lab-tested to verify it contains no added sugar, antibiotics, or adulterants. Our ghee is tested for purity and fat composition. We believe in full transparency — what is on the label is exactly what is in the jar.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Are SIMDI products chemical-free and organic?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. All SIMDI products are sourced from the organic-rich mountain soil of Uttarakhand, grown at altitudes above 1,500 metres using traditional farming methods. No pesticides, synthetic fertilisers, or chemical preservatives are used at any stage — from farming to packaging. Many of our seasonal products like Kaafal, Linguda, and Bhatt Dal are wild-harvested or rain-fed, making them naturally chemical-free.',
+      },
+    },
+
+    // --- SHIPPING & ORDERS ---
+    {
+      '@type': 'Question',
+      name: 'Do you deliver across India? How long does shipping take?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes, SIMDI delivers pan-India. Most orders are dispatched within 1–2 business days from Chakisain, Pauri Garhwal, Uttarakhand. Delivery typically takes 3–7 business days depending on your location. Metro cities like Delhi, Mumbai, Bangalore, and Pune generally receive orders faster. You will receive a tracking link once your order ships.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is your return or refund policy?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'SIMDI stands behind the quality of every product. If you receive a damaged, incorrect, or spoiled item, please contact us at Team@simdi.in within 48 hours of delivery with a photo. We will arrange a replacement or full refund. As our products are perishable food items, we do not accept returns due to change of mind, but we always resolve genuine quality issues.',
+      },
+    },
+
+    // --- MISSION / COMMUNITY ---
+    {
+      '@type': 'Question',
+      name: 'Who are the women farmers behind SIMDI products?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'SIMDI works directly with 35+ women artisans and farmers across 12+ villages in Pauri Garhwal, Uttarakhand — including Chakisain and surrounding hill communities. These women grow, harvest, and handcraft each product using generations-old methods. SIMDI eliminates middlemen so that a fair price reaches the farmers directly. Every purchase you make supports their livelihood and helps preserve traditional mountain agriculture.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I buy SIMDI products as a gift?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Absolutely. SIMDI products make thoughtful, authentic gifts for people who appreciate pure, natural food. Popular gift choices include our Bilona Ghee, Raw Pahadi Honey, Bal Mithai, Buransh Squash, and Pisyu Loon. We currently ship directly to the gift recipient\'s address. For bulk gifting or corporate orders, contact us at Team@simdi.in or call +91-7042735331.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is the shelf life of SIMDI products?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Shelf life varies by product. Bilona Ghee: 12 months from manufacture (store in a cool, dry place). Raw Honey: 18–24 months (store at room temperature, away from direct sunlight). Squash drinks (Buransh, Malta, Seabuckthorn): 6–12 months unopened; consume within 30 days of opening and refrigerate. Dried grains, dals, and spices: 6–12 months in an airtight container. Pickles (Achaar): 6–9 months. All best-before dates are printed on the packaging.',
+      },
+    },
+  ],
+}
 export const metadata: Metadata = {
   // Primary metadata
   title: 'Pure Himalayan Organic Products | SIMDI - Farm to Home from Uttarakhand',
@@ -272,6 +389,7 @@ export default async function Home() {
   return (
     <div className="site-page-shell site-page-shell--hidden-overflow">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageStructuredData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <Suspense fallback={<div>Loading...</div>}>
         <Navbar />
@@ -319,7 +437,7 @@ export default async function Home() {
       </p>
       <h1 style={{ fontFamily: 'Georgia, serif', lineHeight: 1.1, margin: 0 }}>
         <span style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, color: '#1E2D24' }}>
-          Taste the Himalayas
+          Buy Pure Organic Himalayan Products – Ghee, Honey from Uttarakhand
         </span>
       </h1>
       <p style={{ marginTop: '20px', maxWidth: '450px', color: '#5E6E5E', fontSize: '1rem', lineHeight: 1.7 }}>
@@ -357,7 +475,7 @@ export default async function Home() {
       <ImageCarousel
         images={[
           { src: '/product_images/pahadi_honey/pahadi_honey.webp', alt: 'Himalayan raw honey being poured' },
-          { src: '/product_images/ghee/ghee.webp', alt: 'Pure Bilona Ghee' },
+          { src: '/product_images/ghee/ghee.webp', alt: 'SIMDI Pure Bilona Ghee – Organic A2 Ghee from Uttarakhand' },
           { src: '/product_images/pisyu_loon/pisyu_loon.webp', alt: 'Traditional spice grinding with mortar and pestle' },
           { src: '/product_images/pahadi_honey/honey3.webp', alt: 'Packed Himalayan honey' },
           { src: '/product_images/kaafal/kaafal.webp', alt: 'Kafal himalayan berries' },
