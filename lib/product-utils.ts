@@ -316,17 +316,15 @@ export function getProductSizeOptions(unit?: string): ProductSizeOption[] {
 
   if (/\b(kg|kgs|kilogram|kilograms|kilo)\b/.test(normalizedUnit)) {
     return [
-      { value: 'kg', label: 'kg', multiplier: 1, surcharge: 0 },
       { value: '500gm', label: '500gm', multiplier: 0.5, surcharge: 25 },
-      { value: '250gm', label: '250gm', multiplier: 0.25, surcharge: 15 },
+      { value: 'kg', label: 'kg', multiplier: 1, surcharge: 0 },
     ]
   }
 
   if (/\b(l|ltr|ltrs|litre|litres|liter|liters)\b/.test(normalizedUnit)) {
     return [
-      { value: 'L', label: 'L', multiplier: 1, surcharge: 0 },
       { value: '500ml', label: '500ml', multiplier: 0.5, surcharge: 25 },
-      { value: '250ml', label: '250ml', multiplier: 0.25, surcharge: 15 },
+      { value: 'L', label: 'L', multiplier: 1, surcharge: 0 },
     ]
   }
 
