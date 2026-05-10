@@ -50,7 +50,7 @@ export const blogs: Blog[] = [
   id: 6,
   title: "Sea Buckthorn Juice: The Himalayan Superfruit Packed with Nutrition",
   slug: "sea-buckthorn-juice-benefits",
-  date: "May 6, 2026",
+  date: "May 10, 2026",
   publishedAt: "2026-05-06T00:00:00.000Z",
   excerpt:
     "Discover the health benefits of Himalayan sea buckthorn juice, a nutrient-rich superfruit drink known for immunity, skin health, and energy.",
@@ -222,7 +222,7 @@ export const blogs: Blog[] = [
   id: 8,
   title: "Bhatt Ki Daal: Uttarakhand’s Protein-Rich Black Soybean",
   slug: "bhatt-ki-daal-benefits",
-  date: "May 6, 2026",
+  date: "May 8, 2026",
   publishedAt: "2026-05-06T00:00:00.000Z",
   excerpt:
     "Discover Bhatt ki daal, the traditional black soybean from Uttarakhand known for its rich taste and high nutrition.",
@@ -296,7 +296,7 @@ export const blogs: Blog[] = [
   id: 9,
   title: "Gahat Daal: The Traditional Horse Gram of the Himalayas",
   slug: "gahat-daal-benefits",
-  date: "May 6, 2026",
+  date: "May 7, 2026",
   publishedAt: "2026-05-06T00:00:00.000Z",
   excerpt:
     "Learn about Gahat daal, the nutrient-rich horse gram widely consumed in Uttarakhand for warmth and strength.",
