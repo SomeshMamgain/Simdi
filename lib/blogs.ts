@@ -148,7 +148,7 @@ export const blogs: Blog[] = [
   id: 7,
   title: "Bal Mithai: The Iconic Sweet Delight from Uttarakhand",
   slug: "bal-mithai-uttarakhand",
-  date: "May 6, 2026",
+  date: "May 8, 2026",
   publishedAt: "2026-05-06T00:00:00.000Z",
   excerpt:
     "Explore the rich taste and cultural history of Bal Mithai, the famous chocolate-like sweet from Uttarakhand.",
@@ -222,7 +222,7 @@ export const blogs: Blog[] = [
   id: 8,
   title: "Bhatt Ki Daal: Uttarakhand’s Protein-Rich Black Soybean",
   slug: "bhatt-ki-daal-benefits",
-  date: "May 8, 2026",
+  date: "May 7, 2026",
   publishedAt: "2026-05-06T00:00:00.000Z",
   excerpt:
     "Discover Bhatt ki daal, the traditional black soybean from Uttarakhand known for its rich taste and high nutrition.",
@@ -296,7 +296,7 @@ export const blogs: Blog[] = [
   id: 9,
   title: "Gahat Daal: The Traditional Horse Gram of the Himalayas",
   slug: "gahat-daal-benefits",
-  date: "May 7, 2026",
+  date: "May 6, 2026",
   publishedAt: "2026-05-06T00:00:00.000Z",
   excerpt:
     "Learn about Gahat daal, the nutrient-rich horse gram widely consumed in Uttarakhand for warmth and strength.",
