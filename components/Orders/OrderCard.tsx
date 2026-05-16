@@ -60,9 +60,26 @@ export function OrderCard({ order, expanded, onToggle }: OrderCardProps) {
           <Link href={`/orders/${order.$id}`} className={styles.linkButton}>
             Open Order Page
           </Link>
-          <Link  href={order.tracking_number ? ` https://shiprocket.co/tracking/${encodeURIComponent(order.tracking_number)}` : '#'}  className={styles.linkButton}>
-            Track Order
-          </Link>
+         {
+  order.status === 'delivered' ? (
+    <>  </>
+  ) : order.tracking_number ? (
+    <Link
+      href={`https://shiprocket.co/tracking/${encodeURIComponent(
+        order.tracking_number
+      )}`}
+      className={styles.linkButton}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Track Order
+    </Link>
+  ) : (
+    <Link href="#" className={styles.linkButton}>
+      Ships Soon
+    </Link>
+  )
+}
 
         </div>
       </div>
