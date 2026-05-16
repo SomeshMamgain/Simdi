@@ -67,6 +67,10 @@ function getBlogPlainText(blog: Blog) {
         return [block.title, ...block.items.flatMap((item) => [item.title, item.description])]
       }
 
+      if (block.type === 'faq') {
+        return [block.title, ...block.items.flatMap((item) => [item.question, item.answer])]
+      }
+
       return []
     })
     .join(' ')
@@ -166,6 +170,13 @@ function getBenefitSummary(blog: Blog) {
 }
 
 function getBlogFaqs(blog: Blog) {
+  const faqBlock = blog.fullContent.find((block) => block.type === 'faq')
+  console.log('FAQ Block:', faqBlock)
+
+  if (faqBlock) {
+    return faqBlock.items
+  }
+
   const subject = getBlogSubject(blog)
 
   return [
@@ -272,6 +283,28 @@ function BlogContent({ block }: { block: BlogContentBlock }) {
     )
   }
 
+  if (block.type === 'faq') {
+    return (
+      <section style={{ margin: '0 0 72px' }}>
+        <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(2rem, 4vw, 2.7rem)', color: '#1E2D24', lineHeight: 1.18, margin: '0 0 28px' }}>
+          {block.title}
+        </h2>
+        <div style={{ display: 'grid', gap: '16px' }}>
+          {block.items.map((item) => (
+            <article key={item.question} style={{ background: '#fff', border: '1px solid #E8E4D9', borderRadius: '8px', padding: '24px' }}>
+              <h3 style={{ color: '#1E2D24', fontSize: '1.08rem', lineHeight: 1.45, margin: '0 0 10px' }}>
+                {item.question}
+              </h3>
+              <p style={{ color: '#5E6E5E', fontSize: '0.98rem', lineHeight: 1.7, margin: 0 }}>
+                {item.answer}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section style={{ background: '#fff', border: '1px solid #E8E4D9', borderRadius: '8px', padding: 'clamp(28px, 5vw, 56px)', margin: '0 0 72px' }}>
       <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(2rem, 4vw, 2.5rem)', color: '#1E2D24', textAlign: 'center', margin: '0 0 36px' }}>
@@ -349,7 +382,7 @@ export default async function BlogDetailPage({ params }: BlogRouteProps) {
           </div>
         </article>
 
-        <section style={{ maxWidth: '980px', margin: '0 auto 80px' }}>
+        {/* <section style={{ maxWidth: '980px', margin: '0 auto 80px' }}>
           <h2 style={{ fontFamily: 'Georgia, serif', color: '#1E2D24', fontSize: 'clamp(2rem, 4vw, 2.5rem)', margin: '0 0 26px' }}>
             Frequently Asked Questions
           </h2>
@@ -365,7 +398,7 @@ export default async function BlogDetailPage({ params }: BlogRouteProps) {
               </article>
             ))}
           </div>
-        </section>
+        </section> */}
 
         {blog.productHref ? (
           <section style={{ background: '#1E2D24', color: '#fff', textAlign: 'center', borderRadius: '8px', padding: '56px 24px', margin: '8px auto 80px', maxWidth: '980px' }}>
