@@ -171,7 +171,6 @@ function getBenefitSummary(blog: Blog) {
 
 function getBlogFaqs(blog: Blog) {
   const faqBlock = blog.fullContent.find((block) => block.type === 'faq')
-  console.log('FAQ Block:', faqBlock)
 
   if (faqBlock) {
     return faqBlock.items
@@ -376,7 +375,7 @@ export default async function BlogDetailPage({ params }: BlogRouteProps) {
           </header>
 
           <div style={{ maxWidth: '980px', margin: '0 auto' }}>
-            {blog.fullContent.map((block, index) => (
+            {blog.fullContent.filter((block) => block.type !== 'faq').map((block, index) => (
               <BlogContent key={`${block.type}-${index}`} block={block} />
             ))}
           </div>
