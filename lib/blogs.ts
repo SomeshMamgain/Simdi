@@ -53,6 +53,7 @@ export type Blog = {
   productCta?: string
 }
 
+<<<<<<< HEAD
 type ProductBlogInput = {
   id: number
   title: string
@@ -88,6 +89,374 @@ type ProductBlogInput = {
     question: string
     answer: string
   }[]
+=======
+export const blogs: Blog[] = [
+  {
+  id: 6,
+  title: "Sea Buckthorn Juice: The Himalayan Superfruit Packed with Nutrition",
+  slug: "sea-buckthorn-juice-benefits",
+  date: "May 10, 2026",
+  publishedAt: "2026-05-06T00:00:00.000Z",
+  excerpt:
+    "Discover the health benefits of Himalayan sea buckthorn juice, a nutrient-rich superfruit drink known for immunity, skin health, and energy.",
+  image: "/product_images/Seabuckthorn/Seabuckthorn.webp",
+  imageAlt: "Fresh Himalayan sea buckthorn juice",
+  metaTitle: "Sea Buckthorn Juice Benefits & Uses | Simdi",
+  metaDescription:
+    "Learn why Himalayan sea buckthorn juice is considered a superfood packed with vitamins, antioxidants, and natural wellness benefits.",
+  keywords: [
+    "sea buckthorn juice",
+    "Himalayan superfruit",
+    "natural immunity drink",
+    "sea buckthorn benefits",
+    "healthy juice India",
+  ],
+  productHref: "/products/himalayan-omega-boost",
+  productCta: "Shop Sea Buckthorn Juice",
+  fullContent: [
+    {
+      type: "paragraph",
+      text:
+        "Growing naturally in the cold Himalayan regions, sea buckthorn is a bright orange berry known for its exceptional nutritional value. For centuries, local communities in Ladakh and Uttarakhand have consumed sea buckthorn juice as a natural health tonic. Rich in vitamins, antioxidants, and essential fatty acids, this juice has gained global popularity as a superfood drink that supports immunity, skin health, and overall wellness.",
+    },
+    {
+      type: "section",
+      title: "Why Sea Buckthorn is Called a Superfruit",
+      paragraphs: [
+        "Sea buckthorn berries contain rare nutrients that are difficult to find together in a single fruit. They are naturally rich in Vitamin C, Vitamin E, omega fatty acids, and antioxidants.",
+        "Unlike artificial supplements, sea buckthorn juice offers nutrients in a natural form, making it easier for the body to absorb and utilize.",
+      ],
+      list: [
+        "Rich in Vitamin C and antioxidants",
+        "Supports skin and immune health",
+        "Naturally energizing",
+        "Traditionally used in Himalayan wellness practices",
+      ],
+      image: {
+        src: "/product_images/Seabuckthorn/Seabuckthorn1.webp",
+        alt: "Fresh Himalayan sea buckthorn juice in a glass",
+      },
+    },
+    {
+      type: "benefits",
+      title: "Health Benefits of Sea Buckthorn Juice",
+      items: [
+        {
+          title: "Boosts Immunity",
+          description:
+            "Its high Vitamin C content helps strengthen the immune system naturally.",
+        },
+        {
+          title: "Supports Healthy Skin",
+          description:
+            "Antioxidants and omega oils help maintain glowing and hydrated skin.",
+        },
+        {
+          title: "Improves Energy Levels",
+          description:
+            "Provides natural nourishment and helps reduce fatigue.",
+        },
+        {
+          title: "Supports Heart Health",
+          description:
+            "Contains beneficial fatty acids that may support cardiovascular wellness.",
+        },
+      ],
+    },
+    {
+      type: "section",
+      title: "How to Consume Sea Buckthorn Juice",
+      paragraphs: [
+        "Sea buckthorn juice can easily become part of your daily routine. Its tangy flavor makes it refreshing and versatile.",
+      ],
+      list: [
+        "Drink diluted with water every morning",
+        "Add to smoothies",
+        "Use in mocktails and herbal drinks",
+        "Consume chilled during summer",
+      ],
+    },
+    // {
+    //   type: "section",
+    //   title: "Frequently Asked Questions (FAQs)",
+    //   paragraphs: [],
+    //   list: [
+    //     "Is sea buckthorn juice good for immunity? Yes, it is naturally rich in Vitamin C and antioxidants.",
+    //     "Can I drink sea buckthorn juice daily? Yes, moderate daily consumption is common.",
+    //     "What does sea buckthorn juice taste like? It has a tangy and citrus-like flavor.",
+    //     "Is sea buckthorn naturally grown in the Himalayas? Yes, it grows in high-altitude Himalayan regions.",
+    //   ],
+    // },
+  ],
+},
+{
+  id: 7,
+  title: "Bal Mithai: The Iconic Sweet Delight from Uttarakhand",
+  slug: "bal-mithai-uttarakhand",
+  date: "May 8, 2026",
+  publishedAt: "2026-05-06T00:00:00.000Z",
+  excerpt:
+    "Explore the rich taste and cultural history of Bal Mithai, the famous chocolate-like sweet from Uttarakhand.",
+  image: "/product_images/bal_mithai/bal_mithai.webp",
+  imageAlt: "Traditional Bal Mithai sweet from Uttarakhand",
+  metaTitle: "Bal Mithai Sweet from Uttarakhand | Simdi",
+  metaDescription:
+    "Learn about Bal Mithai, Uttarakhand’s famous traditional sweet made from khoya and sugar balls with a rich caramel flavor.",
+  keywords: ["Bal Mithai", "Uttarakhand sweets", "traditional mithai", "pahadi sweets", "khoya sweet"],
+  productHref: "/products/bal-mithai",
+  productCta: "Shop Bal Mithai",
+  fullContent: [
+    {
+      type: "paragraph",
+      text:
+        "Bal Mithai is one of Uttarakhand’s most loved traditional sweets. Made using roasted khoya and coated with tiny sugar balls, this unique dessert has a deep caramel flavor and rich texture. Originating from the Kumaon region, Bal Mithai is more than just a sweet — it is a symbol of celebration, tradition, and mountain hospitality.",
+    },
+    {
+      type: "section",
+      title: "The History Behind Bal Mithai",
+      paragraphs: [
+        "Bal Mithai has been prepared in Uttarakhand for generations and is commonly served during festivals, weddings, and family gatherings.",
+        "Its chocolate-like appearance and rich flavor make it stand out among traditional Indian sweets.",
+      ],
+      list: [
+        "Traditional sweet from Kumaon",
+        "Prepared using roasted khoya",
+        "Decorated with sugar pearls",
+        "Popular during festivals and celebrations",
+      ],
+      image: {
+        src: "/product_images/bal_mithai/bal_mithai2.webp",
+        alt: "Traditional Bal Mithai sweet from Uttarakhand",
+      },
+    },
+    {
+      type: "benefits",
+      title: "Why People Love Bal Mithai",
+      items: [
+        {
+          title: "Rich Traditional Taste",
+          description:
+            "Offers a unique caramelized flavor unlike most sweets.",
+        },
+        {
+          title: "Cultural Importance",
+          description:
+            "Strongly connected to Uttarakhand’s food heritage.",
+        },
+        {
+          title: "Perfect Festive Dessert",
+          description:
+            "Often gifted and shared during celebrations.",
+        },
+      ],
+    },
+    // {
+    //   type: "section",
+    //   title: "Frequently Asked Questions (FAQs)",
+    //   paragraphs: [],
+    //   list: [
+    //     "What is Bal Mithai made of? It is made from roasted khoya and sugar balls.",
+    //     "Which state is famous for Bal Mithai? Uttarakhand is famous for Bal Mithai.",
+    //     "Does Bal Mithai taste like chocolate? It has a caramel-like flavor similar to chocolate fudge.",
+    //     "Can Bal Mithai be gifted? Yes, it is commonly gifted during festivals.",
+    //   ],
+    // },
+  ],
+},
+{
+  id: 8,
+  title: "Bhatt Ki Daal: Uttarakhand’s Protein-Rich Black Soybean",
+  slug: "bhatt-ki-daal-benefits",
+  date: "May 7, 2026",
+  publishedAt: "2026-05-06T00:00:00.000Z",
+  excerpt:
+    "Discover Bhatt ki daal, the traditional black soybean from Uttarakhand known for its rich taste and high nutrition.",
+  image: "/product_images/pahadi_bhatt/pahadi_bhatt.webp",
+  imageAlt: "Traditional Bhatt ki daal from Uttarakhand",
+  metaTitle: "Bhatt Ki Daal Benefits & Nutrition | Simdi",
+  metaDescription:
+    "Learn about Bhatt ki daal, a protein-rich Himalayan black soybean widely used in traditional Uttarakhand cuisine.",
+  keywords: ["Bhatt ki daal", "black soybean", "Uttarakhand pulses", "protein rich daal", "pahadi food"],
+  productHref: "/products/pahadi-bhatt-dal",
+  productCta: "Shop Bhatt Daal",
+  fullContent: [
+    {
+      type: "paragraph",
+      text:
+        "Bhatt ki daal is a traditional Himalayan pulse grown mainly in Uttarakhand. Known as black soybean, it has been a staple in pahadi kitchens for centuries. Rich in protein, fiber, and minerals, Bhatt ki daal is both nutritious and comforting. It is commonly prepared as Bhatt ki Churkani, a famous Kumaoni dish with deep earthy flavors.",
+    },
+    {
+      type: "section",
+      title: "Why Bhatt Daal is Nutritious",
+      paragraphs: [
+        "Bhatt ki daal contains high-quality plant protein and essential nutrients that make it a healthy addition to daily meals.",
+        "Its traditional cultivation in Himalayan regions also means it is often grown naturally with minimal chemical use.",
+      ],
+      list: [
+        "High in protein",
+        "Rich in fiber and iron",
+        "Traditional Himalayan crop",
+        "Popular in Kumaoni cuisine",
+      ],
+       image: {
+        src: "/product_images/pahadi_bhatt/pahadi_bhatt3.webp",
+        alt: "Traditional Bhatt ki daal from Uttarakhand",
+      },
+    },
+    {
+      type: "benefits",
+      title: "Health Benefits of Bhatt Daal",
+      items: [
+        {
+          title: "Supports Muscle Health",
+          description:
+            "Its protein content helps support muscle repair and strength.",
+        },
+        {
+          title: "Good for Digestion",
+          description:
+            "Contains dietary fiber that supports digestive health.",
+        },
+        {
+          title: "Provides Long-lasting Energy",
+          description:
+            "Complex carbohydrates keep you full for longer.",
+        },
+      ],
+    },
+    // {
+    //   type: "section",
+    //   title: "Frequently Asked Questions (FAQs)",
+    //   paragraphs: [],
+    //   list: [
+    //     "What is Bhatt ki daal? It is a traditional black soybean grown in Uttarakhand.",
+    //     "Is Bhatt daal high in protein? Yes, it is naturally protein-rich.",
+    //     "How is Bhatt daal cooked? It is commonly prepared as Bhatt ki Churkani.",
+    //     "Is Bhatt daal healthy? Yes, it contains fiber, protein, and minerals.",
+    //   ],
+    // },
+  ],
+},
+{
+  id: 9,
+  title: "Gahat Daal: The Traditional Horse Gram of the Himalayas",
+  slug: "gahat-daal-benefits",
+  date: "May 6, 2026",
+  publishedAt: "2026-05-06T00:00:00.000Z",
+  excerpt:
+    "Learn about Gahat daal, the nutrient-rich horse gram widely consumed in Uttarakhand for warmth and strength.",
+  image: "/product_images/gauth/gauth.webp",
+  imageAlt: "Traditional Gahat daal from Uttarakhand",
+  metaTitle: "Gahat Daal Benefits & Nutrition | Simdi",
+  metaDescription:
+    "Explore the nutritional value and traditional uses of Gahat daal, a protein-rich Himalayan horse gram.",
+  keywords: ["Gahat daal", "horse gram", "pahadi daal", "Uttarakhand food", "healthy pulses"],
+  productHref: "/products/gahat-organic-kulthi-dal",
+  productCta: "Shop Gahat Daal",
+  fullContent: [
+    {
+      type: "paragraph",
+      text:
+        "Gahat daal, also known as horse gram, is one of the oldest pulses cultivated in the Himalayan region. In Uttarakhand, it is valued for its warming nature and nutritional richness. Traditionally consumed during winters, Gahat daal is known for supporting digestion, strength, and overall wellness.",
+    },
+    {
+      type: "benefits",
+      title: "Health Benefits of Gahat Daal",
+      items: [
+        {
+          title: "Rich in Protein",
+          description:
+            "Supports a balanced vegetarian diet.",
+        },
+        {
+          title: "Keeps the Body Warm",
+          description:
+            "Traditionally consumed during cold weather.",
+        },
+        {
+          title: "Supports Digestion",
+          description:
+            "Contains fiber that helps digestive health.",
+        },
+      ],
+    },
+    // {
+    //   type: "section",
+    //   title: "Frequently Asked Questions (FAQs)",
+    //   paragraphs: [],
+    //   list: [
+    //     "What is Gahat daal? It is horse gram traditionally consumed in Uttarakhand.",
+    //     "Is Gahat daal healthy? Yes, it is rich in protein and fiber.",
+    //     "When is Gahat daal usually eaten? Mostly during winters.",
+    //     "Can Gahat daal be included in daily meals? Yes, in moderate amounts.",
+    //   ],
+    //    image: {
+    //     src: "/product_images/gauth/gauth2.webp",
+    //     alt: "Traditional Gahat daal from Uttarakhand",
+    //   },
+    // },
+  ],
+},
+{
+  id: 10,
+  title: "Ragi Millets: Ancient Himalayan Grain for Modern Nutrition",
+  slug: "ragi-millet-benefits",
+  date: "May 6, 2026",
+  publishedAt: "2026-05-06T00:00:00.000Z",
+  excerpt:
+    "Discover why ragi millet is considered one of the healthiest grains for energy, calcium, and balanced nutrition.",
+  image: "/product_images/ragi/ragi.webp",
+  imageAlt: "Healthy ragi millet grains",
+  metaTitle: "Ragi Millet Benefits & Nutrition | Simdi",
+  metaDescription:
+    "Learn about the benefits of ragi millets, an ancient grain rich in calcium, fiber, and natural nutrition.",
+  keywords: ["ragi millet", "healthy grains", "millets India", "finger millet", "natural nutrition"],
+  productHref: "/products/mandua-ragi-koda",
+  productCta: "Shop Ragi Millets",
+  fullContent: [
+    {
+      type: "paragraph",
+      text:
+        "Ragi, also known as finger millet, has been consumed in India for centuries as a nourishing grain. In Himalayan and rural communities, it is valued for its ability to provide long-lasting energy and natural nutrition. Rich in calcium, fiber, and minerals, ragi is now gaining popularity as a healthy alternative to refined grains.",
+    },
+    {
+      type: "benefits",
+      title: "Benefits of Ragi Millets",
+      items: [
+        {
+          title: "Rich in Calcium",
+          description:
+            "Supports strong bones and teeth.",
+        },
+        {
+          title: "High in Fiber",
+          description:
+            "Helps maintain digestive health and fullness.",
+        },
+        {
+          title: "Natural Energy Source",
+          description:
+            "Provides sustained energy throughout the day.",
+        },
+      ],
+    },
+    // {
+    //   type: "section",
+    //   title: "Frequently Asked Questions (FAQs)",
+    //   paragraphs: [],
+    //   list: [
+    //     "What is ragi? Ragi is also called finger millet.",
+    //     "Is ragi healthy? Yes, it is rich in calcium and fiber.",
+    //     "Can ragi replace wheat? Many people use it as a healthier alternative.",
+    //     "How can ragi be consumed? It can be used in rotis, porridge, and baked foods.",
+    //   ],
+    //    image: {
+    //     src: "/product_images/ragi/ragi2.webp",
+    //     alt: "Traditional Ragi Millet from Uttarakhand",
+    //   },
+    // },
+  ],
+>>>>>>> e008b447319ca2846c766ef460633e73340af0cc
 }
 
 function buildProductBlog(input: ProductBlogInput): Blog {
