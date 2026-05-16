@@ -21,6 +21,7 @@ interface OrderCardProps {
 export function OrderCard({ order, expanded, onToggle }: OrderCardProps) {
   const statusDisplay = getOrderStatusDisplay(order.status)
   const itemPreview = order.items.slice(0, 3).map((item) => item.name).join(', ')
+  console.log('Rendering OrderCard for order:', order.tracking_number, 'with status:', order.status)
 
   return (
     <div className={`${styles.panel} ${styles.orderCard}`}>
@@ -59,6 +60,10 @@ export function OrderCard({ order, expanded, onToggle }: OrderCardProps) {
           <Link href={`/orders/${order.$id}`} className={styles.linkButton}>
             Open Order Page
           </Link>
+          <Link  href={order.tracking_number ? ` https://shiprocket.co/tracking/${encodeURIComponent(order.tracking_number)}` : '#'}  className={styles.linkButton}>
+            Track Order
+          </Link>
+
         </div>
       </div>
 
