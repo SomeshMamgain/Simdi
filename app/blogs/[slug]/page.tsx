@@ -381,7 +381,7 @@ export default async function BlogDetailPage({ params }: BlogRouteProps) {
           </div>
         </article>
 
-        {/* <section style={{ maxWidth: '980px', margin: '0 auto 80px' }}>
+        <section style={{ maxWidth: '980px', margin: '0 auto 80px' }}>
           <h2 style={{ fontFamily: 'Georgia, serif', color: '#1E2D24', fontSize: 'clamp(2rem, 4vw, 2.5rem)', margin: '0 0 26px' }}>
             Frequently Asked Questions
           </h2>
@@ -397,7 +397,7 @@ export default async function BlogDetailPage({ params }: BlogRouteProps) {
               </article>
             ))}
           </div>
-        </section> */}
+        </section>
 
         {blog.productHref ? (
           <section style={{ background: '#1E2D24', color: '#fff', textAlign: 'center', borderRadius: '8px', padding: '56px 24px', margin: '8px auto 80px', maxWidth: '980px' }}>

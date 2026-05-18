@@ -21,7 +21,7 @@ interface OrderCardProps {
 export function OrderCard({ order, expanded, onToggle }: OrderCardProps) {
   const statusDisplay = getOrderStatusDisplay(order.status)
   const itemPreview = order.items.slice(0, 3).map((item) => item.name).join(', ')
-  console.log('Rendering OrderCard for order:', order.tracking_number, 'with status:', order.status)
+  // console.log('Rendering OrderCard for order:', order.tracking_number, 'with status:', order.status)
 
   return (
     <div className={`${styles.panel} ${styles.orderCard}`}>
