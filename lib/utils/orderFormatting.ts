@@ -24,7 +24,7 @@ export function getEstimatedDeliveryDate(order: Pick<OrderRecord, 'date' | 'type
     return null
   }
 
-  const deliveryOffset = order.type === 'express' ? 3 : order.type === 'economy' ? 6 : 5
+  const deliveryOffset = order.type === 'express' ? 8 : order.type === 'economy' ? 10 : 12
   return addDays(baseDate, deliveryOffset)
 }
 
