@@ -5,6 +5,7 @@ import { startTransition, useState } from 'react'
 import { Lock, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import type { CartItem } from '@/types/cart'
 
 import { AuthModal } from '@/components/AuthModal'
 import { AddressCollectionModal } from '@/components/modals/AddressCollectionModal'
@@ -54,8 +55,17 @@ export function CheckoutButton() {
     deliveryAddress: profile.fullAddress,
   })
 
+  function createDescription(items:CartItem[]): string{
+
+    return items.map((item)=>{
+      return `${item.slug}+ ${item.unit}+ ${item.quantity}+ ${item.price} `
+    }).join("")
+  }
+
   const startPayment = async (customer?: OrderCustomer) => {
     try {
+            console.log(items)
+            
       setIsPreparing(true)
       await loadRazorpayScript()
 
@@ -87,7 +97,7 @@ export function CheckoutButton() {
         amount: paymentOrder.amount,
         currency: paymentOrder.currency,
         name: paymentOrder.storeName,
-        description: `Order for ${items.length} item${items.length === 1 ? '' : 's'}`,
+        description: createDescription(items),
         order_id: paymentOrder.razorpayOrderId,
         prefill: {
           name: paymentOrder.customer?.name,
