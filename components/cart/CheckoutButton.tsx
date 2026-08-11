@@ -59,7 +59,7 @@ export function CheckoutButton() {
 
     return items.map((item)=>{
       return `${item.slug}+ ${item.unit}+ ${item.quantity}+ ${item.price} `
-    }).join("")
+    }).join("").slice(0,250)
   }
 
   const startPayment = async (customer?: OrderCustomer) => {
