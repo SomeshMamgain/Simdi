@@ -87,7 +87,7 @@ export function CheckoutButton() {
         amount: paymentOrder.amount,
         currency: paymentOrder.currency,
         name: paymentOrder.storeName,
-        description: JSON.stringify(items),
+        description: `Order for ${items.length} item${items.length === 1 ? '' : 's'}`,
         order_id: paymentOrder.razorpayOrderId,
         prefill: {
           name: paymentOrder.customer?.name,
