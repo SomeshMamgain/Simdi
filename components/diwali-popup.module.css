@@ -1,0 +1,438 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(34, 16, 12, 0.46);
+  backdrop-filter: blur(6px);
+  animation: overlayFade 0.25s ease;
+}
+
+.modal {
+  position: relative;
+  width: min(980px, 100%);
+  min-height: 560px;
+  border-radius: 28px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(255, 209, 98, 0.28), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(133, 19, 19, 0.22), transparent 30%),
+    linear-gradient(135deg, #fffaf1 0%, #f9efdd 45%, #fcedd6 100%);
+  border: 1px solid rgba(161, 92, 39, 0.2);
+  box-shadow: 0 30px 80px rgba(69, 19, 12, 0.22);
+  animation: modalIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.modal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255, 204, 95, 0.18) 0, transparent 2px),
+    radial-gradient(circle, rgba(255, 135, 87, 0.12) 0, transparent 3px),
+    linear-gradient(0deg, rgba(150, 77, 25, 0.04), rgba(150, 77, 25, 0.04));
+  background-position: 10% 10%, 80% 30%, 50% 50%;
+  background-size: 120px 120px;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.03fr 1.15fr;
+  min-height: 560px;
+}
+
+.visualPanel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 34px 18px 28px;
+  background:
+    linear-gradient(180deg, rgba(130, 24, 18, 0.92) 0%, rgba(84, 18, 15, 0.98) 100%);
+  isolation: isolate;
+}
+
+.visualPanel::before {
+  content: '';
+  position: absolute;
+  inset: 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 214, 125, 0.28);
+  box-shadow: inset 0 0 0 1px rgba(255, 214, 125, 0.12);
+}
+
+.visualPanel::after {
+  content: '';
+  position: absolute;
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  background: rgba(255, 183, 68, 0.12);
+  filter: blur(18px);
+  right: 18%;
+  bottom: 19%;
+  z-index: -1;
+}
+
+.lightGlow {
+  position: absolute;
+  inset: auto 14% 10% auto;
+  width: 230px;
+  height: 230px;
+  background: radial-gradient(circle, rgba(255, 219, 118, 0.52) 0%, rgba(255, 219, 118, 0.12) 28%, transparent 72%);
+  border-radius: 50%;
+  filter: blur(18px);
+}
+
+.productStack {
+  position: relative;
+  width: min(370px, 100%);
+  height: 350px;
+}
+
+.productImage,
+.productImageSecondary {
+  position: absolute;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.22));
+  animation: float 4.8s ease-in-out infinite;
+}
+
+.productImage {
+  inset: 26px auto auto 12px;
+  width: 230px;
+  height: 230px;
+  z-index: 2;
+  transform: rotate(-10deg);
+}
+
+.productImageSecondary {
+  right: 8px;
+  bottom: 10px;
+  width: 210px;
+  height: 210px;
+  z-index: 3;
+  transform: rotate(8deg);
+  animation-delay: 0.6s;
+}
+
+.productBadge {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(255, 240, 200, 0.18);
+  color: #fff9ef;
+  border: 1px solid rgba(255, 226, 142, 0.36);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  backdrop-filter: blur(2px);
+}
+
+.copyPanel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(24px, 4vw, 52px) clamp(20px, 4vw, 48px);
+  color: #3b1c0c;
+}
+
+.kicker {
+  margin: 0 0 14px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #a64d20;
+}
+
+.title {
+  margin: 0;
+  color: #2d150d;
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+}
+
+.description {
+  margin-top: 18px;
+  max-width: 560px;
+  color: rgba(42, 25, 17, 0.8);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.offerBox {
+  margin-top: 26px;
+  padding: 20px 18px 18px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(168, 57, 31, 0.08), rgba(255, 201, 77, 0.12));
+  border: 1px solid rgba(167, 91, 39, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.55);
+}
+
+.offerLabel {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8a3a1b;
+}
+
+.promoRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.promoCode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 154px;
+  padding: 12px 18px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #8b1b15 0%, #5f0d0d 100%);
+  color: #fff7ea;
+  border: 1px solid rgba(255, 214, 106, 0.4);
+  box-shadow: 0 14px 28px rgba(126, 27, 14, 0.22);
+  font-weight: 800;
+  font-size: 1.6rem;
+  letter-spacing: 0.08em;
+  font-family: var(--font-body, sans-serif);
+}
+
+.copyButton {
+  appearance: none;
+  border: 1px solid rgba(127, 72, 22, 0.2);
+  background: rgba(255, 245, 213, 0.8);
+  color: #58311a;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.copyButton:hover,
+.copyButton:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(118, 52, 19, 0.18);
+  background: #fffaf1;
+}
+
+.discountText {
+  margin: 14px 0 0;
+  color: #824d00;
+  font-size: 1.12rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.ctaWrap {
+  margin-top: 26px;
+}
+
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 18px 22px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #e2a636 0%, #c66b1d 54%, #a6361b 100%);
+  color: #fffef9;
+  font-size: clamp(1rem, 2vw, 1.18rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  box-shadow: 0 16px 28px rgba(168, 74, 19, 0.24);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.primaryCta:hover,
+.primaryCta:focus-visible {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 20px 32px rgba(168, 74, 19, 0.3);
+  filter: saturate(1.04);
+}
+
+.footerNote {
+  margin-top: 18px;
+  color: rgba(72, 48, 32, 0.82);
+  font-weight: 600;
+  text-align: center;
+}
+
+.closeButton {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(122, 72, 31, 0.18);
+  background: rgba(255, 255, 255, 0.78);
+  color: #5e2b1d;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 8px 18px rgba(94, 43, 29, 0.12);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.closeButton:hover,
+.closeButton:focus-visible {
+  background: rgba(255, 255, 255, 0.96);
+  transform: scale(1.05);
+}
+
+@keyframes overlayFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-10deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-7deg);
+  }
+}
+
+.productImageSecondary {
+  animation-name: floatSecondary;
+}
+
+@keyframes floatSecondary {
+  0%,
+  100% {
+    transform: translateY(0) rotate(8deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(10deg);
+  }
+}
+
+@media (max-width: 760px) {
+  .overlay {
+    padding: 14px;
+  }
+
+  .modal {
+    width: min(100%, 520px);
+    min-height: auto;
+    border-radius: 22px;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .visualPanel {
+    min-height: 250px;
+    padding: 24px 16px 18px;
+  }
+
+  .productStack {
+    width: min(300px, 100%);
+    height: 210px;
+  }
+
+  .productImage {
+    width: 150px;
+    height: 150px;
+    left: 18px;
+  }
+
+  .productImageSecondary {
+    width: 140px;
+    height: 140px;
+    right: 16px;
+    bottom: 18px;
+  }
+
+  .productBadge {
+    left: 16px;
+    bottom: 16px;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+  }
+
+  .copyPanel {
+    padding: 22px 18px 20px;
+  }
+
+  .title {
+    font-size: clamp(1.9rem, 9vw, 2.5rem);
+  }
+
+  .description {
+    font-size: 0.96rem;
+    line-height: 1.6;
+  }
+
+  .offerBox {
+    padding: 16px 14px 14px;
+  }
+
+  .promoRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .promoCode {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .copyButton {
+    width: 100%;
+  }
+
+  .primaryCta {
+    font-size: 1rem;
+    padding: 16px 18px;
+  }
+
+  .closeButton {
+    top: 10px;
+    right: 10px;
+    width: 38px;
+    height: 38px;
+    font-size: 1.7rem;
+  }
+}

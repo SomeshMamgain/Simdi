@@ -5,6 +5,7 @@ import { AuthProvider } from '@/components/providers/auth-provider'
 import { QueryProvider } from '@/components/providers/query-provider'
 import { SITE_NAME, SITE_TAGLINE, defaultKeywords, getMetadataBase } from '@/lib/seo'
 import PromoBanner from '@/components/PromoBanner'
+import DiwaliPopup from '@/components/DiwaliPopup'
 import './globals.css'
 
 const merriweather = Merriweather({
@@ -86,6 +87,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           />
         </noscript>
         <PromoBanner />
+        <DiwaliPopup />
         <QueryProvider>
           <AuthProvider>{children}</AuthProvider>
         </QueryProvider>
