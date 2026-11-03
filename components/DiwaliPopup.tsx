@@ -140,7 +140,7 @@ export default function DiwaliPopup() {
           </div>
 
           <div className={styles.copyPanel}>
-            <p className={styles.kicker}>🪔 SHUBH DEEPAVALI FROM SIMDI</p>
+            <p className={styles.kicker}>🪔 SHUBH DEEPAWALI FROM SIMDI</p>
             <h2 id="simdi-diwali-popup-title" className={styles.title}>
               ✨ Make This Diwali Sweeter with Pahadi Love!
             </h2>
@@ -164,7 +164,7 @@ export default function DiwaliPopup() {
                 </button>
               </div>
 
-              <p className={styles.discountText}>GET 20% OFF YOUR ORDER</p>
+              <p className={styles.discountText}>Get 20 % off on your on orders above ₹1,499 </p>
             </div>
 
             <div className={styles.ctaWrap}>
