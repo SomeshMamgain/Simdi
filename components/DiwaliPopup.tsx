@@ -164,7 +164,7 @@ export default function DiwaliPopup() {
                 </button>
               </div>
 
-              <p className={styles.discountText}>Get 20 % off on your on orders above ₹1,499 </p>
+              <p className={styles.discountText}>Get 20 % off on your orders above ₹1,499 </p>
             </div>
 
             <div className={styles.ctaWrap}>
