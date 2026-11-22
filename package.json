@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "sync:order-schema": "node --env-file=.env.local scripts/sync-order-schema.mjs"
+    "sync:order-schema": "node --env-file=.env.local scripts/sync-order-schema.mjs",
+    "seed:winter-baskets": "node --env-file=.env.local scripts/seed-winter-baskets.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

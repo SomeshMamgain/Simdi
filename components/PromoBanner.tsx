@@ -1,24 +1,15 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
-
-const EXPIRY_DATE = new Date('2026-06-01T00:00:00+05:30'); // 31 May midnight IST
 
 export default function PromoBanner() {
   const [visible, setVisible] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    if (new Date() >= EXPIRY_DATE) return;
     const dismissed = sessionStorage.getItem('simdiBannerDismissed');
     if (!dismissed) setVisible(true);
   }, []);
-
-  const copyCode = () => {
-    navigator.clipboard.writeText('SIMDIWELCOME').catch(() => {});
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const dismiss = () => {
     sessionStorage.setItem('simdiBannerDismissed', '1');
@@ -43,17 +34,15 @@ export default function PromoBanner() {
       fontSize: '13px',
       position: 'relative',
     }}>
-      <span style={{ color: '#A8D5B5', fontWeight: 700 }}>15% off</span>
-      <span style={{ color: '#C8E6D0' }}>on orders above ₹1000 — use code</span>
-
-      <button
-        onClick={copyCode}
-        title="Click to copy"
+      <span style={{ color: '#E8F5EC', fontWeight: 700 }}>Bring the Warmth of the Himalayas Home</span>
+      <span style={{ color: '#C8E6D0' }}>Discover curated Winter Baskets of Pahadi grains, pulses, honey, ghee and mountain flavours.</span>
+      <Link
+        href="/products"
         style={{
           display: 'inline-flex',
           alignItems: 'center',
           gap: '6px',
-          fontFamily: 'monospace',
+          textDecoration: 'none',
           fontWeight: 700,
           fontSize: '12px',
           letterSpacing: '0.05em',
@@ -65,25 +54,9 @@ export default function PromoBanner() {
           cursor: 'pointer',
           transition: 'background-color 0.15s',
         }}
-        onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#B8D9C3')}
-        onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#C8E6D0')}
       >
-        SIMDIWELCOME
-        <span style={{
-          fontFamily: 'sans-serif',
-          fontWeight: 500,
-          fontSize: '10px',
-          color: copied ? '#2D5A3D' : '#4A7A5A',
-          backgroundColor: copied ? '#A8D5B5' : 'transparent',
-          borderRadius: '3px',
-          padding: copied ? '1px 4px' : '0',
-          transition: 'all 0.2s',
-        }}>
-          {copied ? '✓ copied' : 'copy'}
-        </span>
-      </button>
-
-      <span style={{ color: '#8BB89A', fontSize: '11px' }}>· valid till 31 May</span>
+        Explore Winter Baskets
+      </Link>
 
       <button
         onClick={dismiss}

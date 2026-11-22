@@ -8,6 +8,7 @@ import { buildMetadata } from '@/lib/seo'
 import { getProducts } from '@/lib/product-service'
 import type { ProductDocument } from '@/lib/product-types'
 import { toSerializableProducts } from '@/lib/product-utils'
+import { isWinterBasket } from '@/lib/winter-baskets'
 
 export const revalidate = 300
 
@@ -41,12 +42,14 @@ export default async function ProductsPage() {
 
   try {
     products = await getProducts()
+    console.log(products)
   } catch (error) {
     console.error('Error fetching products from Appwrite collection', error)
     hasError = true
   }
 
   const serializableProducts = toSerializableProducts(products)
+  const winterBaskets = serializableProducts.filter((product) => isWinterBasket(product))
 
   return (
     <div className="site-page-shell">
@@ -100,7 +103,7 @@ export default async function ProductsPage() {
               No products were found in the collection yet.
             </div>
           ) : (
-            <ProductsCatalog products={serializableProducts} />
+            <ProductsCatalog products={serializableProducts} winterBaskets={winterBaskets} />
           )}
         </div>
       </section>

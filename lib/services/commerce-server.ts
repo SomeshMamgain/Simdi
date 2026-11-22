@@ -351,6 +351,15 @@ function normalizeOrderItem(rawValue: unknown): OrderItem | null {
   const price = getNumberValue(record, ['price']) ?? 0
   const quantity = Math.max(1, Math.floor(getNumberValue(record, ['quantity']) ?? 1))
   const total = roundCurrency(getNumberValue(record, ['total']) ?? price * quantity)
+  const basketContents = Array.isArray(record.basketContents)
+    ? record.basketContents.flatMap((content) => {
+        if (!content || typeof content !== 'object') return []
+        const basketContent = content as GenericRecord
+        const itemName = getStringValue(basketContent, ['name'])
+        const itemQuantity = getStringValue(basketContent, ['quantity'])
+        return itemName && itemQuantity ? [{ name: itemName, quantity: itemQuantity }] : []
+      })
+    : undefined
 
   if (!id && !productId && !slug) {
     return null
@@ -366,6 +375,7 @@ function normalizeOrderItem(rawValue: unknown): OrderItem | null {
     image: getStringValue(record, ['image']) ?? undefined,
     unit: getStringValue(record, ['unit']) ?? undefined,
     variant: getStringValue(record, ['variant']) ?? undefined,
+    basketContents,
     total,
   }
 }
@@ -575,6 +585,7 @@ function buildOrderRecordFromDocument(document: OrderDocument): OrderRecord {
       inStock: true,
       unit: item.unit,
       variant: item.variant,
+      basketContents: item.basketContents,
     }))
   )
   const discountAmount = getNumberValue(record, ['discount_amount']) ?? snapshot?.promoDiscount ?? 0

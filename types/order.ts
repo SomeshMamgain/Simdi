@@ -26,6 +26,7 @@ export interface OrderItem {
   image?: string
   unit?: string
   variant?: string
+  basketContents?: Array<{ name: string; quantity: string }>
   total: number
 }
 
@@ -112,6 +113,7 @@ export function buildOrderItemFromCartItem(item: CartItem): OrderItem {
     image: item.image,
     unit: item.unit,
     variant: item.variant,
+    basketContents: item.basketContents,
     total: Math.round(item.price * item.quantity * 100) / 100,
   }
 }

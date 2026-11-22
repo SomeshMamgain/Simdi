@@ -89,6 +89,11 @@ export function OrderDetails({ order, detailPage = false }: OrderDetailsProps) {
                   <td>
                     {item.name}
                     {item.variant ? <span className={styles.helperText}>{item.variant}</span> : null}
+                    {item.basketContents?.length ? (
+                      <span className={styles.helperText}>
+                        Pack list: {item.basketContents.map((content) => `${content.name} (${content.quantity})`).join(', ')}
+                      </span>
+                    ) : null}
                   </td>
                   <td>{item.quantity}</td>
                   <td>{formatCurrencyAmount(item.total)}</td>

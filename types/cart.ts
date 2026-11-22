@@ -10,4 +10,5 @@ export interface CartItem {
   stock?: number | null
   unit?: string
   variant?: string
+  basketContents?: Array<{ name: string; quantity: string }>
 }

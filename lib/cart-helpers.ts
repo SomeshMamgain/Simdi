@@ -3,6 +3,7 @@ import type { ProductSizeOption } from '@/lib/product-utils'
 import { getPrimaryImage, getProductSlug, getVariantPrice, toNumber } from '@/lib/product-utils'
 import type { CartItem } from '@/types/cart'
 import type { AppliedPromo } from '@/types/promo'
+import { getWinterBasket } from '@/lib/winter-baskets'
 
 export interface CartTotals {
   subtotal: number
@@ -95,6 +96,7 @@ export function buildCartItem(
   const price = toNumber(rawPrice) ?? 0
   const variant = size?.label?.trim() || undefined
   const baseName = product.name ?? 'Untitled product'
+  const basket = getWinterBasket(getProductSlug(product))
 
   return {
     id: size ? `${product.$id}:${size.value}` : product.$id,
@@ -108,5 +110,6 @@ export function buildCartItem(
     stock: resolveProductStock(product),
     unit: variant ?? product.unit,
     variant,
+    basketContents: basket?.contents.map(({ name, quantity }) => ({ name, quantity })),
   }
 }

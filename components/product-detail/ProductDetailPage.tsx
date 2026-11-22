@@ -17,6 +17,7 @@ import {
   toSerializableProduct,
   toSerializableProducts,
 } from '@/lib/product-utils'
+import { getWinterBasket } from '@/lib/winter-baskets'
 
 import styles from './ProductDetailPage.module.css'
 import { ImageGallery } from './ImageGallery'
@@ -30,10 +31,11 @@ import { ReviewSection } from './ReviewSection'
 interface ProductDetailPageProps {
   product: ProductDocument
   relatedProducts: ProductDocument[]
+  catalogProducts?: ProductDocument[]
   reviews: Review[]
 }
 
-export function ProductDetailPage({ product, relatedProducts, reviews }: ProductDetailPageProps) {
+export function ProductDetailPage({ product, relatedProducts, catalogProducts = [], reviews }: ProductDetailPageProps) {
   const serializableProduct = toSerializableProduct(product)
   const serializableRelatedProducts = toSerializableProducts(relatedProducts)
   const galleryImages = getProductGalleryImages(serializableProduct)
@@ -41,9 +43,12 @@ export function ProductDetailPage({ product, relatedProducts, reviews }: Product
   const ingredients = getProductIngredients(serializableProduct)
   const keywords = getProductKeywords(serializableProduct)
   const video = getProductVideoPresentation(serializableProduct.video)
+  const winterBasket = getWinterBasket(getProductSlug(serializableProduct))
+  const serializableCatalogProducts = toSerializableProducts(catalogProducts)
 
   const sections = [
     { id: 'overview', label: 'Overview' },
+    ...(winterBasket ? [{ id: 'basket-contents', label: "What's Inside" }] : []),
     { id: 'nutrition', label: 'Nutrition' },
     { id: 'details', label: 'Details' },
     { id: 'preparation', label: 'Preparation' },
@@ -117,6 +122,24 @@ export function ProductDetailPage({ product, relatedProducts, reviews }: Product
               <p className={styles.sectionLead}>Clean, readable nutrition data for quick comparison and conscious shopping.</p>
               <NutritionFacts product={serializableProduct} />
             </section>
+
+            {winterBasket ? (
+              <section id="basket-contents" className={`${styles.panel} ${styles.sectionCard} ${styles.basketContents}`}>
+                <p className={styles.eyebrow}>Winter Collection</p>
+                <h2 className={styles.sectionTitle}>What&apos;s Inside This Basket?</h2>
+                <p className={styles.sectionLead}>One carefully packed basket, with every item listed below for your order and our packing team.</p>
+                <ul className={styles.basketList}>
+                  {winterBasket.contents.map((item) => {
+                    const matchingProduct = serializableCatalogProducts.find((candidate) => {
+                      const text = `${candidate.name ?? ''} ${candidate.alias_name ?? ''}`.toLowerCase()
+                      return item.match.some((term) => text.includes(term))
+                    })
+                    const content = <><span>{item.name}</span><strong>{item.quantity}</strong></>
+                    return <li key={`${item.name}-${item.quantity}`}>{matchingProduct ? <Link href={`/products/${getProductSlug(matchingProduct)}`}>{content}</Link> : content}</li>
+                  })}
+                </ul>
+              </section>
+            ) : null}
 
             <section id="details" className={`${styles.panel} ${styles.sectionCard}`}>
               <h2 className={styles.sectionTitle}>Details</h2>

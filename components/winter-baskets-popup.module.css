@@ -1,0 +1,23 @@
+.overlay { position: fixed; inset: 0; z-index: 2000; display: grid; place-items: center; padding: 20px; background: rgba(20, 45, 30, .56); backdrop-filter: blur(6px); }
+.modal { position: relative; width: min(980px, 100%); overflow: hidden; border: 1px solid rgba(222, 206, 162, .62); border-radius: 28px; background: #f8f4e9; box-shadow: 0 30px 84px rgba(12, 33, 21, .38); }
+.content { display: grid; grid-template-columns: minmax(0, .95fr) minmax(340px, 1.05fr); }
+.copyPanel { display: flex; flex-direction: column; justify-content: center; padding: clamp(32px, 6vw, 68px); background: radial-gradient(circle at top left, rgba(221, 189, 108, .32), transparent 34%), linear-gradient(150deg, #205535, #315f3c); color: #fffdf5; }
+.kicker { margin: 0 0 14px; color: #dfc77d; font-size: .76rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+.copyPanel h2 { margin: 0; font-family: Georgia, serif; font-size: clamp(2.15rem, 4.5vw, 3.55rem); line-height: 1.06; }
+.copyPanel p:not(.kicker) { margin: 20px 0 0; color: #edf2e8; font-size: 1.02rem; line-height: 1.7; }
+.primaryCta, .secondaryCta { width: fit-content; margin-top: 28px; border-radius: 999px; padding: 14px 21px; font-weight: 800; font-size: .92rem; text-decoration: none; cursor: pointer; }
+.primaryCta { background: #dfc77d; color: #173b26; border: 1px solid #f5e8b2; }
+.secondaryCta { margin-top: 12px; padding: 8px 2px; border: 0; background: transparent; color: #f5ebc9; text-decoration: underline; }
+.baskets { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: minmax(150px, 1fr) auto; align-items: end; gap: 12px; padding: 28px 22px 24px; background: radial-gradient(circle at 88% 12%, rgba(223, 199, 125, .42), transparent 23%), linear-gradient(145deg, #fffdf7, #e9f0e6); }
+.collectionNote { grid-column: 1 / -1; align-self: center; padding: 18px 20px; border-left: 3px solid #b99849; color: #205535; }
+.collectionNote p { margin: 0 0 8px; color: #8a6a3d; font-size: .72rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+.collectionNote h3 { max-width: 360px; margin: 0; font-family: Georgia, serif; font-size: clamp(1.55rem, 2.5vw, 2.25rem); line-height: 1.1; }
+.collectionNote span { display: block; margin-top: 12px; color: #55705c; font-size: .8rem; font-weight: 700; line-height: 1.5; }
+.basketCard { overflow: hidden; border: 1px solid #d5e0d1; border-radius: 16px; background: #fff; box-shadow: 0 10px 20px rgba(32, 85, 53, .1); color: inherit; text-decoration: none; transition: transform .2s ease, box-shadow .2s ease; }
+.basketCard:hover, .basketCard:focus-visible { transform: translateY(-4px); box-shadow: 0 16px 28px rgba(32, 85, 53, .18); }
+.basketCard img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+.basketCard div { display: flex; flex-direction: column; gap: 4px; min-height: 104px; padding: 13px 12px; color: #205535; font-size: .8rem; line-height: 1.25; }
+.basketCard span { color: #6a7f6d; font-size: .74rem; }
+.basketCard b { margin-top: auto; color: #4a7c59; font-size: .76rem; }
+.closeButton { position: absolute; top: 13px; right: 13px; z-index: 2; width: 40px; height: 40px; border: 1px solid #d5dfcf; border-radius: 50%; background: rgba(255,255,255,.9); color: #205535; font-size: 1.8rem; line-height: 1; cursor: pointer; }
+@media (max-width: 760px) { .overlay { padding: 12px; } .modal { max-height: 92vh; overflow: auto; } .content { grid-template-columns: 1fr; } .copyPanel { padding: 36px 28px 26px; } .copyPanel h2 { font-size: clamp(2rem, 9vw, 2.8rem); } .baskets { grid-template-rows: auto auto; padding: 16px; } .collectionNote { padding: 12px 14px; } .collectionNote h3 { font-size: 1.5rem; } }

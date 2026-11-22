@@ -7,6 +7,11 @@
   flex-wrap: wrap;
 }
 
+.winterCollection { margin: 0 0 46px; padding: 32px; border: 1px solid #c9dccb; border-radius: 26px; background: linear-gradient(135deg, #f5f1e5, #edf5ed); }
+.winterCollection h2 { margin: 6px 0; color: #205535; font-family: Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.6rem); }
+.winterCollection > p:not(.collectionEyebrow) { margin: 0 0 24px; color: #49604f; }
+.collectionEyebrow { margin: 0; color: #4a7c59; font-size: .75rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+
 .searchPanel {
   flex: 1 1 420px;
   padding: 22px;

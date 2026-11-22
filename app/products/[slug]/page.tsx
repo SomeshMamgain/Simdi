@@ -4,8 +4,9 @@ import { notFound, permanentRedirect } from 'next/navigation'
 import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
 import { ProductDetailPage } from '@/components/product-detail/ProductDetailPage'
-import { getProductBySlug, getRelatedProducts } from '@/lib/product-service'
+import { getProductBySlug, getProducts, getRelatedProducts } from '@/lib/product-service'
 import type { ProductDocument } from '@/lib/product-types'
+import { getWinterBasket } from '@/lib/winter-baskets'
 import { getReviewsByProductSlug } from '@/lib/review-service'
 import { DEFAULT_OG_IMAGE, buildMetadata, getCanonicalUrl, mergeKeywords } from '@/lib/seo'
 import {
@@ -80,6 +81,15 @@ function buildProductSeoTitle(
   product: Pick<ProductDocument, 'name' | 'alias_name' | 'type' | 'village'>
 ) {
   const productName = getSeoProductName(product)
+  const basket = getWinterBasket(productName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''))
+
+  if (basket) {
+    return basket.slug === 'pahadi-winter-essentials'
+      ? 'Pahadi Winter Essentials | SIMDI Himalayan Winter Collection'
+      : basket.slug === 'himalayan-winter-nourishment'
+        ? 'Himalayan Winter Nourishment | SIMDI'
+        : 'Pahadi Heritage Luxury Hamper | SIMDI'
+  }
   const productType = getSeoProductType(product)
   const location = getSeoProductLocation(product)
   const preferredTitle = `Buy ${productName} Online | ${productType || 'Himalayan Product'} from ${location} | Simdi`
@@ -201,9 +211,10 @@ export default async function ProductDetailRoute({ params }: ProductDetailRouteP
     permanentRedirect(`/products/${canonicalSlug}`)
   }
 
-  const [relatedProducts, reviews] = await Promise.all([
+  const [relatedProducts, reviews, catalogProducts] = await Promise.all([
     getRelatedProducts(product, 4),
     getReviewsByProductSlug(canonicalSlug),
+    getProducts(),
   ])
   const canonicalPath = `/products/${canonicalSlug}`
   const canonicalUrl = getCanonicalUrl(canonicalPath)
@@ -292,6 +303,7 @@ export default async function ProductDetailRoute({ params }: ProductDetailRouteP
       <ProductDetailPage
         product={product}
         relatedProducts={relatedProducts}
+        catalogProducts={catalogProducts}
         reviews={reviews}
       />
 

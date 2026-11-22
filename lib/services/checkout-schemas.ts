@@ -14,6 +14,7 @@ export const cartItemSchema = z.object({
   stock: z.number().nullable().optional(),
   unit: z.string().optional(),
   variant: z.string().optional(),
+  basketContents: z.array(z.object({ name: z.string().min(1), quantity: z.string().min(1) })).optional(),
 })
 
 export const orderCustomerSchema = z.object({

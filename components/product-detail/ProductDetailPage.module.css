@@ -239,6 +239,15 @@
   color: #435549;
 }
 
+.basketContents { border-color: #c5d8c8; background: linear-gradient(135deg, #fffaf3, #eff6ee); }
+
+.basketList { list-style: none; padding: 0; margin: 24px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.basketList li { padding: 13px 15px; border-radius: 12px; background: rgba(255,255,255,.72); border: 1px solid #dce8dc; color: #205535; }
+.basketList li > a, .basketList li > span { display: flex; justify-content: space-between; gap: 16px; color: inherit; text-decoration: none; }
+.basketList li > a:hover { text-decoration: underline; }
+.basketList strong { color: #4a7c59; white-space: nowrap; }
+@media (max-width: 640px) { .basketList { grid-template-columns: 1fr; } }
+
 .originMeta {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

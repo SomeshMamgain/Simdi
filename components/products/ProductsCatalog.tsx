@@ -5,11 +5,13 @@ import { useDeferredValue, useState } from 'react'
 import { ProductCard } from '@/components/ProductCard'
 import type { ProductDocument } from '@/lib/product-types'
 import { getProductKeywords, getProductSummary, stripHtml } from '@/lib/product-utils'
+import { isWinterBasket } from '@/lib/winter-baskets'
 
 import styles from './products-catalog.module.css'
 
 interface ProductsCatalogProps {
   products: ProductDocument[]
+  winterBaskets?: ProductDocument[]
 }
 
 function normalizeSearchText(value?: string) {
@@ -41,7 +43,7 @@ function getProductSearchText(product: ProductDocument) {
   )
 }
 
-export function ProductsCatalog({ products }: ProductsCatalogProps) {
+export function ProductsCatalog({ products, winterBaskets = [] }: ProductsCatalogProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const deferredSearchQuery = useDeferredValue(searchQuery)
   const normalizedSearchQuery = normalizeSearchText(deferredSearchQuery)
@@ -60,6 +62,14 @@ export function ProductsCatalog({ products }: ProductsCatalogProps) {
 
   return (
     <>
+      {winterBaskets.length ? (
+        <section className={styles.winterCollection} aria-labelledby="winter-collection-title">
+          <p className={styles.collectionEyebrow}>Seasonal pantry curation</p>
+          <h2 id="winter-collection-title">SIMDI Winter Collection</h2>
+          <p>Three curated tastes of the Himalayas.</p>
+          <div className={styles.grid}>{winterBaskets.map((product) => <ProductCard key={product.$id} product={product} />)}</div>
+        </section>
+      ) : null}
       <div className={styles.controls}>
         <div className={styles.searchPanel}>
           <label className={styles.label} htmlFor="products-search">
@@ -86,16 +96,16 @@ export function ProductsCatalog({ products }: ProductsCatalogProps) {
           <p className={styles.helperText}>Try Bilona Ghee, honey, rice, Garhwal, or pantry staples.</p>
         </div>
 
-        <p className={styles.summary}>
+        {/* <p className={styles.summary}>
           {activeSearchLabel
             ? `Showing ${filteredProducts.length} of ${products.length} products for "${activeSearchLabel}"`
             : `Showing ${products.length} live products`}
-        </p>
+        </p> */}
       </div>
 
       {filteredProducts.length ? (
         <div className={styles.grid}>
-          {filteredProducts.map((product) => (
+          {filteredProducts.filter((product) => !isWinterBasket(product)).map((product) => (
             <ProductCard key={product.$id} product={product} />
           ))}
         </div>

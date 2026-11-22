@@ -4,6 +4,7 @@ import { Leaf, MapPin, Sparkles, Star } from 'lucide-react'
 
 import type { ProductDocument } from '@/lib/product-types'
 import { getProductRating, isProductInStock } from '@/lib/product-utils'
+import { isWinterBasket } from '@/lib/winter-baskets'
 
 import styles from './ProductDetailPage.module.css'
 import { useProductReviewState } from './ProductReviewState'
@@ -26,6 +27,7 @@ export function ProductHeader({ product }: ProductHeaderProps) {
         ? `${displayRating} / 5 rating`
         : 'Freshly added to the collection'
   const inStock = isProductInStock(product)
+  const winterBasket = isWinterBasket(product)
 
   return (
     <div>
@@ -48,6 +50,12 @@ export function ProductHeader({ product }: ProductHeaderProps) {
       </div>
 
       <div className={styles.badgeRow}>
+        {winterBasket ? (
+          <span className={`${styles.badge} ${styles.badgeSeasonal}`}>
+            <Leaf size={15} />
+            Winter Collection
+          </span>
+        ) : null}
         <span className={`${styles.badge} ${inStock ? styles.badgeStock : styles.badgeOut}`}>
           <Sparkles size={15} />
           {inStock ? 'In stock' : 'Out of stock'}
