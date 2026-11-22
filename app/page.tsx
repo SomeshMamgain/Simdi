@@ -382,7 +382,7 @@ const features = [
 
 export default async function Home() {
   const products = await getProducts();
-  console.log(products)
+  // console.log(products)
   const bestSellers = products
   .filter(p => Number(p.review) > 0 && Number(p.review) !== 100)
   .sort((a, b) => Number(b.review) - Number(a.review)) // descending (highest first)
