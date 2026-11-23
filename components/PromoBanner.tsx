@@ -10,6 +10,7 @@ export default function PromoBanner() {
     const dismissed = sessionStorage.getItem('simdiBannerDismissed');
     if (!dismissed) setVisible(true);
   }, []);
+  
 
   const dismiss = () => {
     sessionStorage.setItem('simdiBannerDismissed', '1');
