@@ -306,7 +306,7 @@ export function ProductDetailPage({ product, relatedProducts, catalogProducts = 
               </div>
             </section>
 
-            {keywords.length > 0 ? (
+            {/* {keywords.length > 0 ? (
               <section className={`${styles.panel} ${styles.asideCard}`}>
                 <h2 className={styles.asideTitle}>Search Context</h2>
                 <p className={styles.asideText}>Useful search terms associated with this product.</p>
@@ -318,7 +318,7 @@ export function ProductDetailPage({ product, relatedProducts, catalogProducts = 
                   ))}
                 </div>
               </section>
-            ) : null}
+            ) : null} */}
 
             {serializableRelatedProducts.length > 0 ? (
               <>

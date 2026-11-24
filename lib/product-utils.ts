@@ -246,6 +246,7 @@ export function getProductKeywords(
   const explicit = splitContentList(product.keywords)
   const raw = explicit.length > 0 ? [...explicit, ...generateFallbackKeywords(product)] : generateFallbackKeywords(product)
   const seen = new Set<string>()
+  
 
   return raw.filter((keyword) => {
     const normalizedKeyword = keyword.trim().toLowerCase()
