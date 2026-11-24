@@ -387,6 +387,7 @@ const productBlogInputs: ProductBlogInput[] = [
       { title: 'Traditional spice craft', description: 'Preserves the sil-batta style of grinding salt with aromatics.' },
       { title: 'Useful with fresh produce', description: 'Excellent on cucumber, radish, citrus, and seasonal fruit.' },
       { title: 'No need for heavy masala', description: 'Adds depth while keeping food light and clean.' },
+      
     ],
     faqs: [
       { question: 'What does Pisyu Loon mean?', answer: 'In local usage, Pisyu means ground and Loon means salt. It refers to ground Pahadi salt blend.' },
